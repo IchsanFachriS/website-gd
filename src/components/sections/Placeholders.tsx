@@ -57,7 +57,7 @@ export function ContactSection() {
                   <path strokeLinecap="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 <div>
-                  <strong>Gedung Teknik Geodesi</strong><br />
+                  <strong>Labtek IX C</strong><br />
                   Jl. Ganesha No. 10, Bandung 40132<br />
                   Jawa Barat, Indonesia
                 </div>

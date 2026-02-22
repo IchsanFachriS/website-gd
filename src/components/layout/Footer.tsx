@@ -1,40 +1,50 @@
-export function Footer() {
+interface FooterProps {
+  onNavigate?: (page: string) => void;
+}
+
+export function Footer({ onNavigate }: FooterProps) {
   const year = new Date().getFullYear();
+
+  const navigate = (page: string) => {
+    onNavigate?.(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const cols = [
     {
       title: "Profile",
       links: [
-        { label: "What is Geodesy?", href: "#what-is" },
-        { label: "Our History", href: "#history" },
-        { label: "Vision & Mission", href: "#vision" },
-        { label: "News", href: "#news" },
+        { label: "What is Geodesy?", page: "what-is-geodesy-geomatics" },
+        { label: "Our History", page: "our-history" },
+        { label: "Vision & Mission", page: "vision-mission" },
+        { label: "News", page: "news" },
       ],
     },
     {
       title: "Academics",
       links: [
-        { label: "Undergraduate (S1)", href: "#s1" },
-        { label: "Graduate (S2)", href: "#s2" },
-        { label: "Doctoral (S3)", href: "#s3" },
-        { label: "Curriculum", href: "#curriculum" },
+        { label: "Undergraduate (S1)", page: "undergraduate-program-s1" },
+        { label: "Graduate (S2)", page: "graduate-program-s2" },
+        { label: "Doctoral (S3)", page: "doctoral-program-s3" },
+        { label: "Curriculum", page: "curriculum" },
       ],
     },
     {
       title: "Research",
       links: [
-        { label: "Research Groups", href: "#research-groups" },
-        { label: "Laboratories", href: "#labs" },
-        { label: "Publications", href: "#publications" },
-        { label: "Collaboration", href: "#collaboration" },
+        { label: "Research Groups", page: "research-groups" },
+        { label: "Laboratories", page: "laboratories" },
+        { label: "Publications", page: "publications" },
+        { label: "Collaboration", page: "collaboration" },
       ],
     },
     {
       title: "Student Affairs",
       links: [
-        { label: "Student Organizations", href: "#orgs" },
-        { label: "Scholarships", href: "#scholarships" },
-        { label: "Career & Alumni", href: "#career" },
-        { label: "Student Facilities", href: "#facilities" },
+        { label: "Student Organizations", page: "student-organizations" },
+        { label: "Scholarships", page: "scholarships" },
+        { label: "Career & Alumni", page: "career-alumni" },
+        { label: "Student Facilities", page: "student-facilities" },
       ],
     },
   ];
@@ -91,7 +101,7 @@ export function Footer() {
               <ul>
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <a href={link.href}>{link.label}</a>
+                    <button onClick={() => navigate(link.page)}>{link.label}</button>
                   </li>
                 ))}
               </ul>
@@ -100,7 +110,7 @@ export function Footer() {
 
           {/* Contact CTA */}
           <div className="gd-footer-cta">
-            <a href="#contact" className="gd-btn gd-btn--outline">Contact Us</a>
+            <button className="gd-btn gd-btn--outline" onClick={() => navigate("contact-us")}>Contact Us</button>
             <div className="gd-footer-accreditation">
               <div className="gd-accred-badge">
                 <span className="gd-accred-grade">A</span>

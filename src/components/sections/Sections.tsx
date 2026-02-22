@@ -109,10 +109,10 @@ export function HeroSection() {
         {/* Stats */}
         <div className="mt-20 grid grid-cols-2 sm:grid-cols-4 gap-8 border-t border-white/10 pt-10">
           {[
-            { label: "Tahun Berdiri", value: "1959" },
+            { label: "Tahun Berdiri", value: "1950" },
             { label: "Dosen Aktif", value: "40+" },
             { label: "Alumni", value: "3000+" },
-            { label: "Laboratorium", value: "12" },
+            { label: "Kelompok Keahlian", value: "4" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-[#c8922a] text-3xl font-bold">{stat.value}</div>
