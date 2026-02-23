@@ -47,10 +47,9 @@ export function Navbar({ onNavigate }: HeaderProps) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const handleNavClick = (href: string, hasChildren: boolean, label: string) => {
-    if (hasChildren) return; // dropdown handles sub-items
-    // Navigate to page
+  const handleNavClick = (label: string) => {
     onNavigate(label.toLowerCase().replace(/\s+/g, "-"));
+    setActiveMenu(null);
     setMobileOpen(false);
   };
 
@@ -94,10 +93,9 @@ export function Navbar({ onNavigate }: HeaderProps) {
                 <button
                   className="gd-nav-link"
                   onClick={() => {
+                    handleNavClick(item.label);
                     if (item.children) {
                       setActiveMenu(activeMenu === item.label ? null : item.label);
-                    } else {
-                      handleNavClick(item.href, false, item.label);
                     }
                   }}
                 >
@@ -186,11 +184,7 @@ export function Navbar({ onNavigate }: HeaderProps) {
                 <div key={item.label} className="gd-mobile-item">
                   <button
                     className="gd-mobile-link"
-                    onClick={() => {
-                      if (!item.children) {
-                        handleNavClick(item.href, false, item.label);
-                      }
-                    }}
+                    onClick={() => handleNavClick(item.label)}
                   >
                     {item.label}
                   </button>
