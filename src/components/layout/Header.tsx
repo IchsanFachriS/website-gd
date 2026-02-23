@@ -60,7 +60,6 @@ export function Navbar({ onNavigate }: HeaderProps) {
   };
 
   return (
-    /* Fixed header wrapper — contains both topbar and navbar */
     <div className="gd-header-fixed" ref={navRef}>
       <Topbar />
       <header className={`gd-header ${scrolled ? "gd-header--scrolled" : ""}`}>

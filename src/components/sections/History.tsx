@@ -28,10 +28,10 @@ export function HistorySection() {
             {/* Stats */}
             <div className="gd-history-stats">
               {[
-                { value: "1959", label: "Year Founded" },
-                { value: "65+", label: "Years of Excellence" },
+                { value: "1950", label: "Year Founded" },
+                { value: "75+", label: "Years of Excellence" },
                 { value: "3,000+", label: "Alumni Worldwide" },
-                { value: "12", label: "Research Labs" },
+                { value: "4", label: "Research Groups" },
               ].map((stat) => (
                 <div key={stat.label} className="gd-history-stat">
                   <span className="gd-stat-value">{stat.value}</span>

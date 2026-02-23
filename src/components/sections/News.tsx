@@ -43,7 +43,7 @@ export function NewsSection() {
           </p>
         </div>
 
-        {/* Cards grid — Oxford Case Study slider style adapted */}
+        {/* Cards grid */}
         <div className="gd-news-grid">
           {INSTAGRAM_POSTS.map((post) => (
             <article
