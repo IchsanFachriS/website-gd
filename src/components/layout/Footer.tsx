@@ -71,7 +71,7 @@ export function Footer({ onNavigate }: FooterProps) {
               </div>
             </div>
             <address className="gd-footer-address">
-              Gedung Teknik Geodesi<br />
+              Labtek IX-C<br />
               Jl. Ganesha No. 10<br />
               Bandung 40132, Jawa Barat<br />
               Indonesia

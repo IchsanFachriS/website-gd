@@ -39,6 +39,359 @@ function Breadcrumb({ items, onNavigate }: { items: { label: string; page: strin
 }
 
 // ============================================================
+// WHAT IS GEODESY & GEOMATICS PAGE
+// ============================================================
+export function WhatIsGeodesyPage({ onNavigate }: PageProps) {
+  const topics = [
+    {
+      icon: "🌍",
+      title: "Geodesy",
+      body: "Geodesy is the scientific discipline that deals with the measurement and representation of the Earth, including its gravitational field, in a three-dimensional time-varying space. Geodesists study the size and shape of the Earth, how it moves, and the nature of its gravity field. Modern geodesy uses satellite technology — particularly GPS and GNSS — to provide precise positioning that underpins navigation, mapping, and infrastructure development worldwide.",
+    },
+    {
+      icon: "🗺️",
+      title: "Geomatics Engineering",
+      body: "Geomatics Engineering is a modern discipline that encompasses the collection, management, analysis, and visualization of spatially referenced data. It integrates traditional surveying with modern technologies including remote sensing, geographic information systems (GIS), photogrammetry, and satellite navigation. Geomatics engineers are the architects of our digital world — they build the spatial data infrastructure that drives smart cities, disaster management, environmental monitoring, and autonomous vehicles.",
+    },
+    {
+      icon: "📸",
+      title: "Photogrammetry & Remote Sensing",
+      body: "Photogrammetry and Remote Sensing are key disciplines within geomatics. Photogrammetry uses images — from drones, aircraft, or satellites — to reconstruct 3D geometry of objects and terrain. Remote Sensing extends this to analysis of the Earth's surface using multispectral, hyperspectral, SAR, and LiDAR data, enabling land-use mapping, environmental monitoring, disaster assessment, and change detection at regional and global scales.",
+    },
+    {
+      icon: "🛰️",
+      title: "GNSS & Satellite Positioning",
+      body: "Global Navigation Satellite Systems (GNSS) — including GPS, GLONASS, Galileo, and BeiDou — are fundamental tools in modern geodesy. Our department specializes in precise satellite positioning, atmospheric corrections, geodetic datum establishment, and the design of CORS (Continuously Operating Reference Station) networks that serve Indonesia's national spatial reference framework.",
+    },
+  ];
+
+  return (
+    <div>
+      <Breadcrumb items={[{ label: "Profile", page: "profile" }, { label: "What is Geodesy & Geomatics?", page: "" }]} onNavigate={onNavigate} />
+      <PageHero
+        kicker="Profile"
+        title="What is Geodesy & Geomatics?"
+        subtitle="Explore the sciences that measure and map our world — from Earth's gravity field to real-time satellite navigation."
+      />
+
+      <section className="gd-page-section">
+        <div className="gd-container">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: "28px" }}>
+            {topics.map((t) => (
+              <div key={t.title} style={{ background: "var(--white)", border: "1px solid var(--gray-200)", padding: "32px", borderLeft: "4px solid var(--blue)" }}>
+                <span style={{ fontSize: "36px", display: "block", marginBottom: "16px" }}>{t.icon}</span>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: 700, color: "var(--navy)", marginBottom: "12px" }}>{t.title}</h2>
+                <p style={{ fontSize: "15px", lineHeight: 1.75, color: "var(--gray-600)" }}>{t.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="gd-page-section-alt">
+        <div className="gd-container">
+          <p className="gd-section-kicker">Areas of Application</p>
+          <h2 className="gd-section-title">Where Geodesy & Geomatics Matter</h2>
+          <div className="gd-section-divider" />
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px", marginTop: "8px" }}>
+            {[
+              { label: "National Mapping & Cadastre", icon: "📍" },
+              { label: "Smart City & Urban Planning", icon: "🏙️" },
+              { label: "Oil, Gas & Mining", icon: "⛏️" },
+              { label: "Disaster Management", icon: "🌋" },
+              { label: "Maritime & Hydrography", icon: "⚓" },
+              { label: "Autonomous Navigation", icon: "🚗" },
+              { label: "Environmental Monitoring", icon: "🌱" },
+              { label: "Defence & Intelligence", icon: "🛡️" },
+            ].map((app) => (
+              <div key={app.label} style={{ background: "var(--navy)", color: "var(--white)", padding: "20px", textAlign: "center" }}>
+                <span style={{ fontSize: "28px", display: "block", marginBottom: "10px" }}>{app.icon}</span>
+                <p style={{ fontFamily: "var(--font-display)", fontSize: "13px", fontWeight: 600, color: "rgba(255,255,255,0.85)", lineHeight: 1.4 }}>{app.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ============================================================
+// OUR HISTORY PAGE
+// ============================================================
+export function OurHistoryPage({ onNavigate }: PageProps) {
+  const timeline = [
+    { year: "1950", event: "Geodesy education program established as Teknik Geodesi at Institut Teknologi Bandung (ITB), initially part of the Civil Engineering Department. Primary focus on training human resources for cadastral work and land administration." },
+    { year: "1959", event: "Formal establishment as an independent department within ITB. The department became the first and most prestigious geodesy program in Indonesia, producing the engineers who would map the newly independent nation." },
+    { year: "1970s", event: "Expansion of curriculum to include photogrammetry, remote sensing, and early computer-based cartography. The department played a key role in Indonesia's first systematic topographic mapping programs." },
+    { year: "1980s", event: "Introduction of satellite geodesy into the curriculum. Department faculty and alumni led the establishment of Indonesia's geodetic datum and national coordinate reference system." },
+    { year: "1990s", event: "Rapid growth driven by GIS and remote sensing revolution. The department expanded its laboratory infrastructure, including new GIS, photogrammetry, and GNSS facilities." },
+    { year: "2003", event: "Program name changed to Teknik Geodesi dan Geomatika to reflect the modern expansion into geospatial sciences and technologies, aligning with international nomenclature." },
+    { year: "2007", event: "Program transferred to the newly established Faculty of Earth Sciences and Technology (FITB), based on Rector's Decree No. 257/SK/K01/OT/2007." },
+    { year: "2010s", event: "Achieved international accreditation (ASIIN) and national excellent accreditation (BAN-PT). Launched doctoral program and expanded international research collaborations." },
+    { year: "2022", event: "Over 2,875 alumni graduated, contributing to government agencies, private industry, and academia worldwide. Continued leadership in satellite geodesy, UAV mapping, and geospatial data science." },
+    { year: "Present", event: "A leading geomatics program in Southeast Asia, integrating Earth observation, spatial data science, hydrography, and geodynamics with strong industry and government partnerships." },
+  ];
+
+  return (
+    <div>
+      <Breadcrumb items={[{ label: "Profile", page: "profile" }, { label: "Our History", page: "" }]} onNavigate={onNavigate} />
+      <PageHero
+        kicker="Profile"
+        title="Our History"
+        subtitle="75 years of geodesy education — shaping Indonesia's spatial data infrastructure since 1950."
+      />
+
+      <section className="gd-page-section">
+        <div className="gd-container">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "start" }}>
+            {/* Intro */}
+            <div>
+              <p className="gd-section-kicker">About the Department</p>
+              <h2 className="gd-section-title">Oldest & Most Prestigious</h2>
+              <div className="gd-section-divider" />
+              <p style={{ fontSize: "15px", lineHeight: 1.75, color: "var(--gray-600)", marginBottom: "16px" }}>
+                Established in 1950, the Department of Geodesy & Geomatics Engineering at ITB stands as the oldest and most prestigious geodesy program in Indonesia. For over seven decades, we have trained generations of engineers who have shaped the nation's spatial data infrastructure.
+              </p>
+              <p style={{ fontSize: "15px", lineHeight: 1.75, color: "var(--gray-600)", marginBottom: "32px" }}>
+                Our journey reflects Indonesia's own development — from the foundational surveys of a newly independent nation, through the digital revolution in geographic information systems, to the cutting-edge era of drone mapping, autonomous navigation, and space geodesy.
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", paddingTop: "28px", borderTop: "1px solid var(--gray-200)" }}>
+                {[
+                  { value: "1950", label: "Year Founded" },
+                  { value: "75+", label: "Years of Excellence" },
+                  { value: "3,000+", label: "Alumni Worldwide" },
+                  { value: "12", label: "Laboratories" },
+                ].map((s) => (
+                  <div key={s.label}>
+                    <span style={{ fontFamily: "var(--font-display)", fontSize: "34px", fontWeight: 700, color: "var(--blue)", display: "block", lineHeight: 1 }}>{s.value}</span>
+                    <span style={{ fontFamily: "var(--font-display)", fontSize: "12px", letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "var(--gray-400)", marginTop: "4px", display: "block" }}>{s.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Timeline */}
+            <div style={{ position: "relative" }}>
+              <div style={{ position: "absolute", left: "15px", top: 0, bottom: 0, width: "1px", background: "linear-gradient(to bottom, var(--orange), var(--gray-200))" }} />
+              {timeline.map((item) => (
+                <div key={item.year} style={{ position: "relative", paddingLeft: "48px", marginBottom: "4px" }}>
+                  <div style={{ paddingTop: "14px", paddingBottom: "14px", borderBottom: "1px solid var(--gray-200)" }}>
+                    <div style={{ position: "absolute", left: "-33px", top: "20px", width: "10px", height: "10px", borderRadius: "50%", background: "var(--orange)", border: "2px solid var(--orange)" }} />
+                    <span style={{ fontFamily: "var(--font-display)", fontSize: "18px", fontWeight: 700, color: "var(--orange)", display: "block", marginBottom: "4px" }}>{item.year}</span>
+                    <p style={{ fontSize: "14px", lineHeight: 1.65, color: "var(--gray-600)" }}>{item.event}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ============================================================
+// VISION & MISSION PAGE
+// ============================================================
+export function VisionMissionPage({ onNavigate }: PageProps) {
+  const objectives = [
+    "Memperoleh pengetahuan terintegrasi di bidang teknik geodesi dan geomatika seperti yang dituntut oleh industri, profesi, dan layanan publik",
+    "Memiliki keterampilan dalam memanfaatkan pengetahuan dalam memecahkan masalah yang relevan di industri, profesi, dan layanan publik",
+    "Mampu menangani masalah yang terbuka dan kompleks, terutama dengan mempertimbangkan solusi rekayasa, yang terdiri dari aspek teknis, desain, sosio-ekonomi, budaya, lingkungan, dan bisnis",
+    "Menunjukkan kemampuan untuk beradaptasi, menyesuaikan diri, dan berkembang secara mandiri serta bersaing secara global",
+    "Menunjukkan kepatuhan terhadap standar etika dan profesional",
+  ];
+
+  return (
+    <div>
+      <Breadcrumb items={[{ label: "Profile", page: "profile" }, { label: "Vision & Mission", page: "" }]} onNavigate={onNavigate} />
+      <PageHero
+        kicker="Profile"
+        title="Vision & Mission"
+        subtitle="Becoming a leading center of excellence in geospatial science and technology for Indonesia and the world."
+      />
+
+      <section className="gd-page-section">
+        <div className="gd-container">
+          {/* Vision */}
+          <div style={{ marginBottom: "64px" }}>
+            <p className="gd-section-kicker">Visi</p>
+            <h2 className="gd-section-title">Vision</h2>
+            <div className="gd-section-divider" />
+            <div style={{ background: "var(--navy)", padding: "48px", borderLeft: "6px solid var(--orange)", maxWidth: "860px" }}>
+              <svg viewBox="0 0 40 32" fill="none" style={{ width: "40px", height: "32px", color: "var(--orange)", marginBottom: "20px", opacity: 0.6 }} aria-hidden="true">
+                <path d="M0 32V20C0 14.667 1.333 10.333 4 7 6.667 3.667 10.667 1.333 16 0l2 4C14 5.333 12.333 7 11 9c-1.333 2-2 4.333-2 7h7v16H0zm22 0V20c0-5.333 1.333-9.667 4-13 2.667-3.333 6.667-5.667 12-7l2 4c-4 1.333-5.667 3-5 5-.667 2-1 4.333-1 7h7v16H22z" fill="currentColor"/>
+              </svg>
+              <p style={{ fontFamily: "var(--font-display)", fontSize: "17px", fontWeight: 500, lineHeight: 1.8, color: "rgba(255,255,255,0.88)", fontStyle: "italic" }}>
+                Menjadi pemimpin, pusat pendidikan dan teknologi tinggi yang unggul, bermartabat untuk ilmu pengetahuan dan teknologi dalam survei dan pemetaan serta ilmu informasi geografis dalam perspektif aktivitas manusia yang unik dan perubahan lingkungan yang menjadi karakteristik Indonesia.
+              </p>
+            </div>
+          </div>
+
+          {/* Mission */}
+          <div style={{ marginBottom: "64px" }}>
+            <p className="gd-section-kicker">Misi</p>
+            <h2 className="gd-section-title">Mission</h2>
+            <div className="gd-section-divider" />
+            <div style={{ background: "var(--off-white)", padding: "40px", borderLeft: "6px solid var(--blue)", maxWidth: "860px" }}>
+              <p style={{ fontSize: "16px", lineHeight: 1.8, color: "var(--gray-600)" }}>
+                Melaksanakan pendidikan tinggi yang inovatif dan unggul dalam survei, pemetaan dan ilmu informasi geografis berdasarkan penelitian dan berorientasi pada perubahan lingkungan dan hubungannya dengan kegiatan manusia untuk mendukung pembangunan nasional Indonesia.
+              </p>
+            </div>
+          </div>
+
+          {/* Program Objectives */}
+          <div>
+            <p className="gd-section-kicker">Tujuan Program</p>
+            <h2 className="gd-section-title">Program Objectives</h2>
+            <div className="gd-section-divider" />
+            <p style={{ fontSize: "15px", lineHeight: 1.75, color: "var(--gray-600)", marginBottom: "28px", maxWidth: "700px" }}>
+              Program Teknik Geodesi dan Geomatika bertujuan untuk menghasilkan lulusan yang:
+            </p>
+            <div style={{ display: "flex", flexDirection: "column" as const, gap: "16px", maxWidth: "860px" }}>
+              {objectives.map((obj, i) => (
+                <div key={i} style={{ display: "flex", gap: "20px", alignItems: "flex-start", background: "var(--white)", border: "1px solid var(--gray-200)", padding: "24px" }}>
+                  <div style={{
+                    flexShrink: 0,
+                    width: "40px", height: "40px",
+                    background: "var(--orange)",
+                    color: "var(--white)",
+                    fontFamily: "var(--font-display)",
+                    fontSize: "18px",
+                    fontWeight: 700,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}>
+                    {i + 1}
+                  </div>
+                  <p style={{ fontSize: "15px", lineHeight: 1.7, color: "var(--gray-600)", paddingTop: "8px" }}>{obj}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ============================================================
+// NEWS PAGE (Profile > News)
+// ============================================================
+export function NewsPage({ onNavigate }: PageProps) {
+  const posts = [
+    {
+      title: "Tim Geodesi ITB Raih Penghargaan di Konferensi ION GNSS+ 2024",
+      date: "15 November 2024",
+      category: "Research",
+      excerpt: "Tim riset dari Departemen Teknik Geodesi dan Geomatika ITB berhasil mempresentasikan hasil penelitian terkait sistem GPS-CORS di konferensi internasional ION GNSS+ 2024 yang berlangsung di Baltimore, Amerika Serikat.",
+      image: "https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=600&q=80",
+    },
+    {
+      title: "Wisuda Oktober 2024: Selamat kepada Lulusan Geodesi & Geomatika",
+      date: "28 Oktober 2024",
+      category: "Academic",
+      excerpt: "Sebanyak 87 mahasiswa Teknik Geodesi dan Geomatika ITB diwisuda pada periode Oktober 2024. Upacara wisuda dihadiri oleh Rektor ITB, Dekan FITB, dan keluarga para wisudawan.",
+      image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=600&q=80",
+    },
+    {
+      title: "Kuliah Lapangan Fotogrametri UAV di Bandung Selatan",
+      date: "10 Oktober 2024",
+      category: "Academic",
+      excerpt: "Mahasiswa semester 5 mengikuti praktikum fotogrametri menggunakan drone UAV di kawasan Bandung Selatan. Pengolahan data dilakukan menggunakan software Agisoft Metashape untuk menghasilkan model 3D kawasan.",
+      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&q=80",
+    },
+    {
+      title: "Departemen GD-ITB Tandatangani MoU dengan BIG untuk Riset Geospasial",
+      date: "5 September 2024",
+      category: "Collaboration",
+      excerpt: "Departemen Teknik Geodesi dan Geomatika ITB resmi menandatangani Memorandum of Understanding dengan Badan Informasi Geospasial (BIG) untuk memperkuat kerja sama riset dan pengembangan infrastruktur data spasial nasional.",
+      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=600&q=80",
+    },
+    {
+      title: "Seminar Nasional Geomatika 2024: Geospasial untuk Indonesia Emas",
+      date: "20 Agustus 2024",
+      category: "Event",
+      excerpt: "Seminar Nasional Geomatika 2024 dengan tema 'Geospasial untuk Indonesia Emas 2045' berhasil diselenggarakan dengan sukses. Acara ini dihadiri oleh lebih dari 300 peserta dari berbagai universitas dan instansi pemerintah.",
+      image: "https://images.unsplash.com/photo-1562774053-701939374585?w=600&q=80",
+    },
+    {
+      title: "Beasiswa LPDP 2024: Mahasiswa GD-ITB Raih Pendanaan S2 Internasional",
+      date: "1 Agustus 2024",
+      category: "Student",
+      excerpt: "Tiga mahasiswa Teknik Geodesi dan Geomatika ITB berhasil meraih beasiswa LPDP untuk melanjutkan studi S2 di universitas terkemuka di Belanda, Jerman, dan Australia pada tahun akademik 2024/2025.",
+      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80",
+    },
+  ];
+
+  const categoryColors: Record<string, string> = {
+    Research: "var(--blue)",
+    Academic: "var(--navy)",
+    Collaboration: "var(--orange)",
+    Event: "#6b7280",
+    Student: "#059669",
+  };
+
+  return (
+    <div>
+      <Breadcrumb items={[{ label: "Profile", page: "profile" }, { label: "News", page: "" }]} onNavigate={onNavigate} />
+      <PageHero
+        kicker="Profile"
+        title="News & Activities"
+        subtitle="Latest news, events, and achievements from the Department of Geodesy & Geomatics Engineering."
+      />
+
+      <section className="gd-page-section">
+        <div className="gd-container">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: "28px" }}>
+            {posts.map((post) => (
+              <article key={post.title} style={{ background: "var(--white)", border: "1px solid var(--gray-200)", overflow: "hidden", display: "flex", flexDirection: "column" as const }}>
+                <div style={{ height: "200px", overflow: "hidden" }}>
+                  <img src={post.image} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                </div>
+                <div style={{ padding: "24px", flex: 1, display: "flex", flexDirection: "column" as const }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
+                    <span style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "11px",
+                      fontWeight: 700,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase" as const,
+                      padding: "3px 10px",
+                      background: categoryColors[post.category] || "var(--navy)",
+                      color: "var(--white)",
+                    }}>{post.category}</span>
+                    <span style={{ fontFamily: "var(--font-display)", fontSize: "12px", color: "var(--gray-400)", marginLeft: "auto" }}>{post.date}</span>
+                  </div>
+                  <h2 style={{ fontFamily: "var(--font-display)", fontSize: "17px", fontWeight: 700, color: "var(--navy)", lineHeight: 1.35, marginBottom: "10px" }}>{post.title}</h2>
+                  <p style={{ fontSize: "14px", lineHeight: 1.7, color: "var(--gray-600)", flex: 1 }}>{post.excerpt}</p>
+                  <a href="#" style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    fontFamily: "var(--font-display)",
+                    fontSize: "12px",
+                    fontWeight: 700,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase" as const,
+                    color: "var(--navy)",
+                    marginTop: "16px",
+                  }}>
+                    Read More →
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ============================================================
 // ACADEMICS PAGE
 // ============================================================
 export function AcademicsPage({ onNavigate }: PageProps) {

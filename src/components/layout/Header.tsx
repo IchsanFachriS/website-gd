@@ -47,14 +47,29 @@ export function Navbar({ onNavigate }: HeaderProps) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  // Push subdomain-style path to browser URL bar (no actual routing)
+  const pushUrl = (page: string, isProfile: boolean) => {
+    if (isProfile || page === "home") {
+      window.history.pushState(null, "", "/");
+    } else {
+      window.history.pushState(null, "", `/${page}`);
+    }
+  };
+
   const handleNavClick = (label: string) => {
-    onNavigate(label.toLowerCase().replace(/\s+/g, "-"));
+    const page = label.toLowerCase().replace(/\s+/g, "-");
+    const isProfile = label.toLowerCase() === "profile";
+    pushUrl(page, isProfile);
+    onNavigate(page);
     setActiveMenu(null);
     setMobileOpen(false);
   };
 
-  const handleChildClick = (label: string) => {
-    onNavigate(label.toLowerCase().replace(/\s+/g, "-").replace(/[()&]/g, "").replace(/--+/g, "-"));
+  const handleChildClick = (label: string, parentLabel: string) => {
+    const page = label.toLowerCase().replace(/\s+/g, "-").replace(/[()&]/g, "").replace(/--+/g, "-");
+    const isProfile = parentLabel.toLowerCase() === "profile";
+    pushUrl(page, isProfile);
+    onNavigate(page);
     setActiveMenu(null);
     setMobileOpen(false);
   };
@@ -67,16 +82,16 @@ export function Navbar({ onNavigate }: HeaderProps) {
           {/* Logo */}
           <button
             className="gd-logo"
-            onClick={() => onNavigate("home")}
+            onClick={() => { pushUrl("home", false); onNavigate("home"); }}
             aria-label="GD ITB Home"
             style={{ background: "none", border: "none", cursor: "pointer" }}
           >
             <div className="gd-logo-mark">
               <img src="img/logo.png" alt="Logo ITB" />
             </div>
-            <div className="gd-logo-text">
-              <span className="gd-logo-dept">GEODESY &amp; GEOMATICS ENGINEERING</span>
-              <span className="gd-logo-dept">INSTITUT TEKNOLOGI BANDUNG</span>
+            <div className="gd-logo-text" style={{ alignItems: "flex-start", textAlign: "left" }}>
+              <span className="gd-logo-dept" style={{ fontWeight: 600 }}>GEODESY &amp; GEOMATICS ENGINEERING</span>
+              <span className="gd-logo-dept" style={{ fontWeight: 600 }}>INSTITUT TEKNOLOGI BANDUNG</span>
             </div>
           </button>
 
@@ -110,7 +125,7 @@ export function Navbar({ onNavigate }: HeaderProps) {
                     <ul>
                       {item.children.map((child) => (
                         <li key={child.label}>
-                          <button onClick={() => handleChildClick(child.label)}>
+                          <button onClick={() => handleChildClick(child.label, item.label)}>
                             {child.label}
                           </button>
                         </li>
@@ -191,7 +206,7 @@ export function Navbar({ onNavigate }: HeaderProps) {
                     <ul className="gd-mobile-sub">
                       {item.children.map((child) => (
                         <li key={child.label}>
-                          <button onClick={() => handleChildClick(child.label)}>
+                          <button onClick={() => handleChildClick(child.label, item.label)}>
                             {child.label}
                           </button>
                         </li>

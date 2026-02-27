@@ -7,7 +7,7 @@ export const NAV_ITEMS: NavItem[] = [
     children: [
       { label: "What is Geodesy & Geomatics?", href: "#what-is" },
       { label: "Our History", href: "#history" },
-      { label: "Vision & Mission", href: "#vision" },
+      { label: "Vision & Mission", href: "#vision-mission" },
       { label: "News", href: "#news" },
     ],
   },
@@ -16,7 +16,8 @@ export const NAV_ITEMS: NavItem[] = [
     href: "#academics",
     children: [
       { label: "Undergraduate Program (S1)", href: "#s1" },
-      { label: "Postgraduate Program (S2 & S3)", href: "#s2s3" },
+      { label: "Master Program (S2)", href: "#s2" },
+      { label: "Doctoral Program (S2 & S3)", href: "#s3" },
       { label: "Professional Program", href: "#professional" },
     ],
   },
@@ -25,7 +26,7 @@ export const NAV_ITEMS: NavItem[] = [
     href: "#research",
     children: [
       { label: "Research Groups", href: "#research-groups" },
-      { label: "Publications", href: "#publications" },
+      { label: "Community Services", href: "#community-services" },
       { label: "Laboratories", href: "#labs" },
       { label: "Collaboration", href: "#collaboration" },
     ],
@@ -34,10 +35,11 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Student Affairs",
     href: "#student-affairs",
     children: [
-      { label: "Student Organizations", href: "#orgs" },
       { label: "Scholarships", href: "#scholarships" },
-      { label: "Career & Alumni", href: "#career" },
-      { label: "Student Facilities", href: "#facilities" },
+      { label: "Students Achievements", href: "#achievements" },
+      { label: "Students Activities", href: "#activities" },
+      { label: "Students Data", href: "#data" },
+      { label: "Announcements", href: "#announcements" },
     ],
   },
   { label: "Contact Us", href: "#contact" },
@@ -131,8 +133,8 @@ export const HISTORY_TIMELINE: TimelineItem[] = [
   { year: "2022", event: "Launched international pathway programs in collaboration with renowned global universities; over 2,875 alumni graduated by October 2022, contributing to government, industry, and academia worldwide." },
   { year: "Present", event: "Continues as a leading program in Indonesia, integrating earth observation, geospatial technology, surveying, remote sensing, GIS, hydrography, and geodynamics, with strong emphasis on current technologies and applications." },
 ];
+
 // Instagram posts — in production these would come from Instagram Basic Display API
-// Using placeholder data representative of @geodesigeomatika.itb style content
 export const INSTAGRAM_POSTS: NewsPost[] = [
   {
     id: "1",

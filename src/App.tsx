@@ -12,10 +12,14 @@ import {
   StudentAffairsPage,
   ContactPage,
   GenericPage,
+  WhatIsGeodesyPage,
+  OurHistoryPage,
+  VisionMissionPage,
+  NewsPage,
 } from "./components/pages/Pages";
 
 // Home page — all sections
-function HomePage({ onNavigate }: { onNavigate: (page: string) => void }) {
+function HomePage() {
   return (
     <main id="main-content">
       <BannerSlider />
@@ -36,19 +40,24 @@ function PageRouter({
 }) {
   switch (page) {
     case "home":
-      return <HomePage onNavigate={onNavigate} />;
+      return <HomePage />;
 
-    // Profile submenu
+    // Profile submenu — each has its own dedicated page
     case "what-is-geodesy-&-geomatics?":
     case "what-is-geodesy-geomatics":
-      return <GenericPage title="What is Geodesy & Geomatics?" parent="Profile" onNavigate={onNavigate} />;
+    case "what-is-geodesy-&-geomatics":
+      return <WhatIsGeodesyPage onNavigate={onNavigate} />;
     case "our-history":
-      return <GenericPage title="Our History" parent="Profile" onNavigate={onNavigate} />;
+      return <OurHistoryPage onNavigate={onNavigate} />;
     case "vision-&-mission":
     case "vision-mission":
-      return <GenericPage title="Vision & Mission" parent="Profile" onNavigate={onNavigate} />;
+      return <VisionMissionPage onNavigate={onNavigate} />;
     case "news":
-      return <GenericPage title="News" parent="Profile" onNavigate={onNavigate} />;
+      return <NewsPage onNavigate={onNavigate} />;
+
+    // Profile top-level — show home with all sections
+    case "profile":
+      return <HomePage />;
 
     // Academics
     case "academics":
@@ -62,6 +71,11 @@ function PageRouter({
     case "doctoral-program-(s3)":
     case "doctoral-program-s3":
       return <GenericPage title="Doctoral Program (S3)" parent="Academics" onNavigate={onNavigate} />;
+    case "postgraduate-program-(s2-&-s3)":
+    case "postgraduate-program-s2-s3":
+      return <GenericPage title="Postgraduate Program (S2 & S3)" parent="Academics" onNavigate={onNavigate} />;
+    case "professional-program":
+      return <GenericPage title="Professional Program" parent="Academics" onNavigate={onNavigate} />;
     case "curriculum":
       return <GenericPage title="Curriculum" parent="Academics" onNavigate={onNavigate} />;
     case "academic-calendar":
@@ -97,7 +111,7 @@ function PageRouter({
       return <ContactPage onNavigate={onNavigate} />;
 
     default:
-      return <HomePage onNavigate={onNavigate} />;
+      return <HomePage />;
   }
 }
 

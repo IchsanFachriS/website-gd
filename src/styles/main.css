@@ -900,6 +900,7 @@ address { font-style: normal; }
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 5;
+  line-clamp: 5;
   -webkit-box-orient: vertical;
   margin-bottom: 16px;
 }
@@ -1014,7 +1015,6 @@ address { font-style: normal; }
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.gd-footer-brand {}
 .gd-footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
 .gd-footer-logo svg { width: 36px; height: 36px; color: var(--orange); }
 .gd-footer-logo-dept { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--white); }
