@@ -55,13 +55,13 @@ export const SLIDES: SlideItem[] = [
   {
     image: "img/banner/banner-2.jpeg",
     title: "Precision in Every\nMeasurement",
-    subtitle: "Leading research in geospatial technology since 1959",
+    subtitle: "Leading research in geospatial technology since 1950",
     cta: { label: "Our Research", href: "#research" },
   },
   {
     image: "img/banner/banner-3.jpeg",
     title: "From Earth's Surface\nto the Stars",
-    subtitle: "Geodesy, Remote Sensing, and Geographic Information Systems",
+    subtitle: "Geodesy, Cadastre, Remote Sensing, Hydrography and Geographic Information Systems",
     cta: { label: "Discover More", href: "#what-is" },
   },
   {

@@ -6,17 +6,25 @@ import { BannerSlider } from "./components/sections/BannerSlider";
 import { WhatIsSection } from "./components/sections/WhatIs";
 import { HistorySection } from "./components/sections/History";
 import { NewsSection } from "./components/sections/News";
+
+// ── Profile pages ──────────────────────────────────────────────
 import {
-  AcademicsPage,
-  ResearchPage,
-  StudentAffairsPage,
-  ContactPage,
-  GenericPage,
   WhatIsGeodesyPage,
   OurHistoryPage,
   VisionMissionPage,
   NewsPage,
-} from "./components/pages/Pages";
+} from "./components/pages/profile";
+
+// ── Academics pages ────────────────────────────────────────────
+import { AcademicsPage, UndergraduatePage } from "./components/pages/academics";
+
+// ── Other section pages ────────────────────────────────────────
+import { ResearchPage }      from "./components/pages/research/ResearchPage";
+import { StudentAffairsPage } from "./components/pages/student-affairs/StudentAffairsPage";
+import { ContactPage }        from "./components/pages/contact/ContactPage";
+
+// ── Shared primitives ──────────────────────────────────────────
+import { GenericPage } from "./components/pages/_shared/GenericPage";
 
 // Home page — all sections
 function HomePage() {
@@ -42,7 +50,7 @@ function PageRouter({
     case "home":
       return <HomePage />;
 
-    // Profile submenu — each has its own dedicated page
+    // Profile submenu
     case "what-is-geodesy-&-geomatics?":
     case "what-is-geodesy-geomatics":
     case "what-is-geodesy-&-geomatics":
@@ -54,8 +62,6 @@ function PageRouter({
       return <VisionMissionPage onNavigate={onNavigate} />;
     case "news":
       return <NewsPage onNavigate={onNavigate} />;
-
-    // Profile top-level — show home with all sections
     case "profile":
       return <HomePage />;
 
@@ -64,16 +70,13 @@ function PageRouter({
       return <AcademicsPage onNavigate={onNavigate} />;
     case "undergraduate-program-(s1)":
     case "undergraduate-program-s1":
-      return <GenericPage title="Undergraduate Program (S1)" parent="Academics" onNavigate={onNavigate} />;
+      return <UndergraduatePage onNavigate={onNavigate} />;
     case "graduate-program-(s2)":
     case "graduate-program-s2":
       return <GenericPage title="Graduate Program (S2)" parent="Academics" onNavigate={onNavigate} />;
     case "doctoral-program-(s3)":
     case "doctoral-program-s3":
       return <GenericPage title="Doctoral Program (S3)" parent="Academics" onNavigate={onNavigate} />;
-    case "postgraduate-program-(s2-&-s3)":
-    case "postgraduate-program-s2-s3":
-      return <GenericPage title="Postgraduate Program (S2 & S3)" parent="Academics" onNavigate={onNavigate} />;
     case "professional-program":
       return <GenericPage title="Professional Program" parent="Academics" onNavigate={onNavigate} />;
     case "curriculum":
@@ -125,33 +128,17 @@ export default function App() {
 
   return (
     <>
-      {/* Skip to main */}
       <a
         href="#main-content"
-        style={{
-          position: "absolute",
-          left: "-9999px",
-          top: "auto",
-          width: "1px",
-          height: "1px",
-          overflow: "hidden",
-        }}
-        onFocus={(e) => {
-          (e.target as HTMLAnchorElement).style.cssText =
-            "position:fixed;top:0;left:0;z-index:9999;padding:12px 24px;background:var(--orange);color:white;font-family:var(--font-display);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;font-size:13px";
-        }}
-        onBlur={(e) => {
-          (e.target as HTMLAnchorElement).style.cssText =
-            "position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden";
-        }}
+        style={{ position: "absolute", left: "-9999px", top: "auto", width: "1px", height: "1px", overflow: "hidden" }}
+        onFocus={(e) => { (e.target as HTMLAnchorElement).style.cssText = "position:fixed;top:0;left:0;z-index:9999;padding:12px 24px;background:var(--orange);color:white;font-family:var(--font-display);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;font-size:13px"; }}
+        onBlur={(e) => { (e.target as HTMLAnchorElement).style.cssText = "position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden"; }}
       >
         Skip to main content
       </a>
 
-      {/* Fixed header (topbar + navbar together) */}
       <Navbar onNavigate={handleNavigate} />
 
-      {/* Push content below fixed header */}
       <div className="gd-page-offset">
         <PageRouter page={currentPage} onNavigate={handleNavigate} />
         <Footer onNavigate={handleNavigate} />

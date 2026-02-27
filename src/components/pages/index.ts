@@ -1,1 +1,0 @@
-export { AcademicsPage, ResearchPage, StudentAffairsPage, ContactPage, GenericPage, WhatIsGeodesyPage, OurHistoryPage, VisionMissionPage, NewsPage } from "./Pages";
