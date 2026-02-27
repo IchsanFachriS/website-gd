@@ -1,6 +1,7 @@
 export interface NavItem {
   label: string;
   href: string;
+  path?: string;        // URL path segment, e.g. "what-is-geodesy"
   children?: NavItem[];
 }
 

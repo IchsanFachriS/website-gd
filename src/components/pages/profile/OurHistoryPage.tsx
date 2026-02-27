@@ -6,15 +6,11 @@ import type { PageProps } from "../_shared/PageShell";
 
 const timeline = [
   { year: "1950", event: "Geodesy education program established as Teknik Geodesi at Institut Teknologi Bandung (ITB), initially part of the Civil Engineering Department. Primary focus on training human resources for cadastral work and land administration." },
-  { year: "1959", event: "Formal establishment as an independent department within ITB. The department became the first and most prestigious geodesy program in Indonesia, producing the engineers who would map the newly independent nation." },
-  { year: "1970s", event: "Expansion of curriculum to include photogrammetry, remote sensing, and early computer-based cartography. The department played a key role in Indonesia's first systematic topographic mapping programs." },
-  { year: "1980s", event: "Introduction of satellite geodesy into the curriculum. Department faculty and alumni led the establishment of Indonesia's geodetic datum and national coordinate reference system." },
-  { year: "1990s", event: "Rapid growth driven by GIS and remote sensing revolution. The department expanded its laboratory infrastructure, including new GIS, photogrammetry, and GNSS facilities." },
-  { year: "2003", event: "Program name changed to Teknik Geodesi dan Geomatika to reflect the modern expansion into geospatial sciences and technologies, aligning with international nomenclature." },
+  { year: "2003", event: "Program name changed to Teknik Geodesi dan Geomatika to reflect the modern expansion into geospatial sciences and technologies." },
   { year: "2007", event: "Program transferred to the newly established Faculty of Earth Sciences and Technology (FITB), based on Rector's Decree No. 257/SK/K01/OT/2007." },
-  { year: "2010s", event: "Achieved international accreditation (ASIIN) and national excellent accreditation (BAN-PT). Launched doctoral program and expanded international research collaborations." },
-  { year: "2022", event: "Over 2,875 alumni graduated, contributing to government agencies, private industry, and academia worldwide. Continued leadership in satellite geodesy, UAV mapping, and geospatial data science." },
-  { year: "Present", event: "A leading geomatics program in Southeast Asia, integrating Earth observation, spatial data science, hydrography, and geodynamics with strong industry and government partnerships." },
+  { year: "2010s", event: "Achieved international accreditation (ASIIN) and national excellent accreditation (BAN-PT)." },
+  { year: "2022", event: "Over 2,875 alumni graduated, contributing to government, industry, and academia worldwide." },
+  { year: "Present", event: "Continues as a leading program in Indonesia, integrating earth observation, geospatial technology, and GIS with strong industry and government partnerships." },
 ];
 
 const stats = [
