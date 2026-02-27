@@ -17,7 +17,7 @@ export const NAV_ITEMS: NavItem[] = [
     children: [
       { label: "Undergraduate Program (S1)", href: "#s1" },
       { label: "Master Program (S2)", href: "#s2" },
-      { label: "Doctoral Program (S2 & S3)", href: "#s3" },
+      { label: "Doctoral Program (S3)", href: "#s3" },
       { label: "Professional Program", href: "#professional" },
     ],
   },
@@ -84,22 +84,22 @@ export const WHAT_IS_TABS: TabItem[] = [
     title: "What is Geodesy?",
     image: "img/what-is/what-is-1.jpg",
     imageAlt: "Geodetic survey instrument on mountain",
-    body: "Geodesy is the scientific discipline that deals with the measurement and representation of the Earth, including its gravitational field, in a three-dimensional time-varying space. Geodesists study the size and shape of the Earth, how it moves, and the nature of its gravity field. Modern geodesy uses satellite technology — particularly GPS and GNSS — to provide precise positioning that underpins navigation, mapping, and infrastructure development worldwide.",
-    links: [
-      { label: "Physical Geodesy Lab", href: "#labs" },
-      { label: "GNSS Research Group", href: "#research-groups" },
-    ],
+    body: "Geodesy is the scientific discipline that deals with the measurement and representation of the Earth, including its gravitational field, in a three-dimensional time-varying space. Geodesists study the size and shape of the Earth, how it moves, and the nature of its gravity field.",
+    // links: [
+    //   { label: "Physical Geodesy Lab", href: "#labs" },
+    //   { label: "GNSS Research Group", href: "#research-groups" },
+    // ],
   },
   {
     label: "Geomatics",
     title: "What is Geomatics Engineering?",
     image: "img/what-is/what-is-2.JPG",
     imageAlt: "Satellite imagery of Earth from orbit",
-    body: "Geomatics Engineering is a modern discipline that encompasses the collection, management, analysis, and visualization of spatially referenced data. It integrates traditional surveying with modern technologies including remote sensing, geographic information systems (GIS), photogrammetry, and satellite navigation. Geomatics engineers are the architects of our digital world — they build the spatial data infrastructure that drives smart cities, disaster management, environmental monitoring, and autonomous vehicles.",
-    links: [
-      { label: "GIS Laboratory", href: "#labs" },
-      { label: "Remote Sensing Group", href: "#research-groups" },
-    ],
+    body: "Geomatics Engineering is a modern discipline that encompasses the collection, management, analysis, and visualization of spatially referenced data. It integrates traditional surveying with modern technologies including remote sensing, geographic information systems (GIS), photogrammetry, and satellite navigation.",
+    // links: [
+    //   { label: "GIS Laboratory", href: "#labs" },
+    //   { label: "Remote Sensing Group", href: "#research-groups" },
+    // ],
   },
   {
     label: "Career Paths",
@@ -107,10 +107,10 @@ export const WHAT_IS_TABS: TabItem[] = [
     image: "img/what-is/what-is-3.JPG",
     imageAlt: "Engineers working with geospatial data on screens",
     body: "Graduates of Geodesy & Geomatics Engineering are among the most versatile engineers in Indonesia. They work across government agencies such as BIG (Badan Informasi Geospasial), BPN (National Land Agency), and LAPAN; in oil & gas companies like Pertamina and Schlumberger; in technology firms building geospatial applications; in civil engineering and infrastructure consulting; and in academia and research institutions worldwide. Many alumni have pioneered Indonesia's national geospatial infrastructure.",
-    links: [
-      { label: "Alumni Network", href: "#career" },
-      { label: "Career Resources", href: "#career" },
-    ],
+    // links: [
+    //   { label: "Alumni Network", href: "#career" },
+    //   { label: "Career Resources", href: "#career" },
+    // ],
   },
   {
     label: "Specializations",
@@ -119,8 +119,8 @@ export const WHAT_IS_TABS: TabItem[] = [
     imageAlt: "Drone survey over landscape",
     body: "Our undergraduate and postgraduate programs offer specialization in six major areas: Physical Geodesy & GNSS, which covers satellite positioning and Earth's gravity field; Photogrammetry & Remote Sensing, applying aerial and satellite imagery for mapping; Geographic Information Systems, building digital spatial databases; Cadastral & Land Surveying, underpinning Indonesia's land registration system; Hydrography & Marine Geodesy, mapping seas and coastlines; and Cartography & Spatial Visualization, the art and science of map design.",
     links: [
-      { label: "Academic Programs", href: "#academics" },
-      { label: "Research Labs", href: "#labs" },
+      // { label: "Academic Programs", href: "#academics" },
+      // { label: "Research Labs", href: "#labs" },
     ],
   },
 ];
