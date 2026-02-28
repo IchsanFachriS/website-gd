@@ -50,9 +50,9 @@ async function apiFetch<T>(
   return { data, headers: response.headers };
 }
 
-function buildQueryString(params: Record<string, unknown>): string {
+function buildQueryString(params: object): string {
   const query = new URLSearchParams();
-  Object.entries(params).forEach(([key, value]) => {
+  Object.entries(params as Record<string, unknown>).forEach(([key, value]) => {
     if (value === undefined || value === null) return;
     if (Array.isArray(value)) {
       value.forEach((v) => query.append(`${key}[]`, String(v)));
