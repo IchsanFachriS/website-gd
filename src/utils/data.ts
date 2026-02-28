@@ -53,29 +53,29 @@ export const SLIDES: SlideItem[] = [
     image: "img/banner/banner-4.jpg",
     title: "Mapping the World,\nShaping the Future",
     subtitle: "Department of Geodesy & Geomatics Engineering — FITB ITB",
-    cta: { label: "Explore Our Programs", href: "#academics" },
+    cta: { label: "Explore Our Programs", href: "/academics" },
   },
   {
     image: "img/banner/banner-2.jpeg",
     title: "Precision in Every\nMeasurement",
     subtitle: "Leading research in geospatial technology since 1950",
-    cta: { label: "Our Research", href: "#research" },
+    cta: { label: "Our Research", href: "/research" },
   },
   {
     image: "img/banner/banner-3.jpeg",
     title: "From Earth's Surface\nto the Stars",
     subtitle: "Geodesy, Cadastre, Remote Sensing, Hydrography and Geographic Information Systems",
-    cta: { label: "Discover More", href: "#what-is" },
+    cta: { label: "Discover More", href: "/what-is" },
   },
   {
     image: "img/banner/banner-1.jpg",
     title: "Global Standards,\nLocal Impact",
     subtitle: "Collaborating with industry and government for Indonesia's geospatial future",
-    cta: { label: "See Our Work", href: "#research" },
+    cta: { label: "About Us", href: "/research" },
   },
   {
     image: "img/banner/banner-5.jpg",
-    title: "60+ Years of\nAcademic Excellence",
+    title: "75+ Years of\nAcademic Excellence",
     subtitle: "Educating Indonesia's finest geodesists and geomatics engineers",
     cta: { label: "Our History", href: "#history" },
   },
@@ -109,7 +109,11 @@ export const WHAT_IS_TABS: TabItem[] = [
     image: "img/what-is/what-is-4.jpg",
     imageAlt: "Drone survey over landscape",
     body: "Our programs offer specialization in: Physical Geodesy & GNSS, Photogrammetry & Remote Sensing, Geographic Information Systems, Cadastral & Land Surveying, Hydrography & Marine Geodesy, and Cartography & Spatial Visualization.",
-    links: [],
+    links: [
+      { label: "Physical Geodesy Lab", href: "#labs" },
+      { label: "GNSS Research Group", href: "#research-groups" },
+    ],
+
   },
 ];
 

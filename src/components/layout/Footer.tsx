@@ -17,7 +17,6 @@ export function Footer({ onNavigate }: FooterProps) {
         { label: "What is Geodesy?", page: "what-is-geodesy-geomatics" },
         { label: "Our History", page: "our-history" },
         { label: "Vision & Mission", page: "vision-mission" },
-        { label: "News", page: "news" },
       ],
     },
     {
@@ -126,13 +125,6 @@ export function Footer({ onNavigate }: FooterProps) {
 
         {/* Base */}
         <div className="gd-footer-base">
-          <nav className="gd-footer-aux" aria-label="footer auxiliary navigation">
-            <a href="#">Accessibility</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Cookie Statement</a>
-            <a href="#">Sitemap</a>
-            <a href="https://www.itb.ac.id/legal" target="_blank" rel="noreferrer">Legal Notice</a>
-          </nav>
           <p className="gd-footer-copy">© {year} Teknik Geodesi & Geomatika, FITB — Institut Teknologi Bandung</p>
           <button
             className="gd-scroll-top"

@@ -88,6 +88,24 @@ address { font-style: normal; }
 }
 .gd-topbar-nav a:hover { color: var(--orange); }
 
+.gd-topbar-admission a,
+.gd-topbar-admission-link {
+  background: var(--orange) !important;
+  color: var(--white) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em;
+  padding: 0 18px !important;
+  border-radius: 4px;
+  margin: 6px 0 6px 8px;
+  height: calc(var(--topbar-h) - 12px) !important;
+  border: none !important;
+  transition: background var(--transition) !important;
+}
+.gd-topbar-admission-link:hover {
+  background: var(--orange-dark) !important;
+  color: var(--white) !important;
+}
+
 /* ============================================================
    HEADER — fixed wrapper containing topbar + navbar
    ============================================================ */
@@ -339,15 +357,41 @@ address { font-style: normal; }
   padding-top: 24px;
   border-top: 1px solid rgba(255,255,255,0.1);
 }
-.gd-mobile-aux a {
+
+.gd-mobile-aux a,
+.gd-mobile-aux button {
   font-family: var(--font-display);
   font-size: 13px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.5);
   transition: color var(--transition);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
 }
-.gd-mobile-aux a:hover { color: var(--orange); }
+
+.gd-mobile-aux a:hover,
+.gd-mobile-aux button:hover { color: var(--orange); }
+
+.gd-mobile-aux .gd-mobile-admission {
+  display: inline-flex;
+  align-items: center;
+  background: var(--orange);
+  color: var(--white) !important;
+  font-weight: 700 !important;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-top: 4px;
+  width: fit-content;
+  transition: background var(--transition);
+}
+.gd-mobile-aux .gd-mobile-admission:hover {
+  background: var(--orange-dark) !important;
+  color: var(--white) !important;
+}
 
 /* ============================================================
    PAGE WRAPPER — offset for fixed header
@@ -1167,4 +1211,345 @@ address { font-style: normal; }
   .gd-footer-grid { grid-template-columns: 1fr; }
   .gd-news-header { flex-direction: column; align-items: flex-start; }
   .gd-footer-base { flex-direction: column; align-items: flex-start; }
+}
+
+/* ============================================================
+   RESEARCH GROUPS PAGE
+   Tambahkan ke bagian bawah src/styles/main.css
+   ============================================================ */
+
+/* ── Accordion list ─────────────────────────────────────────── */
+
+.rg-accordion-list {
+  display: flex;
+  flex-direction: column;
+  /* Tiap accordion dipisah border saja, tidak ada gap tambahan */
+}
+
+/* ── Accordion item ─────────────────────────────────────────── */
+
+.rg-accordion {
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  /* Pisahkan tiap item dengan margin tipis */
+  margin-bottom: 4px;
+  transition: box-shadow var(--transition);
+}
+
+.rg-accordion--open {
+  box-shadow: var(--shadow-md);
+}
+
+/* ── Trigger ────────────────────────────────────────────────── */
+
+.rg-accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--transition);
+}
+
+.rg-accordion-trigger:hover {
+  background: var(--off-white);
+}
+
+.rg-accordion--open .rg-accordion-trigger {
+  background: var(--navy);
+}
+
+/* Sequential number — same visual language as numbered sections elsewhere */
+.rg-accordion-num {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--gray-400);
+  min-width: 28px;
+  transition: color var(--transition);
+}
+
+.rg-accordion--open .rg-accordion-num {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* Orange accent bar — mirrors the .gd-section-divider aesthetic */
+.rg-accordion-abbr-bar {
+  flex-shrink: 0;
+  width: 3px;
+  height: 36px;
+  background: var(--orange);
+}
+
+/* Labels container */
+.rg-accordion-labels {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+/* Abbreviation — styled like .gd-section-kicker */
+.rg-accordion-abbr {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange);
+  display: block;
+  transition: color var(--transition);
+}
+
+.rg-accordion--open .rg-accordion-abbr {
+  color: var(--orange);
+}
+
+/* Full group name — styled like nav items */
+.rg-accordion-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.25;
+  display: block;
+  transition: color var(--transition);
+}
+
+.rg-accordion--open .rg-accordion-title {
+  color: var(--white);
+}
+
+/* Lecturer count — subtle label on the right */
+.rg-accordion-count {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--gray-400);
+  white-space: nowrap;
+  transition: color var(--transition);
+}
+
+.rg-accordion--open .rg-accordion-count {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Chevron */
+.rg-accordion-chevron {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--gray-400);
+  transition: transform var(--transition), color var(--transition);
+}
+
+.rg-accordion--open .rg-accordion-chevron {
+  transform: rotate(180deg);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ── Body (animated) ────────────────────────────────────────── */
+
+.rg-accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rg-accordion--open .rg-accordion-body {
+  max-height: 3000px;
+}
+
+.rg-accordion-content {
+  padding: 40px 28px 48px;
+  border-top: 1px solid var(--gray-200);
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+
+/* ── Content sections ───────────────────────────────────────── */
+
+.rg-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Heading for full group name — matches gd-section-title size */
+.rg-group-heading {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 6px 0 16px;
+  line-height: 1.3;
+}
+
+/* Description paragraph */
+.rg-group-intro {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--gray-600);
+  max-width: 860px;
+  margin: 0;
+}
+
+/* ── Focus list ─────────────────────────────────────────────── */
+
+.rg-focus-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 8px;
+}
+
+.rg-focus-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--off-white);
+  padding: 10px 14px;
+  border-left: 2px solid var(--gray-200);
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.rg-focus-item:hover {
+  border-left-color: var(--orange);
+  background: var(--blue-pale);
+}
+
+.rg-focus-bullet {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+  display: block;
+}
+
+/* ── Lecturer grid ───────────────────────────────────────────── */
+
+.rg-lecturers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 24px 20px;
+  margin-top: 16px;
+}
+
+/* ── Lecturer card ───────────────────────────────────────────── */
+
+.rg-lecturer-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.rg-lecturer-photo {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--gray-100);
+  border: 2px solid var(--gray-200);
+  flex-shrink: 0;
+  transition: border-color var(--transition);
+}
+
+.rg-lecturer-card:hover .rg-lecturer-photo {
+  border-color: var(--orange);
+}
+
+.rg-lecturer-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+/* Fallback initials — uses same font as the rest of the site */
+.rg-lecturer-initials {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--gray-400);
+  background: var(--gray-100);
+}
+
+.rg-lecturer-name {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .rg-accordion-trigger {
+    padding: 18px 20px;
+    gap: 14px;
+  }
+
+  .rg-accordion-content {
+    padding: 28px 20px 40px;
+    gap: 36px;
+  }
+
+  .rg-accordion-title {
+    font-size: 14px;
+  }
+
+  .rg-accordion-count {
+    display: none; /* hide on small screens to avoid crowding */
+  }
+
+  .rg-focus-list {
+    grid-template-columns: 1fr;
+  }
+
+  .rg-lecturers-grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 20px 14px;
+  }
+
+  .rg-lecturer-photo {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rg-accordion-num {
+    display: none;
+  }
+
+  .rg-lecturers-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

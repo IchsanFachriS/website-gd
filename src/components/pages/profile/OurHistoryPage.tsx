@@ -17,7 +17,7 @@ const stats = [
   { value: "1950", label: "Year Founded" },
   { value: "75+",  label: "Years of Excellence" },
   { value: "3,000+", label: "Alumni Worldwide" },
-  { value: "12",   label: "Laboratories" },
+  { value: "4",   label: "Research Groups" },
 ];
 
 export function OurHistoryPage({ onNavigate }: PageProps) {

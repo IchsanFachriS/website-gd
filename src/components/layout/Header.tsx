@@ -16,15 +16,13 @@ function labelToPageKey(label: string): string {
 }
 
 function resolvePageFromPathname(pathname: string): string {
-  const clean = pathname.replace(/^\//, "").replace(/\/$/, ""); // strip leading/trailing slash
-
+  const clean = pathname.replace(/^\//, "").replace(/\/$/, "");
   if (!clean || clean === "") return "home";
 
   for (const item of NAV_ITEMS) {
     if (item.path && item.path === clean) {
       return labelToPageKey(item.label);
     }
-
     if (item.children) {
       for (const child of item.children) {
         if (child.path && child.path === clean) {
@@ -53,6 +51,16 @@ export function Topbar() {
             <li><a href="https://fitb.itb.ac.id" target="_blank" rel="noreferrer">FITB</a></li>
             <li><a href="#student-affairs">Mahasiswa</a></li>
             <li><a href="https://digilib.itb.ac.id" target="_blank" rel="noreferrer">Library</a></li>
+            <li className="gd-topbar-admission">
+              <a
+                href="https://admission.itb.ac.id"
+                target="_blank"
+                rel="noreferrer"
+                className="gd-topbar-admission-link"
+              >
+                Admission
+              </a>
+            </li>
           </ul>
         </nav>
       </div>
@@ -66,11 +74,9 @@ export function Navbar({ onNavigate }: HeaderProps) {
   const [scrolled, setScrolled]     = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchVal, setSearchVal]   = useState("");
   const navRef = useRef<HTMLDivElement>(null);
 
-  // ── On mount: restore page from current URL (handles refresh) ──
+  // ── On mount: restore page from current URL ──
   useEffect(() => {
     const page = resolvePageFromPathname(window.location.pathname);
     if (page !== "home") {
@@ -98,24 +104,12 @@ export function Navbar({ onNavigate }: HeaderProps) {
   }, []);
 
   // ── URL builder ──
-
-  /**
-   * Push URL to browser history.
-   *
-   * Strategy (flat for profile children, nested for others):
-   *   - Home                        → /
-   *   - Profile children            → /{childPath}           e.g. /what-is-geodesy
-   *   - Other section children      → /{parentPath}/{childPath} e.g. /academics/undergraduate-s1
-   *   - Top-level (no children)     → /{parentPath}          e.g. /contact-us
-   */
   const pushUrl = (parentPath: string | undefined, childPath?: string) => {
     if (!parentPath) {
       window.history.pushState(null, "", "/");
       return;
     }
-
     if (childPath) {
-      // Profile children are flat (no parent prefix)
       const url = parentPath === "profile"
         ? `/${childPath}`
         : `/${parentPath}/${childPath}`;
@@ -126,7 +120,6 @@ export function Navbar({ onNavigate }: HeaderProps) {
   };
 
   // ── Navigation handlers ──
-
   const handleNavClick = (item: NavItem) => {
     if (!item.path || item.label.toLowerCase() === "home") {
       window.history.pushState(null, "", "/");
@@ -244,24 +237,6 @@ export function Navbar({ onNavigate }: HeaderProps) {
           {/* ── Actions ── */}
           <div className="gd-header-actions">
             <button
-              className="gd-search-btn"
-              onClick={() => setSearchOpen(!searchOpen)}
-              aria-label="Search"
-              aria-expanded={searchOpen}
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <path d="M21 21l-4.35-4.35" />
-              </svg>
-            </button>
-
-            <button
               className={`gd-burger ${mobileOpen ? "active" : ""}`}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -271,58 +246,12 @@ export function Navbar({ onNavigate }: HeaderProps) {
           </div>
         </div>
 
-        {/* ── Search panel ── */}
-        {searchOpen && (
-          <div className="gd-search-panel">
-            <div className="gd-container">
-              <form
-                className="gd-search-form"
-                onSubmit={(e) => e.preventDefault()}
-              >
-                <label htmlFor="site-search">
-                  Search by keywords, subject or people
-                </label>
-                <div className="gd-search-row">
-                  <input
-                    id="site-search"
-                    type="text"
-                    placeholder="Search..."
-                    value={searchVal}
-                    onChange={(e) => setSearchVal(e.target.value)}
-                    autoFocus
-                  />
-                  <button type="submit" aria-label="Submit search">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    >
-                      <circle cx="11" cy="11" r="8" />
-                      <path d="M21 21l-4.35-4.35" />
-                    </svg>
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-
         {/* ── Mobile menu ── */}
         <div
           className={`gd-mobile-menu ${mobileOpen ? "open" : ""}`}
           aria-hidden={!mobileOpen}
         >
           <div className="gd-mobile-inner">
-            <div className="gd-mobile-search">
-              <input
-                type="text"
-                placeholder="Search..."
-                aria-label="Mobile search"
-              />
-            </div>
-
             <nav aria-label="mobile navigation">
               {NAV_ITEMS.map((item) => (
                 <div key={item.label} className="gd-mobile-item">
@@ -364,6 +293,14 @@ export function Navbar({ onNavigate }: HeaderProps) {
               >
                 Mahasiswa
               </button>
+              <a
+                href="https://admission.itb.ac.id"
+                target="_blank"
+                rel="noreferrer"
+                className="gd-mobile-admission"
+              >
+                Admission
+              </a>
             </div>
           </div>
         </div>

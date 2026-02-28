@@ -14,41 +14,32 @@ const SUB_TABS = [
 ];
 
 const mandatoryCourses = [
-  { code: "GD1101", name: "Matematika I",                credits: 3, semester: 1 },
-  { code: "GD1102", name: "Fisika Dasar I",              credits: 3, semester: 1 },
-  { code: "GD1103", name: "Kimia Dasar",                 credits: 2, semester: 1 },
-  { code: "GD1104", name: "Pengantar Teknik & Sains",    credits: 2, semester: 1 },
-  { code: "GD1201", name: "Matematika II",               credits: 3, semester: 2 },
-  { code: "GD1202", name: "Fisika Dasar II",             credits: 3, semester: 2 },
-  { code: "GD1203", name: "Pemrograman Komputer",        credits: 3, semester: 2 },
-  { code: "GD2101", name: "Pengukuran Topografi",        credits: 4, semester: 3 },
-  { code: "GD2102", name: "Geodesi Fisis",               credits: 3, semester: 3 },
-  { code: "GD2103", name: "Kartografi",                  credits: 3, semester: 3 },
-  { code: "GD2104", name: "Fotogrametri Dasar",          credits: 3, semester: 3 },
-  { code: "GD2201", name: "Penginderaan Jauh",           credits: 3, semester: 4 },
-  { code: "GD2202", name: "Sistem Informasi Geografis",  credits: 3, semester: 4 },
-  { code: "GD2203", name: "GNSS & Navigasi Satelit",     credits: 3, semester: 4 },
-  { code: "GD2204", name: "Survei Kadaster",             credits: 3, semester: 4 },
-  { code: "GD3101", name: "Hitung Perataan",             credits: 3, semester: 5 },
-  { code: "GD3102", name: "Fotogrametri Lanjut",         credits: 3, semester: 5 },
-  { code: "GD3103", name: "SIG Lanjut",                  credits: 3, semester: 5 },
-  { code: "GD3201", name: "Geodesi Satelit",             credits: 3, semester: 6 },
-  { code: "GD3202", name: "Hidrografi",                  credits: 3, semester: 6 },
-  { code: "GD4101", name: "Kerja Praktek",               credits: 2, semester: 7 },
-  { code: "GD4201", name: "Tugas Akhir",                 credits: 6, semester: 8 },
+  { code: "MA1101", name: "Matematika I",                             credits: 4, semester: 1 },
+  { code: "FI1101", name: "Fisika Dasar I",                           credits: 3, semester: 1 },
+  { code: "KI1101", name: "Kimia Dasar I",                            credits: 3, semester: 1 },
+  { code: "WI1101", name: "Pancasila",                                credits: 2, semester: 1 },
+  { code: "WI1102", name: "Berpikir Komputasional",                   credits: 2, semester: 1 },
+  { code: "WI1103", name: "Pengantar Prinsip Keberlanjutan",          credits: 2, semester: 1 },
+  { code: "WI1111", name: "Laboratorium Fisika Dasar",                credits: 1, semester: 1 },
+  { code: "WI1112", name: "Laboratorium Kimia Dasar",                 credits: 1, semester: 1 },
+  { code: "GD1201", name: "Aljabar Linier Terapan",                   credits: 3, semester: 2 },
+  { code: "GD1202", name: "Mekanika dan Gaya Berat",                  credits: 3, semester: 2 },
+  { code: "WI2001", name: "Pengenalan Rekayasa dan Desain",           credits: 3, semester: 2 },
+  { code: "WI2002", name: "Literasi Data dan Inteligensi Artifisial", credits: 2, semester: 2 },
+  { code: "WI2004", name: "Bahasa Inggris",                           credits: 2, semester: 2 },
+  { code: "WI2005", name: "Bahasa Indonesia",                         credits: 2, semester: 2 },
+  { code: "WF1211", name: "Sistem Bumi",                              credits: 3, semester: 2 },
+  { code: "GD2101", name: "Statistika dan Probabilistik",             credits: 3, semester: 3 },
+  { code: "GD2103", name: "Fisika Gelombang",                         credits: 3, semester: 3 },
+  { code: "WI2023", name: "Olah Raga",                                credits: 1, semester: 3 },
+  { code: "GD2102", name: "Penentuan Posisi",                         credits: 3, semester: 3 },
+  { code: "GD2104", name: "Geodesi Geometrik",                        credits: 3, semester: 3 },
+  { code: "GD2105", name: "Hukum Perundangan Geospasial",             credits: 3, semester: 3 },
+  { code: "GD2106", name: "Ekspedisi Geospasial",                     credits: 2, semester: 3 },
 ];
 
 const electiveCourses = [
-  { code: "GD3E01", name: "Geodynamics & Deformasi Kerak Bumi",       credits: 3 },
-  { code: "GD3E02", name: "LiDAR & Point Cloud Processing",            credits: 3 },
-  { code: "GD3E03", name: "Analisis Citra SAR",                        credits: 3 },
-  { code: "GD3E04", name: "Geospasial Intelligence",                   credits: 3 },
-  { code: "GD3E05", name: "3D City Modeling & Digital Twin",           credits: 3 },
-  { code: "GD3E06", name: "Spatial Data Science & Machine Learning",   credits: 3 },
-  { code: "GD3E07", name: "Manajemen Proyek Geospasial",               credits: 2 },
-  { code: "GD3E08", name: "Kebijakan & Hukum Pertanahan",              credits: 2 },
-  { code: "GD3E09", name: "UAV Mapping & Photogrammetry",              credits: 3 },
-  { code: "GD3E10", name: "Lingkungan Pesisir & Kelautan",             credits: 3 },
+  { code: "GD3206", name: "Hidroinformatika",       credits: 3 },
 ];
 
 // ---- Collapsible semester row ----
@@ -61,7 +52,7 @@ function SemesterRow({
 }) {
   const [open, setOpen] = useState(semester <= 2);
   const total  = courses.reduce((s, c) => s + c.credits, 0);
-  const isTpb  = semester <= 2;
+  const isTpb  = semester <= 1;
 
   return (
     <div style={{ border: "1px solid var(--gray-200)", borderLeft: `4px solid ${isTpb ? "var(--navy)" : "var(--blue)"}` }}>
@@ -163,9 +154,8 @@ export function UndergraduatePage({ onNavigate }: PageProps) {
               { label: "Gelar",       value: "Sarjana Teknik (S.T.)" },
               { label: "Durasi",      value: "8 Semester" },
               { label: "Total SKS",   value: "144 SKS" },
-              { label: "SKS TPB",     value: "36 SKS" },
-              { label: "Tugas Akhir", value: "6 SKS" },
-              { label: "Akreditasi",  value: "BAN-PT: A" },
+              { label: "SKS TPB",     value: "18 SKS" },
+              { label: "Akreditasi",  value: "ASIIN" },
             ].map((item) => (
               <div key={item.label} style={{ background: "var(--white)", padding: "24px 20px", textAlign: "center" }}>
                 <span style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: 700, color: "var(--blue)", display: "block", marginBottom: "4px" }}>{item.value}</span>
@@ -180,18 +170,14 @@ export function UndergraduatePage({ onNavigate }: PageProps) {
                 Program sarjana adalah pendidikan akademik selama <strong>8 semester (4 tahun)</strong> yang mengarah ke gelar <strong>Sarjana Teknik (S.T.)</strong>
               </p>
               <p style={{ fontSize: "15px", lineHeight: 1.8, color: "var(--gray-600)", marginBottom: "16px" }}>
-                Program ini terdiri dari <strong>144 SKS</strong>, di mana <strong>36 SKS</strong> merupakan program dalam <strong>Tahap Persiapan Bersama (TPB)</strong> pada tahun pertama.
-              </p>
-              <p style={{ fontSize: "15px", lineHeight: 1.8, color: "var(--gray-600)" }}>
-                <strong>Tugas Akhir (6 SKS)</strong> adalah kegiatan bagi mahasiswa untuk melaksanakan karya ilmiah, mencakup penyampaian laporan teknis, seminar, penelitian sarjana, dan ujian komprehensif.
+                Program ini terdiri dari <strong>144 SKS</strong>, di mana <strong>18 SKS</strong> merupakan program dalam <strong>Tahap Persiapan Bersama (TPB)</strong> pada tahun pertama.
               </p>
             </div>
             <div>
               {[
-                { icon: "🗺️", title: "Ekspedisi Lapang", desc: "Pengukuran dan survei di berbagai medan — pantai, pegunungan, dan perkotaan." },
-                { icon: "🏢", title: "Magang (Kerja Praktek)", desc: "Pengalaman kerja di instansi pemerintah atau industri selama minimum 2 bulan." },
-                { icon: "⛺", title: "Kamp Lapangan", desc: "Praktik terpadu multi-disiplin mengintegrasikan semua ilmu yang telah dipelajari." },
-                { icon: "📖", title: "Tugas Akhir", desc: "Penelitian orisinal dengan bimbingan dosen, diseminarkan, dan diuji secara lisan." },
+                { icon: "🗺️", title: "Ekskursi Lapangan", desc: "Pengukuran dan survei di berbagai medan." },
+                { icon: "🏢", title: "Magang (Kerja Praktek)", desc: "Pengalaman kerja di instansi pemerintah atau industri." },
+                { icon: "⛺", title: "Kemah Kerja", desc: "Praktik terpadu multi-disiplin mengintegrasikan semua ilmu yang telah dipelajari." },
               ].map((item) => (
                 <div key={item.title} style={{ display: "flex", gap: "16px", alignItems: "flex-start", padding: "16px 0", borderBottom: "1px solid var(--gray-200)" }}>
                   <span style={{ fontSize: "24px", flexShrink: 0, marginTop: "2px" }}>{item.icon}</span>
@@ -221,7 +207,7 @@ export function UndergraduatePage({ onNavigate }: PageProps) {
 
           <p className="gd-section-kicker">Mata Kuliah Pilihan</p>
           <h3 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: 700, color: "var(--navy)", marginBottom: "8px" }}>
-            Pilih minimal 12 SKS
+            Pilih minimal 25 sks
           </h3>
           <div className="gd-section-divider" />
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "2px", background: "var(--gray-200)", border: "1px solid var(--gray-200)" }}>
@@ -256,7 +242,6 @@ export function UndergraduatePage({ onNavigate }: PageProps) {
                 { jalur: "SNBP", full: "Seleksi Nasional Berdasarkan Prestasi", desc: "Seleksi berdasarkan nilai rapor dan prestasi akademik/non-akademik siswa." },
                 { jalur: "SNBT", full: "Seleksi Nasional Berdasarkan Tes", desc: "Seleksi berdasarkan hasil Ujian Tulis Berbasis Komputer (UTBK)." },
                 { jalur: "SM-ITB", full: "Seleksi Mandiri ITB", desc: "Seleksi mandiri ITB untuk calon mahasiswa yang belum lolos jalur nasional." },
-                { jalur: "KIP-K", full: "Kartu Indonesia Pintar Kuliah", desc: "Jalur beasiswa untuk mahasiswa dari keluarga kurang mampu secara ekonomi." },
               ].map((item) => (
                 <div key={item.jalur} style={{ background: "var(--off-white)", border: "1px solid var(--gray-200)", borderLeft: "4px solid var(--blue)", padding: "16px 20px", marginBottom: "12px" }}>
                   <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
@@ -275,7 +260,7 @@ export function UndergraduatePage({ onNavigate }: PageProps) {
                 <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
                 <div style={{ position: "relative", zIndex: 1 }}>
                   <h3 style={{ fontFamily: "var(--font-display)", fontSize: "22px", fontWeight: 700, color: "var(--white)", marginBottom: "12px" }}>
-                    Daftarkan Diri ke Program S1 Geodesi ITB
+                    Daftarkan Diri ke Program S1 Teknik Geodesi dan Geomatika ITB
                   </h3>
                   <p style={{ fontSize: "14px", lineHeight: 1.75, color: "rgba(255,255,255,0.7)", marginBottom: "28px" }}>
                     Informasi lengkap mengenai jadwal, persyaratan, biaya, dan tata cara pendaftaran tersedia di portal resmi penerimaan mahasiswa baru Institut Teknologi Bandung.
@@ -284,13 +269,7 @@ export function UndergraduatePage({ onNavigate }: PageProps) {
                     <a href="https://admission.itb.ac.id" target="_blank" rel="noreferrer" className="gd-btn gd-btn--primary" style={{ width: "100%", justifyContent: "center" }}>
                       Portal Admisi ITB →
                     </a>
-                    <a href="https://www.itb.ac.id/pendaftaran" target="_blank" rel="noreferrer" style={{ display: "flex", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: "13px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.6)", padding: "12px 24px", border: "2px solid rgba(255,255,255,0.25)" }}>
-                      Info Pendaftaran ITB
-                    </a>
                   </div>
-                  <p style={{ marginTop: "20px", fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>
-                    Pertanyaan? Hubungi <a href="mailto:info@gd.fitb.itb.ac.id" style={{ color: "var(--orange)" }}>info@gd.fitb.itb.ac.id</a>
-                  </p>
                 </div>
               </div>
             </div>
@@ -308,22 +287,8 @@ export function UndergraduatePage({ onNavigate }: PageProps) {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px" }}>
             <div>
               <p style={{ fontSize: "15px", lineHeight: 1.8, color: "var(--gray-600)", marginBottom: "16px" }}>
-                Institut Teknologi Bandung menawarkan <strong>International Undergraduate Program (IUP)</strong> — program sarjana berpengantar bahasa Inggris untuk calon mahasiswa internasional maupun Indonesia yang ingin menempuh pendidikan berkelas dunia.
+                Institut Teknologi Bandung menawarkan <strong>International Undergraduate Program (IUP)</strong>, program sarjana berpengantar bahasa Inggris untuk calon mahasiswa internasional maupun Indonesia yang ingin menempuh pendidikan berkelas dunia.
               </p>
-              {[
-                { icon: "🌍", title: "Pengantar Bahasa Inggris", desc: "Seluruh perkuliahan, bahan ajar, dan ujian menggunakan bahasa Inggris." },
-                { icon: "🤝", title: "Jaringan Alumni Global", desc: "Bergabung dengan komunitas alumni ITB yang tersebar di lebih dari 50 negara." },
-                { icon: "🔬", title: "Riset Berstandar Internasional", desc: "Kesempatan berkolaborasi dengan universitas dan lembaga riset internasional." },
-                { icon: "📜", title: "Ijazah Diakui Internasional", desc: "Gelar S.T. dari ITB diakui secara internasional melalui akreditasi ASIIN dan AUN-QA." },
-              ].map((item) => (
-                <div key={item.title} style={{ display: "flex", gap: "14px", alignItems: "flex-start", marginBottom: "16px" }}>
-                  <span style={{ fontSize: "22px", flexShrink: 0 }}>{item.icon}</span>
-                  <div>
-                    <strong style={{ fontFamily: "var(--font-display)", fontSize: "14px", fontWeight: 700, color: "var(--navy)", display: "block", marginBottom: "3px" }}>{item.title}</strong>
-                    <p style={{ fontSize: "13px", lineHeight: 1.65, color: "var(--gray-600)" }}>{item.desc}</p>
-                  </div>
-                </div>
-              ))}
             </div>
 
             <div style={{ background: "var(--white)", border: "1px solid var(--gray-200)", overflow: "hidden" }}>
@@ -333,14 +298,11 @@ export function UndergraduatePage({ onNavigate }: PageProps) {
               </div>
               <div style={{ padding: "28px 32px" }}>
                 <p style={{ fontSize: "14px", lineHeight: 1.75, color: "var(--gray-600)", marginBottom: "20px" }}>
-                  Pendaftaran IUP dikelola secara terpisah dari program reguler. Kunjungi portal resmi IUP ITB untuk informasi lengkap.
+                  Kunjungi portal resmi informasi IUP Teknik Geodesi dan Geomatika untuk informasi lengkap.
                 </p>
                 <div style={{ display: "flex", flexDirection: "column" as const, gap: "10px" }}>
-                  <a href="https://iup.itb.ac.id" target="_blank" rel="noreferrer" className="gd-btn gd-btn--primary" style={{ width: "100%", justifyContent: "center" }}>
-                    Portal IUP ITB →
-                  </a>
-                  <a href="https://www.itb.ac.id/international" target="_blank" rel="noreferrer" className="gd-btn gd-btn--outline" style={{ width: "100%", justifyContent: "center" }}>
-                    International Student Info
+                  <a href="https://fitb.itb.ac.id/iup-geodesi-dan-geomatika/" target="_blank" rel="noreferrer" className="gd-btn gd-btn--primary" style={{ width: "100%", justifyContent: "center" }}>
+                    IUP Teknik Geodesi dan Geomatika ITB →
                   </a>
                 </div>
               </div>

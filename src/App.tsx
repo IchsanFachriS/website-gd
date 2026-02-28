@@ -18,6 +18,7 @@ import { AcademicsPage, UndergraduatePage } from "./components/pages/academics";
 
 // ── Other section pages ────────────────────────────────────────
 import { ResearchPage }       from "./components/pages/research/ResearchPage";
+import { ResearchGroupsPage } from "./components/pages/research/ResearchGroupsPage";
 import { StudentAffairsPage } from "./components/pages/student-affairs/StudentAffairsPage";
 import { ContactPage }        from "./components/pages/contact/ContactPage";
 
@@ -31,7 +32,6 @@ function HomePage() {
       <BannerSlider />
       <WhatIsSection />
       <HistorySection />
-      {/* <NewsSection /> */}
     </main>
   );
 }
@@ -130,13 +130,7 @@ function PageRouter({
       return <ResearchPage onNavigate={onNavigate} />;
 
     case "research-groups":
-      return (
-        <GenericPage
-          title="Research Groups"
-          parent="Research"
-          onNavigate={onNavigate}
-        />
-      );
+      return <ResearchGroupsPage onNavigate={onNavigate} />;
 
     case "community-services":
       return (
@@ -299,7 +293,6 @@ export default function App() {
         Skip to main content
       </a>
 
-      {/* Navbar reads URL on mount and calls onNavigate to restore state */}
       <Navbar onNavigate={handleNavigate} />
 
       <div className="gd-page-offset">
