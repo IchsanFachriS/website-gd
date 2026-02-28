@@ -92,7 +92,7 @@ export function Navbar({ onNavigate }: HeaderProps) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // ── Close dropdown on outside click ──
+  // ── Close desktop dropdown on outside click ──
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(e.target as Node)) {
@@ -102,6 +102,21 @@ export function Navbar({ onNavigate }: HeaderProps) {
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
+
+  // ── Lock body scroll when mobile menu is open ──
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
+  // ── Close mobile menu on Escape key ──
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileOpen) setMobileOpen(false);
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [mobileOpen]);
 
   // ── URL builder ──
   const pushUrl = (parentPath: string | undefined, childPath?: string) => {
@@ -143,6 +158,8 @@ export function Navbar({ onNavigate }: HeaderProps) {
     window.history.pushState(null, "", "/");
     onNavigate("home");
   };
+
+  const closeMobileMenu = () => setMobileOpen(false);
 
   return (
     <div className="gd-header-fixed" ref={navRef}>
@@ -239,6 +256,8 @@ export function Navbar({ onNavigate }: HeaderProps) {
             <button
               className={`gd-burger ${mobileOpen ? "active" : ""}`}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              aria-controls="gd-mobile-menu"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
               <span /><span /><span />
@@ -246,12 +265,36 @@ export function Navbar({ onNavigate }: HeaderProps) {
           </div>
         </div>
 
+        {/* ── Mobile overlay (click-outside to close) ── */}
+        {mobileOpen && (
+          <div
+            className="gd-mobile-overlay"
+            aria-hidden="true"
+            onClick={closeMobileMenu}
+          />
+        )}
+
         {/* ── Mobile menu ── */}
         <div
+          id="gd-mobile-menu"
           className={`gd-mobile-menu ${mobileOpen ? "open" : ""}`}
           aria-hidden={!mobileOpen}
+          role="dialog"
+          aria-label="Mobile navigation"
         >
           <div className="gd-mobile-inner">
+
+            {/* ── Close button (X) inside menu ── */}
+            <button
+              className="gd-mobile-close"
+              onClick={closeMobileMenu}
+              aria-label="Close menu"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+
             <nav aria-label="mobile navigation">
               {NAV_ITEMS.map((item) => (
                 <div key={item.label} className="gd-mobile-item">

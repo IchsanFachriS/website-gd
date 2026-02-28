@@ -393,6 +393,47 @@ address { font-style: normal; }
   color: var(--white) !important;
 }
 
+.gd-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 299;
+  cursor: pointer;
+  animation: overlayFadeIn 0.25s ease-out;
+}
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Mobile close (X) button inside the menu ── */
+.gd-mobile-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+  z-index: 310;
+}
+.gd-mobile-close svg {
+  width: 18px;
+  height: 18px;
+}
+.gd-mobile-close:hover {
+  color: var(--white);
+  border-color: var(--orange);
+  background: rgba(253, 83, 8, 0.15);
+}
+
 /* ============================================================
    PAGE WRAPPER — offset for fixed header
    ============================================================ */
