@@ -1,0 +1,12 @@
+<!-- public/404.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      // Redirect semua 404 ke index.html dengan path disimpan di sessionStorage
+      const path = window.location.pathname;
+      sessionStorage.setItem('redirect', path);
+      window.location.replace('/website-gd/');
+    </script>
+  </head>
+</html>

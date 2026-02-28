@@ -3,18 +3,10 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 3000,
-    proxy: {
-      '/wp-json': {
-        target: 'https://gd.fitb.itb.ac.id',
-        changeOrigin: true,
-        secure: true,
-      },
-    },
-  },
+  base: '/website-gd/', // ← WAJIB jika bukan custom domain
   build: {
     outDir: 'dist',
     sourcemap: false,
   },
+  // server.proxy hanya untuk dev, tidak perlu diubah
 })
