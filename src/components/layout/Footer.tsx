@@ -1,5 +1,96 @@
+import { useState } from "react";
+
 interface FooterProps {
   onNavigate?: (page: string) => void;
+}
+
+function LogoBrand() {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <div className="gd-footer-logo">
+      {!imgError ? (
+        <img
+          src="img/logo.png"
+          alt="Logo Institut Teknologi Bandung"
+          style={{
+            width: "52px",
+            height: "52px",
+            objectFit: "contain",
+            flexShrink: 0,
+            // Aktifkan baris di bawah HANYA jika logo berwarna gelap dan perlu diputihkan:
+            // filter: "brightness(0) invert(1)",
+          }}
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        /* Fallback SVG jika logo tidak ditemukan */
+        <svg viewBox="0 0 44 44" fill="none" aria-hidden="true" style={{ width: "44px", height: "44px", color: "var(--orange)" }}>
+          <circle cx="22" cy="22" r="19" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="22" cy="22" r="10" stroke="currentColor" strokeWidth="1" />
+          <circle cx="22" cy="22" r="3" fill="currentColor" />
+          <line x1="22" y1="3" x2="22" y2="41" stroke="currentColor" strokeWidth="1" />
+          <line x1="3" y1="22" x2="41" y2="22" stroke="currentColor" strokeWidth="1" />
+          <ellipse cx="22" cy="22" rx="19" ry="10" stroke="currentColor" strokeWidth="0.75" opacity="0.4" />
+        </svg>
+      )}
+      <div>
+        <div className="gd-footer-logo-dept">Teknik Geodesi dan Geomatika</div>
+        <div className="gd-footer-logo-sub">Institut Teknologi Bandung</div>
+      </div>
+    </div>
+  );
+}
+
+function AccredBadge({
+  href,
+  src,
+  alt,
+  fallbackGrade,
+  fallbackLabel,
+  title,
+}: {
+  href: string;
+  src: string;
+  alt: string;
+  fallbackGrade: string;
+  fallbackLabel: string;
+  title: string;
+}) {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="gd-accred-badge"
+      title={title}
+      style={{ textDecoration: "none" }}
+    >
+      {!imgError ? (
+        <img
+          src={src}
+          alt={alt}
+          style={{
+            height: "40px",
+            width: "auto",
+            maxWidth: "80px",
+            objectFit: "contain",
+            opacity: 0.9,
+            // Aktifkan jika logo berwarna gelap:
+            // filter: "brightness(0) invert(1)",
+          }}
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <>
+          <span className="gd-accred-grade">{fallbackGrade}</span>
+          <span className="gd-accred-label" dangerouslySetInnerHTML={{ __html: fallbackLabel }} />
+        </>
+      )}
+    </a>
+  );
 }
 
 export function Footer({ onNavigate }: FooterProps) {
@@ -55,20 +146,7 @@ export function Footer({ onNavigate }: FooterProps) {
         <div className="gd-footer-grid">
           {/* Brand column */}
           <div className="gd-footer-brand">
-            <div className="gd-footer-logo">
-              <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
-                <circle cx="22" cy="22" r="19" stroke="currentColor" strokeWidth="1.5" />
-                <circle cx="22" cy="22" r="10" stroke="currentColor" strokeWidth="1" />
-                <circle cx="22" cy="22" r="3" fill="currentColor" />
-                <line x1="22" y1="3" x2="22" y2="41" stroke="currentColor" strokeWidth="1" />
-                <line x1="3" y1="22" x2="41" y2="22" stroke="currentColor" strokeWidth="1" />
-                <ellipse cx="22" cy="22" rx="19" ry="10" stroke="currentColor" strokeWidth="0.75" opacity="0.4" />
-              </svg>
-              <div>
-                <div className="gd-footer-logo-dept">Teknik Geodesi</div>
-                <div className="gd-footer-logo-sub">& Geomatika · FITB · ITB</div>
-              </div>
-            </div>
+            <LogoBrand />
             <address className="gd-footer-address">
               Labtek IX-C<br />
               Jl. Ganesha No. 10<br />
@@ -107,25 +185,37 @@ export function Footer({ onNavigate }: FooterProps) {
             </nav>
           ))}
 
-          {/* Contact CTA */}
+          {/* Contact CTA + Accreditation */}
           <div className="gd-footer-cta">
-            <button className="gd-btn gd-btn--outline" onClick={() => navigate("contact-us")}>Contact Us</button>
+            <button className="gd-btn gd-btn--outline" onClick={() => navigate("contact-us")}>
+              Contact Us
+            </button>
             <div className="gd-footer-accreditation">
-              <div className="gd-accred-badge">
-                <span className="gd-accred-grade">A</span>
-                <span className="gd-accred-label">BAN-PT<br />Accredited</span>
-              </div>
-              <div className="gd-accred-badge">
-                <span className="gd-accred-grade">✓</span>
-                <span className="gd-accred-label">AUN-QA<br />Certified</span>
-              </div>
+              <AccredBadge
+                href="https://www.asiin.de"
+                src="img/accreditation/asiin.png"
+                alt="ASIIN Akkreditierungsagentur"
+                fallbackGrade="✓"
+                fallbackLabel="ASIIN<br/>Accredited"
+                title="ASIIN Accredited"
+              />
+              <AccredBadge
+                href="https://www.banpt.or.id"
+                src="img/accreditation/ban-pt.png"
+                alt="BAN-PT Terakreditasi"
+                fallbackGrade="A"
+                fallbackLabel="BAN-PT<br/>Accredited"
+                title="BAN-PT Terakreditasi Unggul"
+              />
             </div>
           </div>
         </div>
 
         {/* Base */}
         <div className="gd-footer-base">
-          <p className="gd-footer-copy">© {year} Teknik Geodesi & Geomatika, FITB — Institut Teknologi Bandung</p>
+          <p className="gd-footer-copy">
+            © {year} Teknik Geodesi & Geomatika, FITB — Institut Teknologi Bandung
+          </p>
           <button
             className="gd-scroll-top"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

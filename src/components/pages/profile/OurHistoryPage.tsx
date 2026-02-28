@@ -48,7 +48,11 @@ export function OurHistoryPage({ onNavigate }: PageProps) {
                 Established in 1950, the Department of Geodesy & Geomatics Engineering at ITB stands as the oldest and most prestigious geodesy program in Indonesia. For over seven decades, we have trained generations of engineers who have shaped the nation's spatial data infrastructure.
               </p>
               <p style={{ fontSize: "15px", lineHeight: 1.75, color: "var(--gray-600)", marginBottom: "32px" }}>
-                Our journey reflects Indonesia's own development — from the foundational surveys of a newly independent nation, through the digital revolution in geographic information systems, to the cutting-edge era of drone mapping, autonomous navigation, and space geodesy.
+              Our program holds international accreditation from <strong>ASIIN</strong> (Akkreditierungsagentur
+              für Studiengänge der Ingenieurwissenschaften, der Informatik, der Naturwissenschaften und der
+              Mathematik), Germany's leading engineering accreditation agency, and carries the{" "}
+              <strong>Unggul</strong> (Excellence) rating from Indonesia's National Accreditation Board for
+              Higher Education (BAN-PT).
               </p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", paddingTop: "28px", borderTop: "1px solid var(--gray-200)" }}>
                 {stats.map((s) => (

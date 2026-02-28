@@ -8,22 +8,12 @@ const topics = [
   {
     icon: "🌍",
     title: "Geodesy",
-    body: "Geodesy is the scientific discipline that deals with the measurement and representation of the Earth, including its gravitational field, in a three-dimensional time-varying space. Geodesists study the size and shape of the Earth, how it moves, and the nature of its gravity field. Modern geodesy uses satellite technology — particularly GPS and GNSS — to provide precise positioning that underpins navigation, mapping, and infrastructure development worldwide.",
+    body: "Geodesy is the scientific discipline that deals with the measurement and representation of the Earth, including its gravitational field, in a three-dimensional time-varying space. Geodesists study the size and shape of the Earth, how it moves, and the nature of its gravity field.",
   },
   {
     icon: "🗺️",
     title: "Geomatics Engineering",
-    body: "Geomatics Engineering is a modern discipline that encompasses the collection, management, analysis, and visualization of spatially referenced data. It integrates traditional surveying with modern technologies including remote sensing, geographic information systems (GIS), photogrammetry, and satellite navigation. Geomatics engineers are the architects of our digital world — they build the spatial data infrastructure that drives smart cities, disaster management, environmental monitoring, and autonomous vehicles.",
-  },
-  {
-    icon: "📸",
-    title: "Photogrammetry & Remote Sensing",
-    body: "Photogrammetry and Remote Sensing are key disciplines within geomatics. Photogrammetry uses images — from drones, aircraft, or satellites — to reconstruct 3D geometry of objects and terrain. Remote Sensing extends this to analysis of the Earth's surface using multispectral, hyperspectral, SAR, and LiDAR data, enabling land-use mapping, environmental monitoring, disaster assessment, and change detection at regional and global scales.",
-  },
-  {
-    icon: "🛰️",
-    title: "GNSS & Satellite Positioning",
-    body: "Global Navigation Satellite Systems (GNSS) — including GPS, GLONASS, Galileo, and BeiDou — are fundamental tools in modern geodesy. Our department specializes in precise satellite positioning, atmospheric corrections, geodetic datum establishment, and the design of CORS (Continuously Operating Reference Station) networks that serve Indonesia's national spatial reference framework.",
+    body: "Geomatics Engineering is a modern discipline that encompasses the collection, management, analysis, and visualization of spatially referenced data. It integrates traditional surveying with modern technologies including remote sensing, geographic information systems (GIS), photogrammetry, and satellite navigation.",
   },
 ];
 
@@ -51,7 +41,7 @@ export function WhatIsGeodesyPage({ onNavigate }: PageProps) {
       <PageHero
         kicker="Profile"
         title="What is Geodesy & Geomatics?"
-        subtitle="Explore the sciences that measure and map our world — from Earth's gravity field to real-time satellite navigation."
+        subtitle="Explore the sciences that measure and map our world"
       />
 
       <section className="gd-page-section">
