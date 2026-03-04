@@ -33,8 +33,8 @@ function LogoBrand() {
         </svg>
       )}
       <div>
-        <div className="gd-footer-logo-dept">Teknik Geodesi dan Geomatika</div>
-        <div className="gd-footer-logo-sub">Institut Teknologi Bandung</div>
+        <div className="gd-footer-logo-dept">TEKNIK GEODESI DAN GEOMATIKA</div>
+        <div className="gd-footer-logo-sub">INSTITUT TEKNOLOGI BANDUNG</div>
       </div>
     </div>
   );
@@ -145,12 +145,12 @@ export function Footer({ onNavigate }: FooterProps) {
             <LogoBrand />
             <address className="gd-footer-address">
               Labtek IX-C<br />
-              Jl. Ganesha No. 10<br />
-              Bandung 40132, Jawa Barat<br />
-              Indonesia
+              Jl. Ganesha No. 10, Bandung 40132<br />
+              Jawa Barat, Indonesia<br />
             </address>
             <div className="gd-footer-contact-info">
-              <a href="tel:+622222502324">(022) 2502324</a>
+              <a href="tel:+62222530701">(022)-2530701</a>
+              <a href="tel:+62222530702">(022)-2530702</a>
               <a href="mailto:info@gd.fitb.itb.ac.id">info@gd.fitb.itb.ac.id</a>
             </div>
             {/* Social */}
