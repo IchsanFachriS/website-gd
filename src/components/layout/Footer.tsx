@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { imgUrl } from "../../utils/basePath";
 
 interface FooterProps {
   onNavigate?: (page: string) => void;
@@ -11,20 +12,17 @@ function LogoBrand() {
     <div className="gd-footer-logo">
       {!imgError ? (
         <img
-          src="img/logo.png"
+          src={imgUrl("img/logo.png")}
           alt="Logo Institut Teknologi Bandung"
           style={{
             width: "52px",
             height: "52px",
             objectFit: "contain",
             flexShrink: 0,
-            // Aktifkan baris di bawah HANYA jika logo berwarna gelap dan perlu diputihkan:
-            // filter: "brightness(0) invert(1)",
           }}
           onError={() => setImgError(true)}
         />
       ) : (
-        /* Fallback SVG jika logo tidak ditemukan */
         <svg viewBox="0 0 44 44" fill="none" aria-hidden="true" style={{ width: "44px", height: "44px", color: "var(--orange)" }}>
           <circle cx="22" cy="22" r="19" stroke="currentColor" strokeWidth="1.5" />
           <circle cx="22" cy="22" r="10" stroke="currentColor" strokeWidth="1" />
@@ -70,7 +68,7 @@ function AccredBadge({
     >
       {!imgError ? (
         <img
-          src={src}
+          src={imgUrl(src)}
           alt={alt}
           style={{
             height: "40px",
@@ -78,8 +76,6 @@ function AccredBadge({
             maxWidth: "80px",
             objectFit: "contain",
             opacity: 0.9,
-            // Aktifkan jika logo berwarna gelap:
-            // filter: "brightness(0) invert(1)",
           }}
           onError={() => setImgError(true)}
         />

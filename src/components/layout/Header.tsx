@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { NAV_ITEMS } from "../../utils/data";
+import { imgUrl, pageUrl, BASE } from "../../utils/basePath";
 import type { NavItem } from "../../types";
 
 interface HeaderProps {
@@ -15,9 +16,21 @@ function labelToPageKey(label: string): string {
     .replace(/-$/, "");
 }
 
+/**
+ * Dari pathname browser, ekstrak page key.
+ * Harus sadar BASE path (/website-gd/) agar tidak salah parse.
+ */
 function resolvePageFromPathname(pathname: string): string {
-  const clean = pathname.replace(/^\//, "").replace(/\/$/, "");
-  if (!clean || clean === "") return "home";
+  // Lepaskan base prefix dari pathname
+  const base = BASE.endsWith('/') ? BASE.slice(0, -1) : BASE; // e.g. '/website-gd'
+  let clean = pathname;
+  if (base && clean.startsWith(base)) {
+    clean = clean.slice(base.length);
+  }
+  // Normalise slashes
+  clean = clean.replace(/^\//, "").replace(/\/$/, "");
+
+  if (!clean) return "home";
 
   for (const item of NAV_ITEMS) {
     if (item.path && item.path === clean) {
@@ -49,7 +62,7 @@ export function Topbar() {
           <ul>
             <li><a href="https://www.itb.ac.id" target="_blank" rel="noreferrer">ITB Website</a></li>
             <li><a href="https://fitb.itb.ac.id" target="_blank" rel="noreferrer">FITB</a></li>
-            <li><a href="#student-affairs">Mahasiswa</a></li>
+            <li><a href={pageUrl("student-affairs")}>Mahasiswa</a></li>
             <li><a href="https://digilib.itb.ac.id" target="_blank" rel="noreferrer">Library</a></li>
             <li className="gd-topbar-admission">
               <a
@@ -118,26 +131,26 @@ export function Navbar({ onNavigate }: HeaderProps) {
     return () => document.removeEventListener("keydown", handler);
   }, [mobileOpen]);
 
-  // ── URL builder ──
+  // ── URL builder — sadar BASE path ──
   const pushUrl = (parentPath: string | undefined, childPath?: string) => {
     if (!parentPath) {
-      window.history.pushState(null, "", "/");
+      window.history.pushState(null, "", pageUrl(""));
       return;
     }
     if (childPath) {
-      const url = parentPath === "profile"
-        ? `/${childPath}`
-        : `/${parentPath}/${childPath}`;
-      window.history.pushState(null, "", url);
+      const path = parentPath === "profile"
+        ? childPath
+        : `${parentPath}/${childPath}`;
+      window.history.pushState(null, "", pageUrl(path));
     } else {
-      window.history.pushState(null, "", `/${parentPath}`);
+      window.history.pushState(null, "", pageUrl(parentPath));
     }
   };
 
   // ── Navigation handlers ──
   const handleNavClick = (item: NavItem) => {
     if (!item.path || item.label.toLowerCase() === "home") {
-      window.history.pushState(null, "", "/");
+      window.history.pushState(null, "", pageUrl(""));
       onNavigate("home");
     } else {
       pushUrl(item.path);
@@ -155,7 +168,7 @@ export function Navbar({ onNavigate }: HeaderProps) {
   };
 
   const handleHomeClick = () => {
-    window.history.pushState(null, "", "/");
+    window.history.pushState(null, "", pageUrl(""));
     onNavigate("home");
   };
 
@@ -176,7 +189,15 @@ export function Navbar({ onNavigate }: HeaderProps) {
             style={{ background: "none", border: "none", cursor: "pointer" }}
           >
             <div className="gd-logo-mark">
-              <img src="img/logo.png" alt="Logo ITB" />
+              {/* imgUrl() memastikan path benar di dev maupun prod */}
+              <img
+                src={imgUrl("img/logo.png")}
+                alt="Logo ITB"
+                onError={(e) => {
+                  // Fallback: sembunyikan img jika gagal load
+                  (e.currentTarget as HTMLImageElement).style.display = "none";
+                }}
+              />
             </div>
             <div className="gd-logo-text" style={{ alignItems: "flex-start", textAlign: "left" }}>
               <span className="gd-logo-dept" style={{ fontWeight: 600 }}>

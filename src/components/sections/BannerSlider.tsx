@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { SLIDES } from "../../utils/data";
+import { imgUrl } from "../../utils/basePath";
 
 export function BannerSlider() {
   const [current, setCurrent] = useState(0);
@@ -36,16 +37,12 @@ export function BannerSlider() {
 
   return (
     <section id="profile" className="gd-banner" aria-label="Featured content slideshow">
-      {/* Slides */}
       <div className="gd-banner-track">
         {SLIDES.map((slide, i) => (
-          <div
-            key={i}
-            className={`gd-banner-slide ${i === current ? "active" : ""}`}
-            aria-hidden={i !== current}
-          >
+          <div key={i} className={`gd-banner-slide ${i === current ? "active" : ""}`} aria-hidden={i !== current}>
             <div className="gd-banner-img-wrap">
-              <img src={slide.image} alt="" className="gd-banner-img" loading={i === 0 ? "eager" : "lazy"} />
+              {/* imgUrl() adds /website-gd/ prefix in production */}
+              <img src={imgUrl(slide.image)} alt="" className="gd-banner-img" loading={i === 0 ? "eager" : "lazy"} />
               <div className="gd-banner-overlay" />
             </div>
             <div className="gd-banner-content">
@@ -58,13 +55,9 @@ export function BannerSlider() {
                       ))}
                     </h2>
                   )}
-                  {slide.subtitle && (
-                    <p className="gd-banner-subtitle">{slide.subtitle}</p>
-                  )}
+                  {slide.subtitle && <p className="gd-banner-subtitle">{slide.subtitle}</p>}
                   {slide.cta && (
-                    <a href={slide.cta.href} className="gd-btn gd-btn--banner">
-                      {slide.cta.label}
-                    </a>
+                    <a href={slide.cta.href} className="gd-btn gd-btn--banner">{slide.cta.label}</a>
                   )}
                 </div>
               </div>
@@ -73,19 +66,12 @@ export function BannerSlider() {
         ))}
       </div>
 
-      {/* Controls */}
       <div className="gd-banner-controls">
-        {/* Progress bar */}
         <div className="gd-banner-progress-wrap">
           <div className="gd-banner-progress" style={{ width: `${progress}%` }} />
         </div>
-
         <div className="gd-banner-ctrl-row">
-          <button
-            className={`gd-banner-pause ${paused ? "paused" : ""}`}
-            onClick={() => setPaused(!paused)}
-            aria-label={paused ? "Play slideshow" : "Pause slideshow"}
-          >
+          <button className={`gd-banner-pause ${paused ? "paused" : ""}`} onClick={() => setPaused(!paused)} aria-label={paused ? "Play slideshow" : "Pause slideshow"}>
             {paused ? (
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
             ) : (
@@ -94,30 +80,17 @@ export function BannerSlider() {
             <span className="gd-sr">{paused ? "PLAY" : "PAUSE"}</span>
           </button>
           <button className="gd-banner-prev" onClick={prev} aria-label="Previous slide">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <path strokeLinecap="round" d="M15 18l-6-6 6-6" />
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path strokeLinecap="round" d="M15 18l-6-6 6-6" /></svg>
             <span>PREVIOUS</span>
           </button>
           <button className="gd-banner-next" onClick={next} aria-label="Next slide">
             <span>NEXT</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <path strokeLinecap="round" d="M9 18l6-6-6-6" />
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path strokeLinecap="round" d="M9 18l6-6-6-6" /></svg>
           </button>
         </div>
-
-        {/* Dot indicators */}
         <div className="gd-banner-dots" role="tablist" aria-label="Slide indicators">
           {SLIDES.map((_, i) => (
-            <button
-              key={i}
-              role="tab"
-              aria-selected={i === current}
-              aria-label={`Slide ${i + 1}`}
-              className={`gd-banner-dot ${i === current ? "active" : ""}`}
-              onClick={() => goTo(i)}
-            />
+            <button key={i} role="tab" aria-selected={i === current} aria-label={`Slide ${i + 1}`} className={`gd-banner-dot ${i === current ? "active" : ""}`} onClick={() => goTo(i)} />
           ))}
         </div>
       </div>

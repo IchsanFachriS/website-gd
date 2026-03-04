@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { WHAT_IS_TABS } from "../../utils/data";
+import { imgUrl } from "../../utils/basePath";
 
 export function WhatIsSection() {
   const [active, setActive] = useState(0);
@@ -7,7 +8,6 @@ export function WhatIsSection() {
 
   return (
     <section id="what-is" className="gd-tabblock" aria-labelledby="what-is-heading">
-      {/* Tab row — Oxford style */}
       <div className="gd-tabblock-tabs">
         <div className="gd-container">
           <div className="gd-tabs-row" role="tablist" aria-label="What is Geodesy & Geomatics sections">
@@ -28,25 +28,14 @@ export function WhatIsSection() {
         </div>
       </div>
 
-      {/* Tab content */}
-      <div
-        id={`tabpanel-${active}`}
-        role="tabpanel"
-        aria-labelledby={`tab-${active}`}
-        className="gd-tabblock-content"
-      >
+      <div id={`tabpanel-${active}`} role="tabpanel" aria-labelledby={`tab-${active}`} className="gd-tabblock-content">
         <div className="gd-tabblock-layout">
-          {/* Image — left 60% like Oxford */}
           <div className="gd-tabblock-img-col">
             <div className="gd-tabblock-imgwrap">
-              <img
-                src={tab.image}
-                alt={tab.imageAlt}
-                className="gd-tabblock-img"
-              />
+              {/* imgUrl() resolves correct path for both dev and prod */}
+              <img src={imgUrl(tab.image)} alt={tab.imageAlt} className="gd-tabblock-img" />
             </div>
           </div>
-          {/* Text — right 40% */}
           <div className="gd-tabblock-text-col">
             <div className="gd-tabblock-inner">
               <p className="gd-tabblock-kicker">What is Geodesy &amp; Geomatics?</p>
