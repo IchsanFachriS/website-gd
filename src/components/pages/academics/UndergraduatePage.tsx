@@ -36,6 +36,15 @@ const mandatoryCourses = [
   { code: "GD2104", name: "Geodesi Geometrik",                        credits: 3, semester: 3 },
   { code: "GD2105", name: "Hukum Perundangan Geospasial",             credits: 3, semester: 3 },
   { code: "GD2106", name: "Ekspedisi Geospasial",                     credits: 2, semester: 3 },
+  { code: "GD2201", name: "Estimasi dan Aproksimasi",                 credits: 3, semester: 4 },
+  { code: "GD2202", name: "Komputasi Geodetik",                       credits: 3, semester: 4 },
+  { code: "GD2203", name: "Dasar-dasar Geodesi Fisis",                credits: 3, semester: 4 },
+  { code: "GD2204", name: "Sistem Referensi Geometrik",               credits: 1, semester: 4 },
+  { code: "GD2205", name: "Pemetaan Terestris",                       credits: 3, semester: 4 },
+  { code: "GD2206", name: "Geodesi Satelit",                          credits: 3, semester: 4 },
+  // { code: "GD2105", name: "Hukum Perundangan Geospasial",             credits: 3, semester: 4 },
+  // { code: "GD2106", name: "Ekspedisi Geospasial",                     credits: 2, semester: 4 },
+
 ];
 
 const electiveCourses = [
@@ -50,7 +59,7 @@ function SemesterRow({
   semester: number;
   courses: { code: string; name: string; credits: number }[];
 }) {
-  const [open, setOpen] = useState(semester <= 2);
+  const [open, setOpen] = useState(semester <= 1);
   const total  = courses.reduce((s, c) => s + c.credits, 0);
   const isTpb  = semester <= 1;
 

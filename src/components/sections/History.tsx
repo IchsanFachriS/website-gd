@@ -12,7 +12,7 @@ export function HistorySection() {
           <div className="gd-history-intro">
             <p className="gd-section-kicker">Our History</p>
             <h2 id="history-heading" className="gd-section-title">
-              65 Years of Advancing Geospatial Science in Indonesia
+              75+ Years of Advancing Geospatial Science in Indonesia
             </h2>
             <div className="gd-section-divider" />
             <p className="gd-history-body">
