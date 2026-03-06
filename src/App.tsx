@@ -24,14 +24,72 @@ import { ContactPage }        from "./components/pages/contact/ContactPage";
 
 // ── Shared primitives ──────────────────────────────────────────
 import { GenericPage } from "./components/pages/_shared/GenericPage";
+import { pageUrl } from "./utils/basePath";
+
+// ── URL map: page key → URL path segment ─────────────────────
+// Profile parent & children → root level (tanpa prefix "profile/")
+// Semua menu lain → parent/child
+const PAGE_URL_MAP: Record<string, string> = {
+  // Home / Profile → root
+  "home":                    "",
+  "profile":                 "",
+
+  // Profile children → langsung di root, tanpa prefix
+  "what-is-geodesy":         "what-is-geodesy",
+  "our-history":             "our-history",
+  "vision-mission":          "vision-mission",
+  "vision-&-mission":        "vision-mission",
+
+  // Academics
+  "academics":               "academics",
+  "undergraduate-s1":        "academics/undergraduate-s1",
+  "master-s2":               "academics/master-s2",
+  "doctoral-s3":             "academics/doctoral-s3",
+  "professional":            "academics/professional",
+  "curriculum":              "academics/curriculum",
+  "academic-calendar":       "academics/academic-calendar",
+
+  // Research
+  "research":                "research",
+  "research-groups":         "research/research-groups",
+  "community-services":      "research/community-services",
+  "publications":            "research/publications",
+  "laboratories":            "research/laboratories",
+  "collaboration":           "research/collaboration",
+
+  // Student Affairs
+  "student-affairs":         "student-affairs",
+  "student-organizations":   "student-affairs/student-organizations",
+  "scholarships":            "student-affairs/scholarships",
+  "student-achievements":    "student-affairs/student-achievements",
+  "students-achievements":   "student-affairs/student-achievements",
+  "student-activities":      "student-affairs/student-activities",
+  "students-activities":     "student-affairs/student-activities",
+  "student-data":            "student-affairs/student-data",
+  "students-data":           "student-affairs/student-data",
+  "announcements":           "student-affairs/announcements",
+  "career-alumni":           "student-affairs/career-alumni",
+  "career-&-alumni":         "student-affairs/career-alumni",
+  "student-facilities":      "student-affairs/student-facilities",
+
+  // Contact
+  "contact-us":              "contact-us",
+  "contact":                 "contact-us",
+};
+
+function getUrlForPage(page: string): string {
+  const path = PAGE_URL_MAP[page];
+  if (path !== undefined) return pageUrl(path);
+  return pageUrl(page);
+}
 
 // ── Home page ──────────────────────────────────────────────────
-function HomePage() {
+function HomePage({ onNavigate }: { onNavigate: (page: string) => void }) {
   return (
     <main id="main-content">
-      <BannerSlider />
-      <WhatIsSection />
-      <HistorySection />
+      <BannerSlider onNavigate={onNavigate} />
+      <WhatIsSection onNavigate={onNavigate} />
+      <HistorySection onNavigate={onNavigate} />
     </main>
   );
 }
@@ -45,13 +103,9 @@ function PageRouter({
   onNavigate: (page: string) => void;
 }) {
   switch (page) {
-    // ── Home ──
     case "home":
-      return <HomePage />;
-
-    // ── Profile ──
     case "profile":
-      return <HomePage />;
+      return <HomePage onNavigate={onNavigate} />;
 
     case "what-is-geodesy-&-geomatics":
     case "what-is-geodesy-geomatics":
@@ -66,7 +120,6 @@ function PageRouter({
     case "vision-mission":
       return <VisionMissionPage onNavigate={onNavigate} />;
 
-    // ── Academics ──
     case "academics":
       return <AcademicsPage onNavigate={onNavigate} />;
 
@@ -79,53 +132,32 @@ function PageRouter({
     case "master-program-s2":
     case "master-s2":
       return (
-        <GenericPage
-          title="Master Program (S2)"
-          parent="Academics"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Master Program (S2)" parent="Academics" onNavigate={onNavigate} />
       );
 
     case "doctoral-program-(s3)":
     case "doctoral-program-s3":
     case "doctoral-s3":
       return (
-        <GenericPage
-          title="Doctoral Program (S3)"
-          parent="Academics"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Doctoral Program (S3)" parent="Academics" onNavigate={onNavigate} />
       );
 
     case "professional-program":
     case "professional":
       return (
-        <GenericPage
-          title="Professional Program"
-          parent="Academics"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Professional Program" parent="Academics" onNavigate={onNavigate} />
       );
 
     case "curriculum":
       return (
-        <GenericPage
-          title="Curriculum"
-          parent="Academics"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Curriculum" parent="Academics" onNavigate={onNavigate} />
       );
 
     case "academic-calendar":
       return (
-        <GenericPage
-          title="Academic Calendar"
-          parent="Academics"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Academic Calendar" parent="Academics" onNavigate={onNavigate} />
       );
 
-    // ── Research ──
     case "research":
       return <ResearchPage onNavigate={onNavigate} />;
 
@@ -134,128 +166,77 @@ function PageRouter({
 
     case "community-services":
       return (
-        <GenericPage
-          title="Community Services"
-          parent="Research"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Community Services" parent="Research" onNavigate={onNavigate} />
       );
 
     case "publications":
       return (
-        <GenericPage
-          title="Publications"
-          parent="Research"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Publications" parent="Research" onNavigate={onNavigate} />
       );
 
     case "laboratories":
       return (
-        <GenericPage
-          title="Laboratories"
-          parent="Research"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Laboratories" parent="Research" onNavigate={onNavigate} />
       );
 
     case "collaboration":
       return (
-        <GenericPage
-          title="Collaboration"
-          parent="Research"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Collaboration" parent="Research" onNavigate={onNavigate} />
       );
 
-    // ── Student Affairs ──
     case "student-affairs":
       return <StudentAffairsPage onNavigate={onNavigate} />;
 
     case "student-organizations":
       return (
-        <GenericPage
-          title="Student Organizations"
-          parent="Student Affairs"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Student Organizations" parent="Student Affairs" onNavigate={onNavigate} />
       );
 
     case "scholarships":
       return (
-        <GenericPage
-          title="Scholarships"
-          parent="Student Affairs"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Scholarships" parent="Student Affairs" onNavigate={onNavigate} />
       );
 
     case "student-achievements":
     case "students-achievements":
       return (
-        <GenericPage
-          title="Student Achievements"
-          parent="Student Affairs"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Student Achievements" parent="Student Affairs" onNavigate={onNavigate} />
       );
 
     case "student-activities":
     case "students-activities":
       return (
-        <GenericPage
-          title="Student Activities"
-          parent="Student Affairs"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Student Activities" parent="Student Affairs" onNavigate={onNavigate} />
       );
 
     case "student-data":
     case "students-data":
       return (
-        <GenericPage
-          title="Student Data"
-          parent="Student Affairs"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Student Data" parent="Student Affairs" onNavigate={onNavigate} />
       );
 
     case "announcements":
       return (
-        <GenericPage
-          title="Announcements"
-          parent="Student Affairs"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Announcements" parent="Student Affairs" onNavigate={onNavigate} />
       );
 
     case "career-&-alumni":
     case "career-alumni":
       return (
-        <GenericPage
-          title="Career & Alumni"
-          parent="Student Affairs"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Career & Alumni" parent="Student Affairs" onNavigate={onNavigate} />
       );
 
     case "student-facilities":
       return (
-        <GenericPage
-          title="Student Facilities"
-          parent="Student Affairs"
-          onNavigate={onNavigate}
-        />
+        <GenericPage title="Student Facilities" parent="Student Affairs" onNavigate={onNavigate} />
       );
 
-    // ── Contact ──
     case "contact-us":
     case "contact":
       return <ContactPage onNavigate={onNavigate} />;
 
-    // ── Fallback ──
     default:
-      return <HomePage />;
+      return <HomePage onNavigate={onNavigate} />;
   }
 }
 
@@ -263,7 +244,17 @@ function PageRouter({
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
 
+  /**
+   * Single source of truth untuk navigasi.
+   * Semua sumber (CTA, footer, breadcrumb, dll) memanggil ini.
+   * Header.tsx sudah push URL sendiri — pushState duplikat tidak masalah
+   * karena kita cek dulu apakah pathname sudah sama.
+   */
   const handleNavigate = (page: string) => {
+    const url = getUrlForPage(page);
+    if (window.location.pathname !== url) {
+      window.history.pushState(null, "", url);
+    }
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };

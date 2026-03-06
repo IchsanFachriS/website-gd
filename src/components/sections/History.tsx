@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { HISTORY_TIMELINE } from "../../utils/data";
 
-export function HistorySection() {
+interface HistorySectionProps {
+  onNavigate?: (page: string) => void;
+}
+
+export function HistorySection({ onNavigate }: HistorySectionProps) {
   const [expanded, setExpanded] = useState<number | null>(null);
 
   return (
@@ -25,9 +29,12 @@ export function HistorySection() {
               <strong>Unggul</strong> (Excellence) rating from Indonesia's National Accreditation Board for
               Higher Education (BAN-PT).
             </p>
-            <a href="#academics" className="gd-btn gd-btn--primary">
+            <button
+              className="gd-btn gd-btn--primary"
+              onClick={() => onNavigate?.("academics")}
+            >
               Explore Our Programs
-            </a>
+            </button>
 
             {/* Stats */}
             <div className="gd-history-stats">

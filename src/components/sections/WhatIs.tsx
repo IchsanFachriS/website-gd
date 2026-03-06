@@ -2,9 +2,19 @@ import { useState } from "react";
 import { WHAT_IS_TABS } from "../../utils/data";
 import { imgUrl } from "../../utils/basePath";
 
-export function WhatIsSection() {
+interface WhatIsSectionProps {
+  onNavigate?: (page: string) => void;
+}
+
+export function WhatIsSection({ onNavigate }: WhatIsSectionProps) {
   const [active, setActive] = useState(0);
   const tab = WHAT_IS_TABS[active];
+
+  const handleLink = (href: string) => {
+    if (onNavigate) {
+      onNavigate(href);
+    }
+  };
 
   return (
     <section id="what-is" className="gd-tabblock" aria-labelledby="what-is-heading">
@@ -32,7 +42,6 @@ export function WhatIsSection() {
         <div className="gd-tabblock-layout">
           <div className="gd-tabblock-img-col">
             <div className="gd-tabblock-imgwrap">
-              {/* imgUrl() resolves correct path for both dev and prod */}
               <img src={imgUrl(tab.image)} alt={tab.imageAlt} className="gd-tabblock-img" />
             </div>
           </div>
@@ -46,12 +55,12 @@ export function WhatIsSection() {
                 <ul className="gd-quicklinks">
                   {tab.links.map((link) => (
                     <li key={link.label} className="gd-quicklinks-item">
-                      <a href={link.href}>
+                      <button onClick={() => handleLink(link.href)}>
                         <span>{link.label}</span>
                         <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                           <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                         </svg>
-                      </a>
+                      </button>
                     </li>
                   ))}
                 </ul>

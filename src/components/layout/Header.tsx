@@ -17,37 +17,69 @@ function labelToPageKey(label: string): string {
 }
 
 /**
- * Dari pathname browser, ekstrak page key.
- * Harus sadar BASE path (/website-gd/) agar tidak salah parse.
+ * Mapping dari URL path → page key.
+ * Profile children langsung di root level path.
+ * Semua menu lain: parent/child.
  */
+const PROFILE_CHILD_PATHS = [
+  "what-is-geodesy",
+  "our-history",
+  "vision-mission",
+];
+
+function buildUrl(parentPath: string | undefined, childPath?: string): string {
+  if (!parentPath || parentPath === "profile") {
+    // Profile parent → root
+    if (!childPath) return pageUrl("");
+    // Profile children → langsung tanpa prefix
+    return pageUrl(childPath);
+  }
+  if (childPath) {
+    return pageUrl(`${parentPath}/${childPath}`);
+  }
+  return pageUrl(parentPath);
+}
+
 function resolvePageFromPathname(pathname: string): string {
-  // Lepaskan base prefix dari pathname
-  const base = BASE.endsWith('/') ? BASE.slice(0, -1) : BASE; // e.g. '/website-gd'
+  const base = BASE.endsWith("/") ? BASE.slice(0, -1) : BASE;
   let clean = pathname;
   if (base && clean.startsWith(base)) {
     clean = clean.slice(base.length);
   }
-  // Normalise slashes
   clean = clean.replace(/^\//, "").replace(/\/$/, "");
 
+  // Root → home
   if (!clean) return "home";
 
+  // Cek profile children (langsung di root)
+  if (PROFILE_CHILD_PATHS.includes(clean)) {
+    return clean;
+  }
+
+  // Cek exact match dengan nav items (parent)
   for (const item of NAV_ITEMS) {
     if (item.path && item.path === clean) {
       return labelToPageKey(item.label);
     }
+  }
+
+  // Cek path dengan format parent/child
+  for (const item of NAV_ITEMS) {
     if (item.children) {
       for (const child of item.children) {
-        if (child.path && child.path === clean) {
-          return labelToPageKey(child.label);
-        }
-        if (child.path && item.path && `${item.path}/${child.path}` === clean) {
-          return labelToPageKey(child.label);
+        if (child.path) {
+          const fullPath = item.path === "profile"
+            ? child.path
+            : `${item.path}/${child.path}`;
+          if (fullPath === clean) {
+            return labelToPageKey(child.label);
+          }
         }
       }
     }
   }
 
+  // Fallback: ambil segmen terakhir
   const segments = clean.split("/");
   return segments[segments.length - 1];
 }
@@ -98,6 +130,16 @@ export function Navbar({ onNavigate }: HeaderProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // ── Handle browser back/forward ──
+  useEffect(() => {
+    const handlePopState = () => {
+      const page = resolvePageFromPathname(window.location.pathname);
+      onNavigate(page || "home");
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [onNavigate]);
+
   // ── Scroll shadow ──
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -131,29 +173,14 @@ export function Navbar({ onNavigate }: HeaderProps) {
     return () => document.removeEventListener("keydown", handler);
   }, [mobileOpen]);
 
-  // ── URL builder — sadar BASE path ──
-  const pushUrl = (parentPath: string | undefined, childPath?: string) => {
-    if (!parentPath) {
-      window.history.pushState(null, "", pageUrl(""));
-      return;
-    }
-    if (childPath) {
-      const path = parentPath === "profile"
-        ? childPath
-        : `${parentPath}/${childPath}`;
-      window.history.pushState(null, "", pageUrl(path));
-    } else {
-      window.history.pushState(null, "", pageUrl(parentPath));
-    }
-  };
-
   // ── Navigation handlers ──
   const handleNavClick = (item: NavItem) => {
-    if (!item.path || item.label.toLowerCase() === "home") {
-      window.history.pushState(null, "", pageUrl(""));
+    const url = buildUrl(item.path);
+    window.history.pushState(null, "", url);
+
+    if (!item.path || item.path === "profile" || item.label.toLowerCase() === "home") {
       onNavigate("home");
     } else {
-      pushUrl(item.path);
       onNavigate(labelToPageKey(item.label));
     }
     setActiveMenu(null);
@@ -161,7 +188,8 @@ export function Navbar({ onNavigate }: HeaderProps) {
   };
 
   const handleChildClick = (child: NavItem, parent: NavItem) => {
-    pushUrl(parent.path, child.path);
+    const url = buildUrl(parent.path, child.path);
+    window.history.pushState(null, "", url);
     onNavigate(labelToPageKey(child.label));
     setActiveMenu(null);
     setMobileOpen(false);
@@ -189,12 +217,10 @@ export function Navbar({ onNavigate }: HeaderProps) {
             style={{ background: "none", border: "none", cursor: "pointer" }}
           >
             <div className="gd-logo-mark">
-              {/* imgUrl() memastikan path benar di dev maupun prod */}
               <img
                 src={imgUrl("img/logo.png")}
                 alt="Logo ITB"
                 onError={(e) => {
-                  // Fallback: sembunyikan img jika gagal load
                   (e.currentTarget as HTMLImageElement).style.display = "none";
                 }}
               />
@@ -286,7 +312,7 @@ export function Navbar({ onNavigate }: HeaderProps) {
           </div>
         </div>
 
-        {/* ── Mobile overlay (click-outside to close) ── */}
+        {/* ── Mobile overlay ── */}
         {mobileOpen && (
           <div
             className="gd-mobile-overlay"
@@ -305,7 +331,7 @@ export function Navbar({ onNavigate }: HeaderProps) {
         >
           <div className="gd-mobile-inner">
 
-            {/* ── Close button (X) inside menu ── */}
+            {/* ── Close button ── */}
             <button
               className="gd-mobile-close"
               onClick={closeMobileMenu}
@@ -350,7 +376,7 @@ export function Navbar({ onNavigate }: HeaderProps) {
               </a>
               <button
                 onClick={() => {
-                  pushUrl("student-affairs");
+                  window.history.pushState(null, "", pageUrl("student-affairs"));
                   onNavigate("student-affairs");
                   setMobileOpen(false);
                 }}

@@ -2,7 +2,11 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { SLIDES } from "../../utils/data";
 import { imgUrl } from "../../utils/basePath";
 
-export function BannerSlider() {
+interface BannerSliderProps {
+  onNavigate?: (page: string) => void;
+}
+
+export function BannerSlider({ onNavigate }: BannerSliderProps) {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -35,13 +39,18 @@ export function BannerSlider() {
   const prev = () => goTo((current - 1 + SLIDES.length) % SLIDES.length);
   const next = () => goTo((current + 1) % SLIDES.length);
 
+  const handleCta = (href: string) => {
+    if (onNavigate) {
+      onNavigate(href);
+    }
+  };
+
   return (
     <section id="profile" className="gd-banner" aria-label="Featured content slideshow">
       <div className="gd-banner-track">
         {SLIDES.map((slide, i) => (
           <div key={i} className={`gd-banner-slide ${i === current ? "active" : ""}`} aria-hidden={i !== current}>
             <div className="gd-banner-img-wrap">
-              {/* imgUrl() adds /website-gd/ prefix in production */}
               <img src={imgUrl(slide.image)} alt="" className="gd-banner-img" loading={i === 0 ? "eager" : "lazy"} />
               <div className="gd-banner-overlay" />
             </div>
@@ -57,7 +66,12 @@ export function BannerSlider() {
                   )}
                   {slide.subtitle && <p className="gd-banner-subtitle">{slide.subtitle}</p>}
                   {slide.cta && (
-                    <a href={slide.cta.href} className="gd-btn gd-btn--banner">{slide.cta.label}</a>
+                    <button
+                      className="gd-btn gd-btn--banner"
+                      onClick={() => handleCta(slide.cta!.href)}
+                    >
+                      {slide.cta.label}
+                    </button>
                   )}
                 </div>
               </div>
