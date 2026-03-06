@@ -112,7 +112,8 @@ export function Footer({ onNavigate }: FooterProps) {
         { label: "Undergraduate (S1)", page: "undergraduate-program-s1" },
         { label: "Graduate (S2)", page: "graduate-program-s2" },
         { label: "Doctoral (S3)", page: "doctoral-program-s3" },
-        { label: "Curriculum", page: "curriculum" },
+        { label: "Professional Program", page: "professional-program" },
+        { label: "International Undergraduate Program", page: "international-undergraduate-program" },
       ],
     },
     {

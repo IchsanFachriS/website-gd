@@ -20,6 +20,7 @@ export const NAV_ITEMS: NavItem[] = [
       { label: "Master Program (S2)",        href: "#s2",           path: "master-s2" },
       { label: "Doctoral Program (S3)",      href: "#s3",           path: "doctoral-s3" },
       { label: "Professional Program",       href: "#professional", path: "professional" },
+      { label: "International Undergraduate Program", href: "#iup",   path: "iup" },
     ],
   },
   {
@@ -48,7 +49,6 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "Contact Us", href: "#contact", path: "contact-us" },
 ];
 
-// NOTE: cta.href now uses page keys (not URL paths) — handled by onNavigate()
 export const SLIDES: SlideItem[] = [
   {
     image: "img/banner/banner-4.jpg",
@@ -112,8 +112,7 @@ export const WHAT_IS_TABS: TabItem[] = [
     imageAlt: "Drone survey over landscape",
     body: "Our programs offer specialization in: Physical Geodesy & GNSS, Photogrammetry & Remote Sensing, Geographic Information Systems, Cadastral & Land Surveying, Hydrography & Marine Geodesy, and Cartography & Spatial Visualization.",
     links: [
-      { label: "Physical Geodesy Lab", href: "laboratories" },
-      { label: "GNSS Research Group", href: "research-groups" },
+      { label: "Research Groups", href: "research-groups" },
     ],
   },
 ];
