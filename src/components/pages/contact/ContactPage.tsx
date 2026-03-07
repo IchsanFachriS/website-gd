@@ -28,7 +28,7 @@ export function ContactPage({ onNavigate }: PageProps) {
                     <path strokeLinecap="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <div>
-                    <strong>Gedung Teknik Geodesi</strong><br />
+                    <strong>Labtek IX-C</strong><br />
                     Jl. Ganesha No. 10, Bandung 40132<br />
                     Jawa Barat, Indonesia
                   </div>
@@ -37,7 +37,8 @@ export function ContactPage({ onNavigate }: PageProps) {
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                     <path strokeLinecap="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
-                  <a href="tel:+622222502324">(022) 2502324</a>
+                  <a href="tel:+62222530701">(022)-2530701</a>
+                  <a href="tel:+62222530702">(022)-2530702</a>
                 </div>
                 <div className="gd-contact-row">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -91,10 +92,6 @@ export function ContactPage({ onNavigate }: PageProps) {
                   <textarea id="contact-message" name="your-message" rows={5} required placeholder="Write your message here…" />
                 </div>
                 <button type="submit" className="gd-btn gd-btn--primary gd-btn--full">Send Message</button>
-                <p className="gd-form-note">
-                  Integrates with Contact Form 7 via{" "}
-                  <code>POST /wp-json/contact-form-7/v1/contact-forms/&#123;id&#125;/feedback</code>
-                </p>
               </form>
             </div>
           </div>
