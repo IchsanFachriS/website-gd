@@ -68,15 +68,14 @@ const specializationPackages = [
   {
     id: "hidro",
     abbr: "HIDRO",
-    name: "Hidrografi",
+    name: "Hidrografi (12 SKS)",
     description: "Survei dan pemetaan wilayah perairan, batimetri, pemantauan pesisir, dan navigasi maritim.",
     accent: "var(--blue)",
     courses: [
-      { code: "GD3301", name: "Batimetri dan Survei Kelautan",           credits: 3 },
-      { code: "GD3302", name: "Oseanografi Fisis",                       credits: 3 },
-      { code: "GD3303", name: "Navigasi dan Penentuan Posisi Maritim",   credits: 3 },
-      { code: "GD4301", name: "Survei Hidrografi Lanjut",                credits: 3 },
-      { code: "GD4302", name: "Pengelolaan Wilayah Pesisir",             credits: 3 },
+      { code: "GD4110", name: "Dasar-Dasar Ilmu Nautika",           credits: 3 },
+      { code: "GD4111", name: "Penentuan Posisi Lepas Pantai",                       credits: 3 },
+      { code: "GD4207", name: "Analisis Met-Osean",   credits: 3 },
+      { code: "GD4208", name: "Praktik-Praktik Hidrografi",                credits: 3 },
     ],
   },
   {
@@ -86,11 +85,10 @@ const specializationPackages = [
     description: "Infrastruktur data spasial, UAV dan MMS, pemodelan perubahan tata guna lahan, dan web GIS.",
     accent: "var(--orange)",
     courses: [
-      { code: "GD3401", name: "Infrastruktur Data Spasial",              credits: 3 },
-      { code: "GD3402", name: "Fotogrametri Jarak Dekat dan UAV",        credits: 3 },
-      { code: "GD3403", name: "Penginderaan Jauh Lanjut",                credits: 3 },
-      { code: "GD4401", name: "Pemodelan Spasial dan GIS Lanjut",        credits: 3 },
-      { code: "GD4402", name: "Pengembangan Aplikasi Geospasial",        credits: 3 },
+      { code: "GD4118", name: "Analisis Kuanitatif Spasial",              credits: 3 },
+      { code: "GD4119", name: "Penginderaan Jauh Lingkungan",        credits: 3 },
+      { code: "GD4215", name: "Pemodelan Sistem Informasi Geografis",                credits: 3 },
+      { code: "GD4120", name: "Fotogrametri Lanjut",        credits: 3 },
     ],
   },
   {
@@ -100,11 +98,16 @@ const specializationPackages = [
     description: "Sistem referensi, medan gayaberat bumi, penentuan posisi GNSS, dan pemantauan deformasi.",
     accent: "var(--navy)",
     courses: [
-      { code: "GD3501", name: "Geodesi Fisis Lanjut",                    credits: 3 },
-      { code: "GD3502", name: "Penentuan Posisi Presisi Tinggi",          credits: 3 },
-      { code: "GD3503", name: "Pemantauan Deformasi Geodetik",            credits: 3 },
-      { code: "GD4501", name: "Geodesi Satelit Lanjut",                   credits: 3 },
-      { code: "GD4502", name: "Sains Data Geodesi",                       credits: 3 },
+      { code: "GD4105", name: "Geodesi Fisis Lanjut",                    credits: 3 },
+      { code: "GD4106", name: "Geokinematik",          credits: 3 },
+      { code: "GD4107", name: "Geodesi Kelautan",            credits: 2 },
+      { code: "GD4108", name: "Survei Teliti",                   credits: 3 },
+      { code: "GD4217", name: "Aplikasi-Aplikasi GNSS",                       credits: 2 },
+      { code: "GD4109", name: "Survei Batas Pengelolaan Energi dan Sumber Daya",                    credits: 2 },
+      { code: "GD4203", name: "Pengantar Statistik Spasial",          credits: 2 },
+      { code: "GD4204", name: "Pengantar Sistem Spasial",            credits: 2 },
+      { code: "GD4205", name: "Intelijen Geospasial",                   credits: 2 },
+      { code: "GD4206", name: "Sistem Monitoring Geodesi untuk Infrastruktur",                       credits: 3 },
     ],
   },
   {
@@ -114,21 +117,31 @@ const specializationPackages = [
     description: "Kadaster 3D, sistem informasi pertanahan, survei konstruksi, dan kebencanaan spasial.",
     accent: "#4a7c59",
     courses: [
-      { code: "GD3601", name: "Infrastruktur Kadaster 3D",               credits: 3 },
-      { code: "GD3602", name: "Sistem Informasi Pertanahan",              credits: 3 },
-      { code: "GD3603", name: "Survei Rekayasa Lanjut",                   credits: 3 },
-      { code: "GD4601", name: "Administrasi Pertanahan dan Hukum",        credits: 3 },
-      { code: "GD4602", name: "Pemodelan Spasial Kebencanaan",            credits: 3 },
+      { code: "GD4112", name: "Aspek Teknis Kadaster 3-Dimensi",               credits: 2 },
+      { code: "GD4113", name: "Penilaian Lahan",              credits: 2 },
+      { code: "GD4114", name: "Pengamatan Geodetik untuk Perubahan Iklim",                   credits: 3 },
+      { code: "GD4115", name: "Geodesi Kebencanaan",        credits: 3 },
+      { code: "GD4116", name: "Pemodelan Geodesi untuk Kebencanaan",            credits: 3 },
+      { code: "GD4212", name: "Sistem Informasi Geospasial untuk Kota Cerdas",               credits: 3 },
+      { code: "GD4213", name: "Pemetaan Kota Tiga Dimensi (3D) dengan Drone",              credits: 3 },
+      { code: "GD4214", name: "Survei dan Pemetaan Drainase",                   credits: 3 },
+      { code: "GD4117", name: "Survei Jalan dan Basis Data Jalan (Leger)",        credits: 3 },
+      { code: "GD4209", name: "Survei Kadaster",            credits: 3 },
+      { code: "GD4210", name: "Pemodelan Digital Tiga Dimensi (3D) Kota",               credits: 3 },
+      { code: "GD4211", name: "Survei Jaringan Pipa dan Terowongan",              credits: 3 },
     ],
   },
 ];
 
 // ── Non-specialization electives ────────────────────────────
 const generalElectives = [
-  { code: "GD3206", name: "Hidroinformatika",                            credits: 3 },
-  { code: "GD3207", name: "Pemetaan Partisipatif",                       credits: 2 },
-  { code: "GD4105", name: "Topik Khusus Geodesi",                        credits: 3 },
-  { code: "GD4106", name: "Kerja Sama Internasional",                    credits: 2 },
+  { code: "GD3106", name: "Ekonomi Hidrografi",                            credits: 2 },
+  { code: "GD3205", name: "Batas Laut",                            credits: 3 },
+  { code: "GD3206", name: "Hidroinformatika",                       credits: 3 },
+  { code: "GD3207", name: "Survei Deformasi",                        credits: 3 },
+  { code: "GD4001", name: "Penelitian Mandiri",                            credits: 3 },
+  { code: "GD3206", name: "Pengenalan Profesi Surveyor",                       credits: 2 },
+
 ];
 
 // ── Semester accordion ───────────────────────────────────────
