@@ -69,7 +69,7 @@ const specializationPackages = [
     id: "hidro",
     abbr: "HIDRO",
     name: "Hidrografi (12 SKS)",
-    description: "Survei dan pemetaan wilayah perairan, batimetri, pemantauan pesisir, dan navigasi maritim.",
+    description: "Paket spesialisasi hidrografi ini akan memberikan materi lanjutan yang lebih rinci mengenai hidrografi hingga setelah menyelesaikan seluruh mata kuliah wajib di Prodi Sarjana Teknik Geodesi dan Geomatika serta pilihan pada paket ini, akan setara dengan materi pembelajaran untuk pendidikan surveyor hidrografi sesuai standar internasional S-5B IHO.",
     accent: "var(--blue)",
     courses: [
       { code: "GD4110", name: "Dasar-Dasar Ilmu Nautika",           credits: 3 },
@@ -82,7 +82,7 @@ const specializationPackages = [
     id: "stig",
     abbr: "STIG",
     name: "Sains dan Teknologi Informasi Geografis",
-    description: "Infrastruktur data spasial, UAV dan MMS, pemodelan perubahan tata guna lahan, dan web GIS.",
+    description: "Spesialisasi ini difokuskan untuk kompetensi dalam pengembangan ekstraksi data dan pemodelan geospasial berbasiskan penginderaan jauh dan sistem informasi geografis untuk analisis lingkungan (environmental).",
     accent: "var(--orange)",
     courses: [
       { code: "GD4118", name: "Analisis Kuanitatif Spasial",              credits: 3 },
@@ -95,7 +95,7 @@ const specializationPackages = [
     id: "srig",
     abbr: "SRIG",
     name: "Sains, Rekayasa dan Inovasi Geodesi",
-    description: "Sistem referensi, medan gayaberat bumi, penentuan posisi GNSS, dan pemantauan deformasi.",
+    description: "Spesialisasi ini berfokus pada sistem kerangka referensi, medan gaya berat, rotasi bumi dan geodinamik, dan penentuan posisi dan implikasinya dengan mempelajari pengukuran dan perepresentasian bentuk dan ukuran bumi yang berubah dengan waktu, penentuan posisi yang teliti dari semua unsur yang ada di bumi, pencitraan dan monitoring bumi, menghasilkan data geospasial 3-dimensi dengan resolusi dan ketelitian tinggi yang selanjutnya dikelola sebagai sistem informasi geospasial untuk berbagai aplikasi keilmuan ataupun rekayasa lainnya.",
     accent: "var(--navy)",
     courses: [
       { code: "GD4105", name: "Geodesi Fisis Lanjut",                    credits: 3 },
@@ -114,7 +114,7 @@ const specializationPackages = [
     id: "siska",
     abbr: "SISKA",
     name: "Sistem Spasial dan Kadaster",
-    description: "Kadaster 3D, sistem informasi pertanahan, survei konstruksi, dan kebencanaan spasial.",
+    description: "Spesialisasi Sistem Spasial dan Kadaster terdiri dari 4 fokus, yaitu: - Kebencanaan Spesialisasi ini berfokus pada pengamatan, analisis spasial, dan manajemen risiko bencana dengan menggunakan teknologi dan metode geodesi - Administrasi Pertanahan/Kadaster Spesialisasi ini berfokus pada aspek teknis dan legal untuk fungsi fiskal, tenure, dan pengembangan lahan - Infrastruktur Data Spasial Perkotaan Spesialisasi ini berfokus pada survei, pemodelan, manajemen, dan sistem informasi tiga dimensi untuk perkotaan - Survei Jalan dan Drainase Spesialisasi ini berfokus pada aspek teknis untuk pemodelan dan pemetaan utilitas.",
     accent: "#4a7c59",
     courses: [
       { code: "GD4112", name: "Aspek Teknis Kadaster 3-Dimensi",               credits: 2 },
