@@ -14,8 +14,7 @@ import {
 } from "./components/pages/profile";
 
 // ── Academics pages ────────────────────────────────────────────
-import { AcademicsPage, UndergraduatePage } from "./components/pages/academics";
-
+import { AcademicsPage, UndergraduatePage, InternationalUndergraduatePage } from "./components/pages/academics";
 // ── Other section pages ────────────────────────────────────────
 import { ResearchPage }       from "./components/pages/research/ResearchPage";
 import { ResearchGroupsPage } from "./components/pages/research/ResearchGroupsPage";
@@ -46,8 +45,9 @@ const PAGE_URL_MAP: Record<string, string> = {
   "master-s2":               "academics/master-s2",
   "doctoral-s3":             "academics/doctoral-s3",
   "professional":            "academics/professional",
-  "curriculum":              "academics/curriculum",
-  "academic-calendar":       "academics/academic-calendar",
+  "iup":                         "academics/iup",
+  "international-undergraduate-program": "academics/iup",
+  "international-undergraduate": "academics/iup",
 
   // Research
   "research":                "research",
@@ -148,15 +148,10 @@ function PageRouter({
         <GenericPage title="Professional Program" parent="Academics" onNavigate={onNavigate} />
       );
 
-    case "curriculum":
-      return (
-        <GenericPage title="Curriculum" parent="Academics" onNavigate={onNavigate} />
-      );
-
-    case "academic-calendar":
-      return (
-        <GenericPage title="Academic Calendar" parent="Academics" onNavigate={onNavigate} />
-      );
+    case "iup":
+    case "international-undergraduate-program":
+    case "international-undergraduate":
+      return <InternationalUndergraduatePage onNavigate={onNavigate} />;
 
     case "research":
       return <ResearchPage onNavigate={onNavigate} />;
