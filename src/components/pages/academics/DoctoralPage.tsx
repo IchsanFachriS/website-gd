@@ -1,6 +1,6 @@
 // ============================================================
-// academics/MasterPage.tsx
-// Program Magister (S2) — accordion per semester
+// academics/DoctoralPage.tsx
+// Program Doktoral (S3) — Wajib + Pilihan, accordion per semester
 // ============================================================
 import { useState } from "react";
 import { Breadcrumb, PageHero } from "../_shared/PageShell";
@@ -13,82 +13,27 @@ interface Course {
   sks: number;
   semester: number;
 }
-interface Concentration {
-  id: string;
-  label: string;
-  color: string;
-  wajib: Course[];
-}
 
 // ── Data placeholder ─────────────────────────────────────────
-const MK_WAJIB_UMUM: Course[] = [
-  { kode: "GD5001", nama: "Metodologi Penelitian",     sks: 3, semester: 1 },
-  { kode: "GD5002", nama: "Matematika Terapan Lanjut", sks: 3, semester: 1 },
-  { kode: "GD5003", nama: "Seminar Proposal Tesis",    sks: 2, semester: 2 },
-  { kode: "GD5099", nama: "Tesis",                     sks: 6, semester: 4 },
-];
-
-const CONCENTRATIONS: Concentration[] = [
-  {
-    id: "pertanahan",
-    label: "Administrasi Pertanahan",
-    color: "var(--orange)",
-    wajib: [
-      { kode: "GD5101", nama: "Hukum dan Kebijakan Pertanahan",        sks: 3, semester: 1 },
-      { kode: "GD5102", nama: "Administrasi dan Manajemen Pertanahan", sks: 3, semester: 1 },
-      { kode: "GD5103", nama: "Kadaster dan Registrasi Tanah",         sks: 3, semester: 2 },
-      { kode: "GD5104", nama: "Penilaian Tanah dan Properti",          sks: 3, semester: 2 },
-      { kode: "GD5105", nama: "Pengelolaan Sumber Daya Agraria",       sks: 3, semester: 3 },
-    ],
-  },
-  {
-    id: "hidrografi",
-    label: "Hidrografi",
-    color: "var(--blue)",
-    wajib: [
-      { kode: "GD5201", nama: "Survei Hidrografi Lanjut",             sks: 3, semester: 1 },
-      { kode: "GD5202", nama: "Sistem Navigasi dan Penentuan Posisi",  sks: 3, semester: 1 },
-      { kode: "GD5203", nama: "Pemodelan Dasar Laut",                  sks: 3, semester: 2 },
-      { kode: "GD5204", nama: "Oseanografi Fisika",                    sks: 3, semester: 2 },
-      { kode: "GD5205", nama: "Manajemen Data Hidrografi",             sks: 3, semester: 3 },
-    ],
-  },
-  {
-    id: "kebencanaan",
-    label: "Kebencanaan",
-    color: "#16a34a",
-    wajib: [
-      { kode: "GD5301", nama: "Mitigasi dan Manajemen Bencana",       sks: 3, semester: 1 },
-      { kode: "GD5302", nama: "Pemantauan Deformasi Geodetik",        sks: 3, semester: 1 },
-      { kode: "GD5303", nama: "Penginderaan Jauh untuk Bencana",      sks: 3, semester: 2 },
-      { kode: "GD5304", nama: "Analisis Risiko Geospasial",           sks: 3, semester: 2 },
-      { kode: "GD5305", nama: "Sistem Peringatan Dini",               sks: 3, semester: 3 },
-    ],
-  },
-  {
-    id: "geodesi",
-    label: "Teknik Geodesi dan Geomatika",
-    color: "var(--navy)",
-    wajib: [
-      { kode: "GD5401", nama: "Geodesi Satelit Lanjut",               sks: 3, semester: 1 },
-      { kode: "GD5402", nama: "Pemetaan dan Kartografi Lanjut",       sks: 3, semester: 1 },
-      { kode: "GD5403", nama: "Jaringan Geodetik",                    sks: 3, semester: 2 },
-      { kode: "GD5404", nama: "Geomatika Terestris Lanjut",           sks: 3, semester: 2 },
-      { kode: "GD5405", nama: "Komputasi Geodetik",                   sks: 3, semester: 3 },
-    ],
-  },
+const MK_WAJIB: Course[] = [
+  { kode: "GD7001", nama: "Filsafat Ilmu dan Metodologi Riset",  sks: 3,  semester: 1 },
+  { kode: "GD7002", nama: "Geodesi dan Geomatika Lanjut",        sks: 3,  semester: 1 },
+  { kode: "GD7003", nama: "Seminar Kemajuan Penelitian I",       sks: 2,  semester: 2 },
+  { kode: "GD7004", nama: "Seminar Kemajuan Penelitian II",      sks: 2,  semester: 3 },
+  { kode: "GD7005", nama: "Seminar Kemajuan Penelitian III",     sks: 2,  semester: 4 },
+  { kode: "GD7099", nama: "Disertasi",                           sks: 12, semester: 6 },
 ];
 
 const MK_PILIHAN: Course[] = [
-  { kode: "GD6001", nama: "Topik Khusus Geodesi I",                    sks: 3, semester: 1 },
-  { kode: "GD6002", nama: "Topik Khusus Geodesi II",                   sks: 3, semester: 2 },
-  { kode: "GD6003", nama: "Pemrosesan Data Spasial Lanjut",            sks: 3, semester: 1 },
-  { kode: "GD6004", nama: "Sistem Informasi Geografis Lanjut",         sks: 3, semester: 2 },
-  { kode: "GD6005", nama: "Fotogrametri dan Penginderaan Jauh Lanjut", sks: 3, semester: 1 },
-  { kode: "GD6006", nama: "Geodesi Fisis Lanjut",                      sks: 3, semester: 2 },
+  { kode: "GD7101", nama: "Topik Riset Geodesi I",                     sks: 3, semester: 1 },
+  { kode: "GD7102", nama: "Topik Riset Geodesi II",                    sks: 3, semester: 2 },
+  { kode: "GD7103", nama: "Pemodelan Geospasial Lanjut",               sks: 3, semester: 1 },
+  { kode: "GD7104", nama: "Teknik Komputasi Geodetik Lanjut",          sks: 3, semester: 2 },
+  { kode: "GD7105", nama: "Survei dan Deformasi Geodetik Lanjut",      sks: 3, semester: 1 },
+  { kode: "GD7106", nama: "Integrasi Data Penginderaan Jauh dan GNSS", sks: 3, semester: 2 },
 ];
 
-// ── Shared helpers ────────────────────────────────────────────
+// ── Helpers ──────────────────────────────────────────────────
 function groupBySemester(courses: Course[]): [number, Course[]][] {
   const map = new Map<number, Course[]>();
   for (const c of courses) {
@@ -224,7 +169,6 @@ function CourseRows({ courses }: { courses: Course[] }) {
   );
 }
 
-// Semester accordion — reusable
 function SemesterAccordion({
   courses,
   accentColor,
@@ -329,30 +273,27 @@ function SemesterAccordion({
 }
 
 // ── Main component ────────────────────────────────────────────
-export function MasterPage({ onNavigate }: PageProps) {
-  const [openConc, setOpenConc] = useState<string | null>(null);
-  const toggleConc = (id: string) => setOpenConc((prev) => (prev === id ? null : id));
-
+export function DoctoralPage({ onNavigate }: PageProps) {
   return (
     <div style={{ fontFamily: "Inter, sans-serif" }}>
       <Breadcrumb
         items={[
           { label: "Academics", page: "academics" },
-          { label: "Program Magister (S2)", page: "" },
+          { label: "Program Doktoral (S3)", page: "" },
         ]}
         onNavigate={onNavigate}
       />
       <PageHero
         kicker="Academics"
-        title="Program Magister (S2)"
-        subtitle="Geodesi dan Geomatika — Jenjang S2 · 4 Konsentrasi"
+        title="Program Doktoral (S3)"
+        subtitle="Geodesi dan Geomatika — Jenjang S3"
       />
 
-      {/* ── Wajib Umum ── */}
+      {/* ── Wajib ── */}
       <section className="gd-page-section">
         <div className="gd-container">
           <p className="gd-section-kicker">Kurikulum</p>
-          <h2 className="gd-section-title">Mata Kuliah Wajib Umum</h2>
+          <h2 className="gd-section-title">Mata Kuliah Wajib</h2>
           <div className="gd-section-divider" />
           <p
             style={{
@@ -364,140 +305,15 @@ export function MasterPage({ onNavigate }: PageProps) {
               maxWidth: "680px",
             }}
           >
-            Wajib ditempuh oleh seluruh mahasiswa S2, tidak bergantung pada
-            konsentrasi yang dipilih.
+            Seluruh mahasiswa doktoral wajib menyelesaikan mata kuliah berikut
+            sebagai fondasi akademik dan penyelesaian disertasi.
           </p>
-          <SemesterAccordion courses={MK_WAJIB_UMUM} accentColor="var(--navy)" defaultOpen />
-        </div>
-      </section>
-
-      {/* ── Konsentrasi ── */}
-      <section className="gd-page-section" style={{ background: "var(--off-white)" }}>
-        <div className="gd-container">
-          <p className="gd-section-kicker">Konsentrasi</p>
-          <h2 className="gd-section-title">Mata Kuliah Wajib Konsentrasi</h2>
-          <div className="gd-section-divider" />
-          <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "14px",
-              color: "var(--gray-600)",
-              lineHeight: 1.75,
-              marginBottom: "32px",
-              maxWidth: "680px",
-            }}
-          >
-            Klik konsentrasi untuk membuka daftar mata kuliah, lalu klik
-            semester untuk melihat rinciannya.
-          </p>
-
-          <div style={{ display: "flex", flexDirection: "column" as const, gap: "10px" }}>
-            {CONCENTRATIONS.map((c) => {
-              const isOpen = openConc === c.id;
-              return (
-                <div
-                  key={c.id}
-                  style={{
-                    background: "var(--white, #fff)",
-                    border: "1px solid var(--gray-200)",
-                    borderLeft: `4px solid ${c.color}`,
-                    overflow: "hidden",
-                  }}
-                >
-                  {/* Concentration header */}
-                  <button
-                    onClick={() => toggleConc(c.id)}
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      padding: "18px 20px",
-                      background: isOpen ? "var(--off-white)" : "transparent",
-                      border: "none",
-                      cursor: "pointer",
-                      textAlign: "left" as const,
-                      gap: "16px",
-                      transition: "background 0.15s",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-                      <div
-                        style={{
-                          width: "10px",
-                          height: "10px",
-                          borderRadius: "50%",
-                          background: c.color,
-                          flexShrink: 0,
-                        }}
-                      />
-                      <div>
-                        <p
-                          style={{
-                            fontFamily: "Inter, sans-serif",
-                            fontSize: "11px",
-                            fontWeight: 700,
-                            letterSpacing: "0.1em",
-                            textTransform: "uppercase" as const,
-                            color: c.color,
-                            marginBottom: "2px",
-                          }}
-                        >
-                          Konsentrasi
-                        </p>
-                        <strong
-                          style={{
-                            fontFamily: "Inter, sans-serif",
-                            fontSize: "15px",
-                            fontWeight: 700,
-                            color: "var(--navy)",
-                          }}
-                        >
-                          {c.label}
-                        </strong>
-                      </div>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          fontWeight: 700,
-                          color: isOpen ? c.color : "var(--gray-400)",
-                          background: "var(--off-white)",
-                          border: "1px solid var(--gray-200)",
-                          padding: "3px 10px",
-                          borderRadius: "2px",
-                          whiteSpace: "nowrap" as const,
-                        }}
-                      >
-                        {c.wajib.reduce((s, mk) => s + mk.sks, 0)} SKS
-                      </span>
-                      <Chevron open={isOpen} color={isOpen ? c.color : "var(--gray-400)"} />
-                    </div>
-                  </button>
-
-                  {/* Semester accordions inside */}
-                  {isOpen && (
-                    <div
-                      style={{
-                        borderTop: "1px solid var(--gray-200)",
-                        padding: "16px 20px",
-                        background: "var(--off-white)",
-                      }}
-                    >
-                      <SemesterAccordion courses={c.wajib} accentColor={c.color} />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+          <SemesterAccordion courses={MK_WAJIB} accentColor="var(--navy)" defaultOpen />
         </div>
       </section>
 
       {/* ── Pilihan ── */}
-      <section className="gd-page-section">
+      <section className="gd-page-section" style={{ background: "var(--off-white)" }}>
         <div className="gd-container">
           <p className="gd-section-kicker">Kurikulum</p>
           <h2 className="gd-section-title">Mata Kuliah Pilihan</h2>
@@ -512,10 +328,10 @@ export function MasterPage({ onNavigate }: PageProps) {
               maxWidth: "680px",
             }}
           >
-            Mahasiswa dapat memilih mata kuliah pilihan untuk melengkapi
-            kurikulum sesuai minat dan kebutuhan penelitian.
+            Mahasiswa memilih mata kuliah pilihan untuk mendukung topik
+            penelitian disertasi sesuai arahan promotor.
           </p>
-          <SemesterAccordion courses={MK_PILIHAN} accentColor="var(--gray-400)" />
+          <SemesterAccordion courses={MK_PILIHAN} accentColor="var(--orange)" />
         </div>
       </section>
 

@@ -43,7 +43,6 @@ export const NAV_ITEMS: NavItem[] = [
       { label: "Student Achievements",  href: "#achievements",  path: "student-achievements" },
       { label: "Student Activities",    href: "#activities",    path: "student-activities" },
       { label: "Student Data",          href: "#data",          path: "student-data" },
-      { label: "Announcements",         href: "#announcements", path: "announcements" },
     ],
   },
   { label: "Contact Us", href: "#contact", path: "contact-us" },

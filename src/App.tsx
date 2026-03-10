@@ -14,7 +14,7 @@ import {
 } from "./components/pages/profile";
 
 // ── Academics pages ────────────────────────────────────────────
-import { AcademicsPage, UndergraduatePage, InternationalUndergraduatePage } from "./components/pages/academics";
+import { AcademicsPage, UndergraduatePage, InternationalUndergraduatePage, MasterPage, DoctoralPage } from "./components/pages/academics";
 // ── Other section pages ────────────────────────────────────────
 import { ResearchPage }       from "./components/pages/research/ResearchPage";
 import { ResearchGroupsPage } from "./components/pages/research/ResearchGroupsPage";
@@ -131,16 +131,12 @@ function PageRouter({
     case "master-program-(s2)":
     case "master-program-s2":
     case "master-s2":
-      return (
-        <GenericPage title="Master Program (S2)" parent="Academics" onNavigate={onNavigate} />
-      );
+      return <MasterPage onNavigate={onNavigate} />;
 
     case "doctoral-program-(s3)":
     case "doctoral-program-s3":
     case "doctoral-s3":
-      return (
-        <GenericPage title="Doctoral Program (S3)" parent="Academics" onNavigate={onNavigate} />
-      );
+      return <DoctoralPage onNavigate={onNavigate} />;
 
     case "professional-program":
     case "professional":
