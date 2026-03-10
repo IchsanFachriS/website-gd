@@ -81,7 +81,7 @@ const specializationPackages = [
   {
     id: "stig",
     abbr: "STIG",
-    name: "Sains dan Teknologi Informasi Geografis",
+    name: "Sains dan Teknologi Informasi Geografis (12 SKS)",
     description: "Spesialisasi ini difokuskan untuk kompetensi dalam pengembangan ekstraksi data dan pemodelan geospasial berbasiskan penginderaan jauh dan sistem informasi geografis untuk analisis lingkungan (environmental).",
     accent: "var(--orange)",
     courses: [
@@ -94,7 +94,7 @@ const specializationPackages = [
   {
     id: "srig",
     abbr: "SRIG",
-    name: "Sains, Rekayasa dan Inovasi Geodesi",
+    name: "Sains, Rekayasa dan Inovasi Geodesi (9 SKS)",
     description: "Spesialisasi ini berfokus pada sistem kerangka referensi, medan gaya berat, rotasi bumi dan geodinamik, dan penentuan posisi dan implikasinya dengan mempelajari pengukuran dan perepresentasian bentuk dan ukuran bumi yang berubah dengan waktu, penentuan posisi yang teliti dari semua unsur yang ada di bumi, pencitraan dan monitoring bumi, menghasilkan data geospasial 3-dimensi dengan resolusi dan ketelitian tinggi yang selanjutnya dikelola sebagai sistem informasi geospasial untuk berbagai aplikasi keilmuan ataupun rekayasa lainnya.",
     accent: "var(--navy)",
     courses: [
@@ -113,7 +113,7 @@ const specializationPackages = [
   {
     id: "siska",
     abbr: "SISKA",
-    name: "Sistem Spasial dan Kadaster",
+    name: "Sistem Spasial dan Kadaster (9 SKS)",
     description: "Spesialisasi Sistem Spasial dan Kadaster terdiri dari 4 fokus, yaitu: - Kebencanaan Spesialisasi ini berfokus pada pengamatan, analisis spasial, dan manajemen risiko bencana dengan menggunakan teknologi dan metode geodesi - Administrasi Pertanahan/Kadaster Spesialisasi ini berfokus pada aspek teknis dan legal untuk fungsi fiskal, tenure, dan pengembangan lahan - Infrastruktur Data Spasial Perkotaan Spesialisasi ini berfokus pada survei, pemodelan, manajemen, dan sistem informasi tiga dimensi untuk perkotaan - Survei Jalan dan Drainase Spesialisasi ini berfokus pada aspek teknis untuk pemodelan dan pemetaan utilitas.",
     accent: "#4a7c59",
     courses: [
@@ -140,7 +140,7 @@ const generalElectives = [
   { code: "GD3206", name: "Hidroinformatika",                       credits: 3 },
   { code: "GD3207", name: "Survei Deformasi",                        credits: 3 },
   { code: "GD4001", name: "Penelitian Mandiri",                            credits: 3 },
-  { code: "GD3206", name: "Pengenalan Profesi Surveyor",                       credits: 2 },
+  { code: "GD4002", name: "Pengenalan Profesi Surveyor",                       credits: 2 },
 
 ];
 
@@ -304,7 +304,6 @@ function SemesterRow({
 // ── Specialization card ──────────────────────────────────────
 function SpecializationCard({ pkg }: { pkg: typeof specializationPackages[0] }) {
   const [open, setOpen] = useState(false);
-  const total = pkg.courses.reduce((s, c) => s + c.credits, 0);
 
   return (
     <div style={{
@@ -385,7 +384,6 @@ function SpecializationCard({ pkg }: { pkg: typeof specializationPackages[0] }) 
             fontWeight: 700,
             color: "var(--blue)",
           }}>
-            {total} SKS
           </span>
           <svg
             viewBox="0 0 12 8"
