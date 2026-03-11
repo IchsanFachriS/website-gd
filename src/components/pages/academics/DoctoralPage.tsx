@@ -16,21 +16,34 @@ interface Course {
 
 // ── Data placeholder ─────────────────────────────────────────
 const MK_WAJIB: Course[] = [
-  { kode: "GD7001", nama: "Filsafat Ilmu dan Metodologi Riset",  sks: 3,  semester: 1 },
-  { kode: "GD7002", nama: "Geodesi dan Geomatika Lanjut",        sks: 3,  semester: 1 },
-  { kode: "GD7003", nama: "Seminar Kemajuan Penelitian I",       sks: 2,  semester: 2 },
-  { kode: "GD7004", nama: "Seminar Kemajuan Penelitian II",      sks: 2,  semester: 3 },
-  { kode: "GD7005", nama: "Seminar Kemajuan Penelitian III",     sks: 2,  semester: 4 },
-  { kode: "GD7099", nama: "Disertasi",                           sks: 12, semester: 6 },
+  { kode: "WI7001", nama: "Literasi Digital, AI, dan Etika Akademik",  sks: 2,  semester: 1 },
+  { kode: "GD7101", nama: "Metodologi Penelitian",        sks: 3,  semester: 1 },
+  { kode: "GD7012", nama: "Ujian Kualifikasi",       sks: 3,  semester: 1 },
+  { kode: "WI7002", nama: "Filsafat Ilmu Pengetahuan",      sks: 2,  semester: 2 },
+  { kode: "GD7021", nama: "Penyusunan Proposal",     sks: 5,  semester: 2 },
+  { kode: "GD8011", nama: "Penelitian Doktoral I",                           sks: 8, semester: 3 },
+  { kode: "GD8012", nama: "Seminar Kemajuan I",      sks: 2,  semester: 3 },
+  { kode: "GD8021", nama: "Penelitian Doktoral II",     sks: 8,  semester: 4 },
+  { kode: "GD8022", nama: "Seminar Kemajuan II",                           sks: 2, semester: 4 },
+  { kode: "GD8031", nama: "Penelitian Doktoral III",      sks: 8,  semester: 5 },
+  { kode: "GD8032", nama: "Seminar Kemajuan III",     sks: 2,  semester: 5 },
+  { kode: "GD8041", nama: "Penelitian Doktoral IV",                           sks: 8, semester: 6 },
+  { kode: "GD8091", nama: "Penulisan Disertasi",     sks: 2,  semester: 6 },
+  { kode: "GD8099", nama: "Sidang Doktor",                           sks: 3, semester: 6 },
 ];
 
 const MK_PILIHAN: Course[] = [
-  { kode: "GD7101", nama: "Topik Riset Geodesi I",                     sks: 3, semester: 1 },
-  { kode: "GD7102", nama: "Topik Riset Geodesi II",                    sks: 3, semester: 2 },
-  { kode: "GD7103", nama: "Pemodelan Geospasial Lanjut",               sks: 3, semester: 1 },
-  { kode: "GD7104", nama: "Teknik Komputasi Geodetik Lanjut",          sks: 3, semester: 2 },
-  { kode: "GD7105", nama: "Survei dan Deformasi Geodetik Lanjut",      sks: 3, semester: 1 },
-  { kode: "GD7106", nama: "Integrasi Data Penginderaan Jauh dan GNSS", sks: 3, semester: 2 },
+  { kode: "GD7000", nama: "Topik Khusus Geodesi",                     sks: 2, semester: 1 },
+  { kode: "GD7001", nama: "Topik Khusus Geomatika",                    sks: 2, semester: 1 },
+  { kode: "GD7002", nama: "Studi Mandiri",               sks: 3, semester: 1 },
+  { kode: "GD7202", nama: "Ilmu Sistem Bumi",          sks: 4, semester: 4 },
+  { kode: "GD7203", nama: "Telaah Hidrografi",      sks: 4, semester: 4 },
+  { kode: "GD7204", nama: "Sains Pengamatan Bumi", sks: 4, semester: 4 },
+  { kode: "GD7205", nama: "Survei Rekayasa dan Infrastruktur",                     sks: 4, semester: 4 },
+  { kode: "GD8102", nama: "Sains Informasi Geografis",                    sks: 4, semester: 5 },
+  { kode: "GD8103", nama: "Sistem Kadaster Modern",               sks: 4, semester: 5 },
+  { kode: "GD8104", nama: "Akta Sains Maritim",          sks: 4, semester: 5 },
+  { kode: "GD8105", nama: "Pemodelan Geodesi",      sks: 4, semester: 5 },
 ];
 
 // ── Helpers ──────────────────────────────────────────────────
@@ -149,7 +162,7 @@ function CourseRows({ courses }: { courses: Course[] }) {
               color: "var(--gray-400)",
             }}
           >
-            Total semester ini
+            Total
           </td>
           <td
             style={{
@@ -240,7 +253,6 @@ function SemesterAccordion({
                     color: "var(--gray-400)",
                   }}
                 >
-                  {list.length} mata kuliah
                 </span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
@@ -255,7 +267,6 @@ function SemesterAccordion({
                     borderRadius: "2px",
                   }}
                 >
-                  {totalSks} SKS
                 </span>
                 <Chevron open={isOpen} color={isOpen ? accentColor : "var(--gray-400)"} />
               </div>
@@ -328,8 +339,7 @@ export function DoctoralPage({ onNavigate }: PageProps) {
               maxWidth: "680px",
             }}
           >
-            Mahasiswa memilih mata kuliah pilihan untuk mendukung topik
-            penelitian disertasi sesuai arahan promotor.
+            Mahasiswa dapat memilih mata kuliah pilihan berikut.
           </p>
           <SemesterAccordion courses={MK_PILIHAN} accentColor="var(--orange)" />
         </div>
