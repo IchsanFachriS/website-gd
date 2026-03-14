@@ -4,13 +4,6 @@
 import { Breadcrumb, PageHero } from "../_shared/PageShell";
 import type { PageProps } from "../_shared/PageShell";
 
-const orgs = [
-  { name: "HIMAGD ITB",     full: "Himpunan Mahasiswa Geodesi ITB",   desc: "The main student organization representing all geodesy and geomatics students at ITB.", icon: "🏛️" },
-  { name: "GeoGIS Club",    full: "Geographic Information Science Club", desc: "Student club focused on GIS applications, web mapping, and open-source geospatial tools.", icon: "🗺️" },
-  { name: "GNSS Student Team", full: "Satellite Navigation Research Team", desc: "Student research team working on GNSS projects and competitions.", icon: "🛰️" },
-  { name: "GD Photography Club", full: "Geodesy Photography & UAV Club", desc: "Club for aerial photography, drone piloting, and photogrammetric documentation.", icon: "📸" },
-];
-
 const scholarships = [
   "Beasiswa KIP Kuliah (Kartu Indonesia Pintar)",
   "ITB Endowment Scholarship",
@@ -37,30 +30,6 @@ export function StudentAffairsPage({ onNavigate }: PageProps) {
         title="Student Life & Support"
         subtitle="Empowering students beyond the classroom through organizations, scholarships, and career development."
       />
-
-      <section className="gd-page-section">
-        <div className="gd-container">
-          <p className="gd-section-kicker">Organizations</p>
-          <h2 className="gd-section-title">Student Organizations</h2>
-          <div className="gd-section-divider" />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px" }}>
-            {orgs.map((org) => (
-              <div key={org.name} style={{ background: "var(--white)", border: "1px solid var(--gray-200)", overflow: "hidden" }}>
-                <div style={{ background: "var(--navy)", padding: "20px 24px", display: "flex", alignItems: "center", gap: "14px" }}>
-                  <span style={{ fontSize: "28px" }}>{org.icon}</span>
-                  <div>
-                    <h3 style={{ fontFamily: "var(--font-display)", fontSize: "17px", fontWeight: 700, color: "var(--white)" }}>{org.name}</h3>
-                    <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.6)" }}>{org.full}</p>
-                  </div>
-                </div>
-                <div style={{ padding: "20px 24px" }}>
-                  <p style={{ fontSize: "14px", lineHeight: 1.7, color: "var(--gray-600)" }}>{org.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <section className="gd-page-section-alt">
         <div className="gd-container">
