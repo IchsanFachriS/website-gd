@@ -38,9 +38,7 @@ export function GenericPage({ title, parent, onNavigate }: GenericPageProps) {
             <p className="gd-section-kicker">{parent || "Section"}</p>
             <h2 className="gd-coming-soon-title">{title}</h2>
             <p className="gd-coming-soon-body">
-              This section is currently being developed. Content will be integrated from the
-              WordPress REST API at <code>gd.fitb.itb.ac.id/wp-json/</code> in the next
-              development phase.
+              This section is currently being developed. Please check back later for updates!
             </p>
             <button className="gd-btn gd-btn--primary" onClick={() => onNavigate("home")}>
               Back to Home

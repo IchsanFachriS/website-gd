@@ -90,7 +90,7 @@ const programs = [
     abbr: "Doctoral",
     name: "Doctor of Geodesy and Geomatics Engineering",
     subtitle: "Program Doktor",
-    duration: "3–5 Years",
+    duration: "3 Years",
     credits: "48 SKS",
     desc: "A research-intensive doctoral program producing scholars who contribute original knowledge to geodesy and geomatics. Graduates pursue careers in academia, government research bodies, and international institutions.",
     image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=1400&q=90",
