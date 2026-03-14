@@ -94,7 +94,7 @@ export function Topbar() {
           <ul>
             <li><a href="https://www.itb.ac.id" target="_blank" rel="noreferrer">ITB Website</a></li>
             <li><a href="https://fitb.itb.ac.id" target="_blank" rel="noreferrer">FITB</a></li>
-            <li><a href={pageUrl("student-affairs")}>Mahasiswa</a></li>
+            <li><a href="https://kemahasiswaan.itb.ac.id" target="_blank" rel="noreferrer">Mahasiswa</a></li>
             <li><a href="https://digilib.itb.ac.id" target="_blank" rel="noreferrer">Library</a></li>
             <li className="gd-topbar-admission">
               <a

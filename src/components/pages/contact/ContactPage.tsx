@@ -1,20 +1,6 @@
 // ============================================================
 // contact/ContactPage.tsx
 // Integrated with EmailJS — sends directly to info@gd.fitb.itb.ac.id
-//
-// SETUP:
-//   1. npm install @emailjs/browser
-//   2. Ganti 3 konstanta di bawah sesuai akun EmailJS Anda:
-//      - EMAILJS_SERVICE_ID
-//      - EMAILJS_TEMPLATE_ID
-//      - EMAILJS_PUBLIC_KEY
-//
-// Template variables yang digunakan di EmailJS dashboard:
-//   {{from_name}}    → nama pengirim
-//   {{from_email}}   → email pengirim
-//   {{subject}}      → subjek
-//   {{message}}      → isi pesan
-//   {{to_email}}     → info@gd.fitb.itb.ac.id (set di template)
 // ============================================================
 import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
@@ -22,12 +8,11 @@ import { Breadcrumb, PageHero } from "../_shared/PageShell";
 import type { PageProps } from "../_shared/PageShell";
 
 // ── ⚠️  GANTI DENGAN NILAI DARI AKUN EMAILJS ANDA ────────────
-const EMAILJS_SERVICE_ID  = "service_92zc5jm";   // e.g. "service_abc123"
-const EMAILJS_TEMPLATE_ID = "template_bniplac";  // e.g. "template_xyz789"
-const EMAILJS_PUBLIC_KEY  = "lKVPK-HKvvLkSP3JW";   // e.g. "abcDEFghiJKL123"
+const EMAILJS_SERVICE_ID  = "service_92zc5jm";
+const EMAILJS_TEMPLATE_ID = "template_bniplac";
+const EMAILJS_PUBLIC_KEY  = "lKVPK-HKvvLkSP3JW";
 // ─────────────────────────────────────────────────────────────
 
-// ── Form state ───────────────────────────────────────────────
 interface FormState {
   from_name:    string;
   from_email:   string;
@@ -43,10 +28,8 @@ const INITIAL_FORM: FormState = {
 };
 
 type FieldErrors = Partial<Record<keyof FormState, string>>;
-
 type SendStatus = "idle" | "sending" | "success" | "error";
 
-// ── Inline field error ────────────────────────────────────────
 function FieldError({ message }: { message: string }) {
   return (
     <span
@@ -72,7 +55,6 @@ function FieldError({ message }: { message: string }) {
   );
 }
 
-// ── Simple client-side validation ────────────────────────────
 function validate(form: FormState): FieldErrors {
   const errors: FieldErrors = {};
   if (!form.from_name.trim())  errors.from_name  = "Nama wajib diisi.";
@@ -83,6 +65,75 @@ function validate(form: FormState): FieldErrors {
   return errors;
 }
 
+// ── Google Maps Embed ─────────────────────────────────────────
+function GoogleMapEmbed() {
+  return (
+    <div
+      style={{
+        marginTop: "24px",
+        position: "relative",
+        overflow: "hidden",
+        border: "1px solid var(--gray-200)",
+        background: "var(--gray-100)",
+      }}
+    >
+      {/* Label strip at top */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "10px 14px",
+          background: "var(--navy)",
+          borderBottom: "2px solid var(--orange)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          {/* Pin icon */}
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="var(--orange)"
+            strokeWidth="2"
+            style={{ width: "16px", height: "16px", flexShrink: 0 }}
+          >
+            <path strokeLinecap="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path strokeLinecap="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "11px",
+              fontWeight: 700,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.85)",
+            }}
+          >
+            Gedung Labtek IX-C — ITB, Bandung
+          </span>
+        </div>
+      </div>
+
+      {/* Actual iframe embed */}
+      <iframe
+        title="Lokasi Teknik Geodesi dan Geomatika ITB"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d993.5273325!2d107.6120229!3d-6.8903077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e7c9e6514aa7%3A0xc410c08405a0eade!2sDepartment%20of%20Geodesy%20and%20Geomatics%20Engineering%20ITB!5e0!3m2!1sid!2sid!4v1710000000000!5m2!1sid!2sid"
+        width="100%"
+        height="280"
+        style={{
+          border: "none",
+          display: "block",
+          filter: "saturate(0.85) contrast(1.05)",
+        }}
+        allowFullScreen
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+      />
+    </div>
+  );
+}
+
 // ── Main component ────────────────────────────────────────────
 export function ContactPage({ onNavigate }: PageProps) {
   const formRef                         = useRef<HTMLFormElement>(null);
@@ -91,7 +142,6 @@ export function ContactPage({ onNavigate }: PageProps) {
   const [status, setStatus]             = useState<SendStatus>("idle");
   const [errorMsg, setErrorMsg]         = useState<string | null>(null);
 
-  // ── Field change ──────────────────────────────────────────
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -100,11 +150,9 @@ export function ContactPage({ onNavigate }: PageProps) {
     setFieldErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
-  // ── Submit ────────────────────────────────────────────────
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    // Client-side validation
     const errors = validate(form);
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
@@ -123,7 +171,6 @@ export function ContactPage({ onNavigate }: PageProps) {
           from_email: form.from_email,
           subject:    form.subject || "(Tanpa Subjek)",
           message:    form.message,
-          // to_email di-set di template EmailJS, bukan di sini
         },
         EMAILJS_PUBLIC_KEY
       );
@@ -176,7 +223,7 @@ export function ContactPage({ onNavigate }: PageProps) {
                     <path strokeLinecap="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <div>
-                    <strong>Labtek IX-C</strong><br />
+                    <strong>Labtek IX-C Institut Teknologi Bandung</strong><br />
                     Jl. Ganesha No. 10, Bandung 40132<br />
                     Jawa Barat, Indonesia
                   </div>
@@ -207,40 +254,8 @@ export function ContactPage({ onNavigate }: PageProps) {
                 </div>
               </address>
 
-              {/* Map placeholder */}
-              <div
-                style={{
-                  marginTop: "24px",
-                  background: "var(--gray-100)",
-                  height: "240px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  border: "1px solid var(--gray-200)",
-                }}
-              >
-                <div style={{ textAlign: "center" }}>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontSize: "14px",
-                      color: "var(--gray-400)",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    📍 Gedung Teknik Geodesi, ITB
-                  </div>
-                  <a
-                    href="https://maps.google.com/?q=Gedung+Teknik+Geodesi+ITB+Bandung"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="gd-btn gd-btn--outline"
-                    style={{ fontSize: "12px", padding: "8px 16px" }}
-                  >
-                    Open in Google Maps
-                  </a>
-                </div>
-              </div>
+              {/* ── Google Maps embed ── */}
+              <GoogleMapEmbed />
             </div>
 
             {/* ── Form ── */}
@@ -318,7 +333,6 @@ export function ContactPage({ onNavigate }: PageProps) {
                 </div>
 
               ) : (
-                /* ── FORM ── */
                 <>
                   <h3 className="gd-form-title">Send a Message</h3>
 
@@ -354,7 +368,6 @@ export function ContactPage({ onNavigate }: PageProps) {
                     </div>
                   )}
 
-                  {/* Hidden form ref (opsional jika pakai sendForm) */}
                   <form ref={formRef} style={{ display: "contents" }}>
 
                     <div className="gd-form-row">
@@ -369,15 +382,9 @@ export function ContactPage({ onNavigate }: PageProps) {
                           onChange={handleChange}
                           required
                           placeholder="Nama lengkap Anda"
-                          style={
-                            fieldErrors.from_name
-                              ? { borderBottomColor: "#ef4444" }
-                              : undefined
-                          }
+                          style={fieldErrors.from_name ? { borderBottomColor: "#ef4444" } : undefined}
                         />
-                        {fieldErrors.from_name && (
-                          <FieldError message={fieldErrors.from_name} />
-                        )}
+                        {fieldErrors.from_name && <FieldError message={fieldErrors.from_name} />}
                       </div>
 
                       {/* Email */}
@@ -391,15 +398,9 @@ export function ContactPage({ onNavigate }: PageProps) {
                           onChange={handleChange}
                           required
                           placeholder="email@anda.com"
-                          style={
-                            fieldErrors.from_email
-                              ? { borderBottomColor: "#ef4444" }
-                              : undefined
-                          }
+                          style={fieldErrors.from_email ? { borderBottomColor: "#ef4444" } : undefined}
                         />
-                        {fieldErrors.from_email && (
-                          <FieldError message={fieldErrors.from_email} />
-                        )}
+                        {fieldErrors.from_email && <FieldError message={fieldErrors.from_email} />}
                       </div>
                     </div>
 
@@ -427,15 +428,9 @@ export function ContactPage({ onNavigate }: PageProps) {
                         onChange={handleChange}
                         required
                         placeholder="Tulis pesan Anda di sini…"
-                        style={
-                          fieldErrors.message
-                            ? { borderBottomColor: "#ef4444" }
-                            : undefined
-                        }
+                        style={fieldErrors.message ? { borderBottomColor: "#ef4444" } : undefined}
                       />
-                      {fieldErrors.message && (
-                        <FieldError message={fieldErrors.message} />
-                      )}
+                      {fieldErrors.message && <FieldError message={fieldErrors.message} />}
                     </div>
 
                     {/* Submit */}
@@ -459,18 +454,8 @@ export function ContactPage({ onNavigate }: PageProps) {
                               animation: "gd-spin 0.8s linear infinite",
                             }}
                           >
-                            <circle
-                              cx="12" cy="12" r="10"
-                              stroke="currentColor"
-                              strokeWidth="3"
-                              strokeOpacity="0.25"
-                            />
-                            <path
-                              d="M12 2a10 10 0 0110 10"
-                              stroke="currentColor"
-                              strokeWidth="3"
-                              strokeLinecap="round"
-                            />
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeOpacity="0.25" />
+                            <path d="M12 2a10 10 0 0110 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
                           </svg>
                           Mengirim…
                         </>

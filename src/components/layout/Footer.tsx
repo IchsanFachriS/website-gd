@@ -14,12 +14,7 @@ function LogoBrand() {
         <img
           src={imgUrl("img/logo.png")}
           alt="Logo Institut Teknologi Bandung"
-          style={{
-            width: "52px",
-            height: "52px",
-            objectFit: "contain",
-            flexShrink: 0,
-          }}
+          style={{ width: "52px", height: "52px", objectFit: "contain", flexShrink: 0 }}
           onError={() => setImgError(true)}
         />
       ) : (
@@ -41,19 +36,9 @@ function LogoBrand() {
 }
 
 function AccredBadge({
-  href,
-  src,
-  alt,
-  fallbackGrade,
-  fallbackLabel,
-  title,
+  href, src, alt, fallbackText, title,
 }: {
-  href: string;
-  src: string;
-  alt: string;
-  fallbackGrade: string;
-  fallbackLabel: string;
-  title: string;
+  href: string; src: string; alt: string; fallbackText: string; title: string;
 }) {
   const [imgError, setImgError] = useState(false);
 
@@ -62,28 +47,48 @@ function AccredBadge({
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="gd-accred-badge"
       title={title}
-      style={{ textDecoration: "none" }}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "72px",
+        height: "52px",
+        padding: "8px",
+        background: "rgba(255,255,255,0.07)",
+        border: "1px solid rgba(255,255,255,0.12)",
+        textDecoration: "none",
+        transition: "background 0.2s, border-color 0.2s",
+        flexShrink: 0,
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.14)";
+        (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.3)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.07)";
+        (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.12)";
+      }}
     >
       {!imgError ? (
         <img
-          src={imgUrl(src)}
+          src={src}
           alt={alt}
-          style={{
-            height: "40px",
-            width: "auto",
-            maxWidth: "80px",
-            objectFit: "contain",
-            opacity: 0.9,
-          }}
+          style={{ maxWidth: "56px", maxHeight: "38px", objectFit: "contain", opacity: 0.9 }}
           onError={() => setImgError(true)}
         />
       ) : (
-        <>
-          <span className="gd-accred-grade">{fallbackGrade}</span>
-          <span className="gd-accred-label" dangerouslySetInnerHTML={{ __html: fallbackLabel }} />
-        </>
+        <span style={{
+          fontFamily: "var(--font-display)",
+          fontSize: "11px",
+          fontWeight: 700,
+          color: "rgba(255,255,255,0.65)",
+          textAlign: "center" as const,
+          lineHeight: 1.2,
+          letterSpacing: "0.04em",
+        }}>
+          {fallbackText}
+        </span>
       )}
     </a>
   );
@@ -187,23 +192,36 @@ export function Footer({ onNavigate }: FooterProps) {
             <button className="gd-btn gd-btn--outline" onClick={() => navigate("contact-us")}>
               Contact Us
             </button>
-            <div className="gd-footer-accreditation">
-              <AccredBadge
-                href="https://www.asiin.de"
-                src="img/accreditation/asiin.png"
-                alt="ASIIN Akkreditierungsagentur"
-                fallbackGrade="✓"
-                fallbackLabel="ASIIN<br/>Accredited"
-                title="ASIIN Accredited"
-              />
-              <AccredBadge
-                href="https://www.banpt.or.id"
-                src="img/accreditation/ban-pt.png"
-                alt="BAN-PT Terakreditasi"
-                fallbackGrade="A"
-                fallbackLabel="BAN-PT<br/>Accredited"
-                title="BAN-PT Terakreditasi Unggul"
-              />
+
+            {/* Accreditation logos */}
+            <div>
+              <div style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "10px",
+                fontWeight: 700,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.3)",
+                marginBottom: "8px",
+              }}>
+                Accreditation
+              </div>
+              <div style={{ display: "flex", gap: "8px" }}>
+                <AccredBadge
+                  href="https://www.asiin.de"
+                  src={imgUrl("img/accreditation/asiin.png")}
+                  alt="ASIIN Accredited"
+                  fallbackText="ASIIN"
+                  title="ASIIN International Accreditation"
+                />
+                <AccredBadge
+                  href="https://lamteknik.or.id"
+                  src={imgUrl("img/accreditation/lam-teknik.png")}
+                  alt="LAM TEKNIK Terakreditasi Unggul"
+                  fallbackText="LAM TEKNIK"
+                  title="LAM TEKNIK Terakreditasi Unggul"
+                />
+              </div>
             </div>
           </div>
         </div>
