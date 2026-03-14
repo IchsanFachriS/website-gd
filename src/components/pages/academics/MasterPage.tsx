@@ -22,10 +22,11 @@ interface Concentration {
 
 // ── Data placeholder ─────────────────────────────────────────
 const MK_WAJIB_UMUM: Course[] = [
-  { kode: "GD5001", nama: "Metodologi Penelitian",     sks: 3, semester: 1 },
-  { kode: "GD5002", nama: "Matematika Terapan Lanjut", sks: 3, semester: 1 },
-  { kode: "GD5003", nama: "Seminar Proposal Tesis",    sks: 2, semester: 2 },
-  { kode: "GD5099", nama: "Tesis",                     sks: 6, semester: 4 },
+  { kode: "WI7001", nama: "Literasi Digital, AI, & Etika Akademik",     sks: 2, semester: 1 },
+  { kode: "GD5103", nama: "Metodologi Penelitian", sks: 3, semester: 1 },
+  { kode: "GD5101", nama: "Sistem Referensi Geospasial",    sks: 3, semester: 1 },
+  { kode: "GD5110", nama: "Metodologi Pemetaan",                     sks: 4, semester: 1 },
+  { kode: "GD5000", nama: "Kolokium",                     sks: 4, semester: 1 },
 ];
 
 const CONCENTRATIONS: Concentration[] = [
@@ -296,7 +297,6 @@ function SemesterAccordion({
                     color: "var(--gray-400)",
                   }}
                 >
-                  {list.length} mata kuliah
                 </span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
@@ -458,21 +458,6 @@ export function MasterPage({ onNavigate }: PageProps) {
                       </div>
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          fontWeight: 700,
-                          color: isOpen ? c.color : "var(--gray-400)",
-                          background: "var(--off-white)",
-                          border: "1px solid var(--gray-200)",
-                          padding: "3px 10px",
-                          borderRadius: "2px",
-                          whiteSpace: "nowrap" as const,
-                        }}
-                      >
-                        {c.wajib.reduce((s, mk) => s + mk.sks, 0)} SKS
-                      </span>
                       <Chevron open={isOpen} color={isOpen ? c.color : "var(--gray-400)"} />
                     </div>
                   </button>
