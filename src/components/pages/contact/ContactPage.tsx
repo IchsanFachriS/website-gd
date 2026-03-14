@@ -1,106 +1,158 @@
 // ============================================================
 // contact/ContactPage.tsx
-// Integrated with Contact Form 7 (CF7) WordPress REST API
-// POST /wp-json/contact-form-7/v1/contact-forms/{id}/feedback
+// Integrated with EmailJS — sends directly to info@gd.fitb.itb.ac.id
+//
+// SETUP:
+//   1. npm install @emailjs/browser
+//   2. Ganti 3 konstanta di bawah sesuai akun EmailJS Anda:
+//      - EMAILJS_SERVICE_ID
+//      - EMAILJS_TEMPLATE_ID
+//      - EMAILJS_PUBLIC_KEY
+//
+// Template variables yang digunakan di EmailJS dashboard:
+//   {{from_name}}    → nama pengirim
+//   {{from_email}}   → email pengirim
+//   {{subject}}      → subjek
+//   {{message}}      → isi pesan
+//   {{to_email}}     → info@gd.fitb.itb.ac.id (set di template)
 // ============================================================
-import { useState } from "react";
+import { useState, useRef } from "react";
+import emailjs from "@emailjs/browser";
 import { Breadcrumb, PageHero } from "../_shared/PageShell";
 import type { PageProps } from "../_shared/PageShell";
-import { submitContactForm } from "../../../utils/api";
-import type { CF7FeedbackResponse } from "../../../types/wordpress";
 
-// ── CF7 Form ID — sesuaikan dengan ID form di WordPress ──────
-const CF7_FORM_ID = 7;
+// ── ⚠️  GANTI DENGAN NILAI DARI AKUN EMAILJS ANDA ────────────
+const EMAILJS_SERVICE_ID  = "service_92zc5jm";   // e.g. "service_abc123"
+const EMAILJS_TEMPLATE_ID = "template_bniplac";  // e.g. "template_xyz789"
+const EMAILJS_PUBLIC_KEY  = "lKVPK-HKvvLkSP3JW";   // e.g. "abcDEFghiJKL123"
+// ─────────────────────────────────────────────────────────────
 
 // ── Form state ───────────────────────────────────────────────
 interface FormState {
-  "your-name": string;
-  "your-email": string;
-  "your-subject": string;
-  "your-message": string;
+  from_name:    string;
+  from_email:   string;
+  subject:      string;
+  message:      string;
 }
 
 const INITIAL_FORM: FormState = {
-  "your-name": "",
-  "your-email": "",
-  "your-subject": "",
-  "your-message": "",
+  from_name:  "",
+  from_email: "",
+  subject:    "",
+  message:    "",
 };
 
-// ── Field error map ───────────────────────────────────────────
 type FieldErrors = Partial<Record<keyof FormState, string>>;
 
-export function ContactPage({ onNavigate }: PageProps) {
-  const [form, setForm]           = useState<FormState>(INITIAL_FORM);
-  const [loading, setLoading]     = useState(false);
-  const [result, setResult]       = useState<CF7FeedbackResponse | null>(null);
-  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
-  const [globalError, setGlobalError] = useState<string | null>(null);
+type SendStatus = "idle" | "sending" | "success" | "error";
 
-  // ── Handlers ─────────────────────────────────────────────
+// ── Inline field error ────────────────────────────────────────
+function FieldError({ message }: { message: string }) {
+  return (
+    <span
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "5px",
+        fontSize: "12px",
+        color: "#dc2626",
+        marginTop: "4px",
+        fontFamily: "var(--font-display)",
+      }}
+    >
+      <svg
+        viewBox="0 0 16 16"
+        fill="currentColor"
+        style={{ width: "12px", height: "12px", flexShrink: 0 }}
+      >
+        <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 3.5a.75.75 0 01.75.75v3a.75.75 0 01-1.5 0v-3A.75.75 0 018 4.5zm0 6.5a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+      </svg>
+      {message}
+    </span>
+  );
+}
+
+// ── Simple client-side validation ────────────────────────────
+function validate(form: FormState): FieldErrors {
+  const errors: FieldErrors = {};
+  if (!form.from_name.trim())  errors.from_name  = "Nama wajib diisi.";
+  if (!form.from_email.trim()) errors.from_email = "Email wajib diisi.";
+  else if (!/\S+@\S+\.\S+/.test(form.from_email))
+    errors.from_email = "Format email tidak valid.";
+  if (!form.message.trim())    errors.message    = "Pesan wajib diisi.";
+  return errors;
+}
+
+// ── Main component ────────────────────────────────────────────
+export function ContactPage({ onNavigate }: PageProps) {
+  const formRef                         = useRef<HTMLFormElement>(null);
+  const [form, setForm]                 = useState<FormState>(INITIAL_FORM);
+  const [fieldErrors, setFieldErrors]   = useState<FieldErrors>({});
+  const [status, setStatus]             = useState<SendStatus>("idle");
+  const [errorMsg, setErrorMsg]         = useState<string | null>(null);
+
+  // ── Field change ──────────────────────────────────────────
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    // Clear field error on change
     setFieldErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
+  // ── Submit ────────────────────────────────────────────────
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setLoading(true);
-    setGlobalError(null);
-    setFieldErrors({});
-    setResult(null);
+
+    // Client-side validation
+    const errors = validate(form);
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+
+    setStatus("sending");
+    setErrorMsg(null);
 
     try {
-      const formData = new FormData();
-      Object.entries(form).forEach(([key, value]) => {
-        formData.append(key, value);
-      });
-
-      const response = await submitContactForm(CF7_FORM_ID, formData);
-      setResult(response);
-
-      // Map per-field validation errors dari CF7
-      if (response.invalid_fields && response.invalid_fields.length > 0) {
-        const errors: FieldErrors = {};
-        response.invalid_fields.forEach((f) => {
-          const key = f.field as keyof FormState;
-          errors[key] = f.message;
-        });
-        setFieldErrors(errors);
-      }
-
-      // Reset form on success
-      if (response.status === "mail_sent") {
-        setForm(INITIAL_FORM);
-      }
-    } catch (err) {
-      setGlobalError(
-        err instanceof Error
-          ? err.message
-          : "Gagal mengirim pesan. Silakan coba lagi."
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name:  form.from_name,
+          from_email: form.from_email,
+          subject:    form.subject || "(Tanpa Subjek)",
+          message:    form.message,
+          // to_email di-set di template EmailJS, bukan di sini
+        },
+        EMAILJS_PUBLIC_KEY
       );
-    } finally {
-      setLoading(false);
+      setStatus("success");
+      setForm(INITIAL_FORM);
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setStatus("error");
+      setErrorMsg(
+        "Gagal mengirim pesan. Silakan coba lagi atau hubungi kami melalui email langsung."
+      );
     }
   };
 
   const handleReset = () => {
-    setResult(null);
+    setStatus("idle");
     setForm(INITIAL_FORM);
     setFieldErrors({});
-    setGlobalError(null);
+    setErrorMsg(null);
   };
 
-  // ── Success state ─────────────────────────────────────────
-  const isSuccess = result?.status === "mail_sent";
+  const isLoading = status === "sending";
 
   return (
     <div>
-      <Breadcrumb items={[{ label: "Contact Us", page: "contact-us" }]} onNavigate={onNavigate} />
+      <Breadcrumb
+        items={[{ label: "Contact Us", page: "contact-us" }]}
+        onNavigate={onNavigate}
+      />
       <PageHero
         kicker="Contact Us"
         title="Get in Touch"
@@ -156,22 +208,26 @@ export function ContactPage({ onNavigate }: PageProps) {
               </address>
 
               {/* Map placeholder */}
-              <div style={{
-                marginTop: "24px",
-                background: "var(--gray-100)",
-                height: "240px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "1px solid var(--gray-200)",
-              }}>
+              <div
+                style={{
+                  marginTop: "24px",
+                  background: "var(--gray-100)",
+                  height: "240px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  border: "1px solid var(--gray-200)",
+                }}
+              >
                 <div style={{ textAlign: "center" }}>
-                  <div style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "14px",
-                    color: "var(--gray-400)",
-                    marginBottom: "8px",
-                  }}>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "14px",
+                      color: "var(--gray-400)",
+                      marginBottom: "8px",
+                    }}
+                  >
                     📍 Gedung Teknik Geodesi, ITB
                   </div>
                   <a
@@ -190,49 +246,66 @@ export function ContactPage({ onNavigate }: PageProps) {
             {/* ── Form ── */}
             <div className="gd-contact-form-wrap">
 
-              {/* ── SUCCESS STATE ── */}
-              {isSuccess ? (
-                <div style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  textAlign: "center",
-                  padding: "48px 24px",
-                  gap: "16px",
-                }}>
-                  {/* Checkmark icon */}
-                  <div style={{
-                    width: "64px",
-                    height: "64px",
-                    borderRadius: "50%",
-                    background: "rgba(34,197,94,0.12)",
-                    border: "2px solid rgba(34,197,94,0.3)",
+              {/* ── SUCCESS ── */}
+              {status === "success" ? (
+                <div
+                  style={{
                     display: "flex",
+                    flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
-                  }}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "32px", height: "32px" }}>
+                    textAlign: "center",
+                    padding: "48px 24px",
+                    gap: "16px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "64px",
+                      height: "64px",
+                      borderRadius: "50%",
+                      background: "rgba(34,197,94,0.12)",
+                      border: "2px solid rgba(34,197,94,0.3)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#22c55e"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{ width: "32px", height: "32px" }}
+                    >
                       <path d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
 
-                  <h3 style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "22px",
-                    fontWeight: 700,
-                    color: "var(--navy)",
-                  }}>
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "22px",
+                      fontWeight: 700,
+                      color: "var(--navy)",
+                    }}
+                  >
                     Pesan Terkirim!
                   </h3>
 
-                  <p style={{
-                    fontSize: "15px",
-                    lineHeight: 1.7,
-                    color: "var(--gray-600)",
-                    maxWidth: "360px",
-                  }}>
-                    {result?.message || "Terima kasih, pesan Anda telah kami terima. Kami akan segera menghubungi Anda."}
+                  <p
+                    style={{
+                      fontSize: "15px",
+                      lineHeight: 1.7,
+                      color: "var(--gray-600)",
+                      maxWidth: "360px",
+                    }}
+                  >
+                    Terima kasih, pesan Anda telah dikirim ke{" "}
+                    <strong>info@gd.fitb.itb.ac.id</strong>. Kami akan segera
+                    menghubungi Anda kembali.
                   </p>
 
                   <button
@@ -245,152 +318,168 @@ export function ContactPage({ onNavigate }: PageProps) {
                 </div>
 
               ) : (
-                /* ── FORM STATE ── */
+                /* ── FORM ── */
                 <>
                   <h3 className="gd-form-title">Send a Message</h3>
 
                   {/* Global error banner */}
-                  {globalError && (
-                    <div style={{
-                      display: "flex",
-                      gap: "10px",
-                      alignItems: "flex-start",
-                      background: "rgba(239,68,68,0.08)",
-                      border: "1px solid rgba(239,68,68,0.25)",
-                      borderLeft: "3px solid #ef4444",
-                      padding: "12px 16px",
-                      marginBottom: "20px",
-                      borderRadius: "0 2px 2px 0",
-                    }}>
-                      <svg viewBox="0 0 20 20" fill="#ef4444" style={{ width: "18px", height: "18px", flexShrink: 0, marginTop: "1px" }}>
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  {status === "error" && errorMsg && (
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "10px",
+                        alignItems: "flex-start",
+                        background: "rgba(239,68,68,0.08)",
+                        border: "1px solid rgba(239,68,68,0.25)",
+                        borderLeft: "3px solid #ef4444",
+                        padding: "12px 16px",
+                        marginBottom: "20px",
+                        borderRadius: "0 2px 2px 0",
+                      }}
+                    >
+                      <svg
+                        viewBox="0 0 20 20"
+                        fill="#ef4444"
+                        style={{ width: "18px", height: "18px", flexShrink: 0, marginTop: "1px" }}
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                       <p style={{ fontSize: "14px", color: "#dc2626", lineHeight: 1.5 }}>
-                        {globalError}
+                        {errorMsg}
                       </p>
                     </div>
                   )}
 
-                  {/* CF7 non-success message (e.g. validation failed) */}
-                  {result && !isSuccess && result.message && (
-                    <div style={{
-                      background: "rgba(234,179,8,0.08)",
-                      border: "1px solid rgba(234,179,8,0.25)",
-                      borderLeft: "3px solid #eab308",
-                      padding: "12px 16px",
-                      marginBottom: "20px",
-                      borderRadius: "0 2px 2px 0",
-                    }}>
-                      <p style={{ fontSize: "14px", color: "#854d0e", lineHeight: 1.5 }}>
-                        {result.message}
-                      </p>
-                    </div>
-                  )}
+                  {/* Hidden form ref (opsional jika pakai sendForm) */}
+                  <form ref={formRef} style={{ display: "contents" }}>
 
-                  <div className="gd-form-row">
-                    {/* Name */}
+                    <div className="gd-form-row">
+                      {/* Name */}
+                      <div className="gd-form-group">
+                        <label htmlFor="contact-name">Full Name *</label>
+                        <input
+                          type="text"
+                          id="contact-name"
+                          name="from_name"
+                          value={form.from_name}
+                          onChange={handleChange}
+                          required
+                          placeholder="Nama lengkap Anda"
+                          style={
+                            fieldErrors.from_name
+                              ? { borderBottomColor: "#ef4444" }
+                              : undefined
+                          }
+                        />
+                        {fieldErrors.from_name && (
+                          <FieldError message={fieldErrors.from_name} />
+                        )}
+                      </div>
+
+                      {/* Email */}
+                      <div className="gd-form-group">
+                        <label htmlFor="contact-email">Email Address *</label>
+                        <input
+                          type="email"
+                          id="contact-email"
+                          name="from_email"
+                          value={form.from_email}
+                          onChange={handleChange}
+                          required
+                          placeholder="email@anda.com"
+                          style={
+                            fieldErrors.from_email
+                              ? { borderBottomColor: "#ef4444" }
+                              : undefined
+                          }
+                        />
+                        {fieldErrors.from_email && (
+                          <FieldError message={fieldErrors.from_email} />
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Subject */}
                     <div className="gd-form-group">
-                      <label htmlFor="contact-name">Full Name *</label>
+                      <label htmlFor="contact-subject">Subject</label>
                       <input
                         type="text"
-                        id="contact-name"
-                        name="your-name"
-                        value={form["your-name"]}
+                        id="contact-subject"
+                        name="subject"
+                        value={form.subject}
                         onChange={handleChange}
-                        required
-                        placeholder="Your name"
-                        style={fieldErrors["your-name"] ? { borderBottomColor: "#ef4444" } : undefined}
+                        placeholder="Perihal pesan Anda"
                       />
-                      {fieldErrors["your-name"] && (
-                        <FieldError message={fieldErrors["your-name"]} />
-                      )}
                     </div>
 
-                    {/* Email */}
+                    {/* Message */}
                     <div className="gd-form-group">
-                      <label htmlFor="contact-email">Email Address *</label>
-                      <input
-                        type="email"
-                        id="contact-email"
-                        name="your-email"
-                        value={form["your-email"]}
+                      <label htmlFor="contact-message">Message *</label>
+                      <textarea
+                        id="contact-message"
+                        name="message"
+                        rows={5}
+                        value={form.message}
                         onChange={handleChange}
                         required
-                        placeholder="your@email.com"
-                        style={fieldErrors["your-email"] ? { borderBottomColor: "#ef4444" } : undefined}
+                        placeholder="Tulis pesan Anda di sini…"
+                        style={
+                          fieldErrors.message
+                            ? { borderBottomColor: "#ef4444" }
+                            : undefined
+                        }
                       />
-                      {fieldErrors["your-email"] && (
-                        <FieldError message={fieldErrors["your-email"]} />
+                      {fieldErrors.message && (
+                        <FieldError message={fieldErrors.message} />
                       )}
                     </div>
-                  </div>
 
-                  {/* Subject */}
-                  <div className="gd-form-group">
-                    <label htmlFor="contact-subject">Subject</label>
-                    <input
-                      type="text"
-                      id="contact-subject"
-                      name="your-subject"
-                      value={form["your-subject"]}
-                      onChange={handleChange}
-                      placeholder="What is your enquiry about?"
-                      style={fieldErrors["your-subject"] ? { borderBottomColor: "#ef4444" } : undefined}
-                    />
-                    {fieldErrors["your-subject"] && (
-                      <FieldError message={fieldErrors["your-subject"]} />
-                    )}
-                  </div>
+                    {/* Submit */}
+                    <button
+                      onClick={handleSubmit}
+                      disabled={isLoading}
+                      className="gd-btn gd-btn--primary gd-btn--full"
+                      style={{
+                        opacity: isLoading ? 0.7 : 1,
+                        cursor: isLoading ? "not-allowed" : "pointer",
+                      }}
+                    >
+                      {isLoading ? (
+                        <>
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            style={{
+                              width: "16px",
+                              height: "16px",
+                              animation: "gd-spin 0.8s linear infinite",
+                            }}
+                          >
+                            <circle
+                              cx="12" cy="12" r="10"
+                              stroke="currentColor"
+                              strokeWidth="3"
+                              strokeOpacity="0.25"
+                            />
+                            <path
+                              d="M12 2a10 10 0 0110 10"
+                              stroke="currentColor"
+                              strokeWidth="3"
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                          Mengirim…
+                        </>
+                      ) : (
+                        "Send Message"
+                      )}
+                    </button>
 
-                  {/* Message */}
-                  <div className="gd-form-group">
-                    <label htmlFor="contact-message">Message *</label>
-                    <textarea
-                      id="contact-message"
-                      name="your-message"
-                      rows={5}
-                      value={form["your-message"]}
-                      onChange={handleChange}
-                      required
-                      placeholder="Write your message here…"
-                      style={fieldErrors["your-message"] ? { borderBottomColor: "#ef4444" } : undefined}
-                    />
-                    {fieldErrors["your-message"] && (
-                      <FieldError message={fieldErrors["your-message"]} />
-                    )}
-                  </div>
-
-                  {/* Submit */}
-                  <button
-                    onClick={handleSubmit}
-                    disabled={loading}
-                    className="gd-btn gd-btn--primary gd-btn--full"
-                    style={{ opacity: loading ? 0.7 : 1, cursor: loading ? "not-allowed" : "pointer" }}
-                  >
-                    {loading ? (
-                      <>
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          style={{ width: "16px", height: "16px", animation: "gd-spin 0.8s linear infinite" }}
-                        >
-                          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeOpacity="0.25" />
-                          <path d="M12 2a10 10 0 0110 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                        </svg>
-                        Sending…
-                      </>
-                    ) : (
-                      "Send Message"
-                    )}
-                  </button>
-
-                  {/* CF7 Form ID note for dev */}
-                  <p className="gd-form-note">
-                    Terhubung ke WordPress CF7 form ID{" "}
-                    <code>{CF7_FORM_ID}</code> via{" "}
-                    <code>POST /wp-json/contact-form-7/v1/contact-forms/{CF7_FORM_ID}/feedback</code>.
-                    Sesuaikan <code>CF7_FORM_ID</code> dengan ID form di dashboard WordPress.
-                  </p>
+                  </form>
                 </>
               )}
             </div>
@@ -406,25 +495,5 @@ export function ContactPage({ onNavigate }: PageProps) {
         }
       `}</style>
     </div>
-  );
-}
-
-// ── Inline field error ────────────────────────────────────────
-function FieldError({ message }: { message: string }) {
-  return (
-    <span style={{
-      display: "flex",
-      alignItems: "center",
-      gap: "5px",
-      fontSize: "12px",
-      color: "#dc2626",
-      marginTop: "4px",
-      fontFamily: "var(--font-display)",
-    }}>
-      <svg viewBox="0 0 16 16" fill="currentColor" style={{ width: "12px", height: "12px", flexShrink: 0 }}>
-        <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 3.5a.75.75 0 01.75.75v3a.75.75 0 01-1.5 0v-3A.75.75 0 018 4.5zm0 6.5a.75.75 0 110-1.5.75.75 0 010 1.5z" />
-      </svg>
-      {message}
-    </span>
   );
 }

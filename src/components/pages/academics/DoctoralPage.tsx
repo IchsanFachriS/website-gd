@@ -207,7 +207,6 @@ function SemesterAccordion({
     <div style={{ display: "flex", flexDirection: "column" as const, gap: "6px" }}>
       {grouped.map(([sem, list]) => {
         const isOpen = openSems.has(sem);
-        const totalSks = list.reduce((s, c) => s + c.sks, 0);
         return (
           <div
             key={sem}
